@@ -13,18 +13,18 @@ class RecomendationProduct extends StatelessWidget {
       child: Row(
         children: [
           WideProductCard(
-            productName: "Avocado",
-            productImageUrl: "images/avocado.png",
-            productPrice: 9,
-            productWeight: 220,
-            callback: () {},
+            merk: "Avocado",
+            imageUrl: "images/avocado.png",
+            price: 9,
+            weight: 220,
+            press: () {},
           ),
           WideProductCard(
-            productName: "Orange",
-            productImageUrl: "images/orange.png",
-            productPrice: 4,
-            productWeight: 160,
-            callback: () {},
+            merk: "Orange",
+            imageUrl: "images/orange.png",
+            price: 4,
+            weight: 160,
+            press: () {},
           ),
         ],
       ),

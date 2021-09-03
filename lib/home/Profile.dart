@@ -19,7 +19,7 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 9),
+                  // margin: EdgeInsets.only(bottom: 9),
                   child: Text(
                     "Good Morning",
                     style: TextStyle(
@@ -29,7 +29,7 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 9),
+                  // margin: EdgeInsets.only(bottom: 9),
                   child: Text(
                     "Ghazi",
                     style: TextStyle(

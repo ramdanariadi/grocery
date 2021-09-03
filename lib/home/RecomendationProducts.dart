@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
-import 'package:grocery/home2/WideProductCard.dart';
+import 'package:grocery/home/WideProductCard.dart';
 
 class RecomendationProducts extends StatelessWidget {
   const RecomendationProducts({
