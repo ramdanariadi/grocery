@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/product/ProductDetail.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -7,15 +8,21 @@ class ProductCard extends StatelessWidget {
     required this.merk,
     required this.weight,
     required this.price,
-    required this.press,
     required this.imageUrl,
   }) : super(key: key);
 
   final String merk;
   final int weight;
   final int price;
-  final VoidCallback press;
   final String imageUrl;
+
+  factory ProductCard.fromJson(Map<String, dynamic> item) {
+    return new ProductCard(
+        merk: item['name'],
+        weight: item['weight'],
+        price: item['price'],
+        imageUrl: '${item['imageUrl']}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class ProductCard extends StatelessWidget {
       margin: EdgeInsets.only(
           left: kDefaultPadding / 2, right: kDefaultPadding / 2),
       decoration: BoxDecoration(
-          color: kNaturanWhite,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
                 offset: Offset(0, 8),
@@ -37,7 +44,15 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       child: Column(
         children: [
-          Image.asset(this.imageUrl),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProductDetail()));
+            },
+            child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
+                ? Image.asset('images/notFound.png')
+                : Image.network(this.imageUrl),
+          ),
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding / 2),
             child: Row(
@@ -73,7 +88,7 @@ class ProductCard extends StatelessWidget {
                       style: TextStyle(height: 1.5, color: kBlackHint)),
                 ])),
                 GestureDetector(
-                    onTap: this.press,
+                    onTap: () {},
                     child: Image.asset("images/icons/plus_icon.png"))
               ],
             ),

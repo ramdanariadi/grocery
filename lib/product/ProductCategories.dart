@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 
@@ -53,14 +52,23 @@ class ProductCategory extends StatelessWidget {
       child: GestureDetector(
         onTap: this.onTap,
         child: Container(
-          margin: EdgeInsets.only(left: kDefaultPadding),
+          margin:
+              EdgeInsets.only(left: kDefaultPadding, bottom: kDefaultPadding),
           padding: EdgeInsets.only(
               left: kDefaultPadding,
               right: kDefaultPadding,
               top: kDefaultPadding / 2,
               bottom: kDefaultPadding / 2),
           decoration: BoxDecoration(
-              color: kNaturanWhite, borderRadius: BorderRadius.circular(40)),
+              color: kNaturanWhite,
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 2,
+                    offset: Offset(0, 2),
+                    color: kShadownColor.withOpacity(0.12),
+                    spreadRadius: 0)
+              ],
+              borderRadius: BorderRadius.circular(40)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

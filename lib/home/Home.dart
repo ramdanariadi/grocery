@@ -1,20 +1,13 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
-import 'package:grocery/home/ProductCategory.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
-import 'package:grocery/home/ProductCategories.dart';
+import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/home/Profile.dart';
-import 'package:grocery/home/RecomendationProduct.dart';
-import 'package:grocery/home/RecomendationProducts.dart';
-import 'package:grocery/home/TitleAndMoreButton.dart';
-import 'package:grocery/home/ProductCard.dart';
-import 'package:grocery/home/TopProducts.dart';
-import 'package:grocery/home/WideProductCard.dart';
+import 'package:grocery/product/RecomendationProducts.dart';
+import 'package:grocery/product/TopProducts.dart';
 import 'package:grocery/home/SearchBar.dart';
 
 enum BottomIcons { Home, Favorite, Search, Account }

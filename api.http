@@ -1,0 +1,98 @@
+### STORE CATEGORY
+POST https://tunas-grocery.herokuapp.com/api/v1/category
+Content-Type: application/json
+
+{
+  "category": "Fruits",
+  "imageUrl": null
+}
+
+### Update Category
+PUT https://tunas-grocery.herokuapp.com/api/v1/category
+Content-Type: application/json
+
+{
+  "id": "99f90103-186c-11ec-b6fd-b74e3419320a",
+  "category": "Fruits",
+  "imageUrl": "notFound.png"
+}
+
+### All Category
+GET https://tunas-grocery.herokuapp.com/api/v1/category
+
+### Get Category by Id
+GET https://tunas-grocery.herokuapp.com/api/v1/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+
+### PRODUCT
+### STORE PRODUCT
+POST https://tunas-grocery.herokuapp.com/api/v1/product
+Content-Type: application/json
+
+{
+  "name": "Radish",
+  "price": 10,
+  "weight": 1000,
+  "perUnit": 100,
+  "description": "Good for health",
+  "category": "8c2c184e-11d2-11ec-82a8-0242ac130003"
+}
+
+### UPDATE PRODUCT
+PUT https://tunas-grocery.herokuapp.com/api/v1/product
+Content-Type: application/json
+
+{
+  "name": "Banana",
+  "id": "5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f",
+  "imageUrl": "https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/products%2Fbanana.jpg?alt=media&token=aea8a0f7-7ef9-44e2-9662-802f66185be1",
+  "price": 10
+}
+
+###  GET ALL PRODUCT
+GET https://tunas-grocery.herokuapp.com/api/v1/product
+
+### GET PRODUCT BY ID
+GET https://tunas-grocery.herokuapp.com/api/v1/product/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+
+### DESTROY PRODUCT ID
+DELETE https://tunas-grocery.herokuapp.com/api/v1/product/a3c02e8c-11d2-11ec-82a8-0242ac130003
+
+### TOP PRODUCT
+### STORE TOP PRODUCT
+POST https://tunas-grocery.herokuapp.com/api/v1/product/top/a3c02e8c-11d2-11ec-82a8-0242ac130003
+
+### GET ALL TOP PRODUCT
+GET https://tunas-grocery.herokuapp.com/api/v1/product/top
+
+### RECOMMEDATION PRODUCT
+### STORE RECOMMEDATION PRODUCT
+POST https://tunas-grocery.herokuapp.com/api/v1/product/recommendation/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+
+### GET ALL RECOMMEDATION PRODUCT
+GET https://tunas-grocery.herokuapp.com/api/v1/product/recommendation
+
+### TRANSACTION
+POST https://tunas-grocery.herokuapp.com/api/v1/transaction
+Content-Type: application/json
+
+{
+  "userId": "9f6c6a4e-6b3f-44f7-ac6a-4e6b3fe4f750",
+  "products": [
+    {
+      "id": "60579a98-e62e-11eb-b661-95eb20afe2f3",
+      "name": "Banana",
+      "price": 1000,
+      "weight": 1000,
+      "perUnit": 100,
+      "total": 2
+    },
+    {
+      "id": "52635e66-e62e-11eb-b661-23efb168b9dd",
+      "name": "Broccoli",
+      "price": 1100,
+      "weight": 1500,
+      "perUnit": 100,
+      "total": 3
+    }
+  ]
+}
