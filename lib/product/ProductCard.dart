@@ -6,12 +6,14 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
     required this.merk,
+    required this.category,
     required this.weight,
     required this.price,
     required this.imageUrl,
   }) : super(key: key);
 
   final String merk;
+  final String category;
   final int weight;
   final int price;
   final String imageUrl;
@@ -19,6 +21,7 @@ class ProductCard extends StatelessWidget {
   factory ProductCard.fromJson(Map<String, dynamic> item) {
     return new ProductCard(
         merk: item['name'],
+        category: item['category'],
         weight: item['weight'],
         price: item['price'],
         imageUrl: '${item['imageUrl']}');
@@ -46,8 +49,9 @@ class ProductCard extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProductDetail()));
+              Navigator.pushNamed(context, ProductDetail.routeName,
+                  arguments: ProductArguments(
+                      merk, category, weight, price, imageUrl));
             },
             child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
                 ? Image.asset('images/notFound.png')
@@ -97,4 +101,15 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class ProductArguments {
+  final String merk;
+  final String category;
+  final int weight;
+  final int price;
+  final String imageUrl;
+
+  ProductArguments(
+      this.merk, this.category, this.weight, this.price, this.imageUrl);
 }

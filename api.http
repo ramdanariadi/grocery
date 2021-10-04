@@ -96,3 +96,28 @@ Content-Type: application/json
     }
   ]
 }
+
+
+### CUSTOMER
+GET https://tunas-grocery.herokuapp.com/api/v1/customer
+
+### STORE CHART
+POST https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663/2
+
+### DESTROY CHART
+DELETE https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### GET CUSTOMER CHART
+GET https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003
+
+### STORE WISHLIST
+POST https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### GET WISHLIST
+GET https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### DESTROY WISHLIST
+DELETE https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### GET CUSTOMER WISHLIST
+GET https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003

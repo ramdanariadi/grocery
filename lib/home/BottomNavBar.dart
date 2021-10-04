@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery/chart/Chart.dart';
 import 'package:grocery/constrant.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -32,7 +33,9 @@ class BottomNavBar extends StatelessWidget {
           GestureDetector(
               onTap: () {}, child: Image.asset("images/icons/UserOutline.png")),
           GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Chart.routeName);
+              },
               child: Image.asset("images/icons/ShoppingCartOutline.png"))
         ]),
       ),

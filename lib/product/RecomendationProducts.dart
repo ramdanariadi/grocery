@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/product/ProductCard.dart';
+import 'package:grocery/product/WideProductCard.dart';
 import 'package:http/http.dart' as http;
 
 class RecomendationProducts extends StatelessWidget {
@@ -10,7 +11,7 @@ class RecomendationProducts extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<List<ProductCard>>? futureProduct;
+  Future<List<WideProductCard>>? futureProduct;
 
   void init() {
     futureProduct = this.fetchRecomendedProduct();
@@ -23,7 +24,7 @@ class RecomendationProducts extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding / 2),
-          child: FutureBuilder<List<ProductCard>>(
+          child: FutureBuilder<List<WideProductCard>>(
             future: futureProduct,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -42,14 +43,14 @@ class RecomendationProducts extends StatelessWidget {
     );
   }
 
-  Future<List<ProductCard>> fetchRecomendedProduct() async {
-    final response = await http
-        .get(Uri.parse("${HTTPBASEURL}/product/recommendation"));
+  Future<List<WideProductCard>> fetchRecomendedProduct() async {
+    final response =
+        await http.get(Uri.parse("${HTTPBASEURL}/product/recommendation"));
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['response'];
-      List<ProductCard> productCardList = productList
-          .map((dynamic item) => ProductCard.fromJson(item))
+      List<WideProductCard> productCardList = productList
+          .map((dynamic item) => WideProductCard.fromJson(item))
           .toList();
       return productCardList;
     } else {

@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 
+import 'ProductCard.dart';
+import 'ProductDetail.dart';
+
 class WideProductCard extends StatelessWidget {
   const WideProductCard({
     Key? key,
     required this.merk,
+    required this.category,
     required this.weight,
     required this.price,
-    required this.press,
     required this.imageUrl,
   }) : super(key: key);
 
   final String merk;
   final int weight;
   final int price;
-  final VoidCallback press;
+  final String category;
   final String imageUrl;
+
+  factory WideProductCard.fromJson(Map<String, dynamic> item) {
+    return new WideProductCard(
+        merk: item['name'],
+        weight: item['weight'],
+        price: item['price'],
+        category: item['category'],
+        imageUrl: item['imageUrl']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class WideProductCard extends StatelessWidget {
       margin: EdgeInsets.only(
           left: kDefaultPadding / 2, right: kDefaultPadding / 2),
       decoration: BoxDecoration(
-          color: kNaturanWhite,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
                 offset: Offset(0, 8),
@@ -38,9 +50,21 @@ class WideProductCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            this.imageUrl,
-            width: size.width / 5,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, ProductDetail.routeName,
+                  arguments: ProductArguments(
+                      merk, category, weight, price, imageUrl));
+            },
+            child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
+                ? Image.asset(
+                    'images/notFound.png',
+                    width: size.width / 5,
+                  )
+                : Image.network(
+                    this.imageUrl,
+                    width: size.width / 5,
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding / 2),
@@ -80,7 +104,7 @@ class WideProductCard extends StatelessWidget {
                   width: kDefaultPadding,
                 ),
                 GestureDetector(
-                    onTap: this.press,
+                    onTap: () {},
                     child: Image.asset("images/icons/plus_icon.png"))
               ],
             ),
