@@ -37,13 +37,16 @@ class WideProductCard extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _WideProductCard();
   }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return '{ ${this.merk},${this.weight},${this.price},${this.total},${this.category},${this.imageUrl} }';
+  }
 }
 
 class _WideProductCard extends State<WideProductCard> {
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -82,13 +85,14 @@ class _WideProductCard extends State<WideProductCard> {
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, ProductDetail.routeName,
-                      arguments: ProductArguments(
-                          widget.merk, widget.category, widget.weight, widget.price, widget.imageUrl));
+                      arguments: ProductArguments(widget.merk, widget.category,
+                          widget.weight, widget.price, widget.imageUrl));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    widget.imageUrl == 'null' || widget.imageUrl == 'notFound.png'
+                    widget.imageUrl == 'null' ||
+                            widget.imageUrl == 'notFound.png'
                         ? Image.asset(
                             'images/notFound.png',
                             height: cardHeight * 0.6,

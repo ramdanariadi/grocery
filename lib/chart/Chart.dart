@@ -9,6 +9,7 @@ class Chart extends StatelessWidget {
   static final routeName = '/chart';
 
   Future<List<WideProductCard>>? productFuture;
+  List<WideProductCard>? productList;
 
   Future<List<WideProductCard>> fetchChart() async {
     final response = await http.get(
@@ -45,6 +46,7 @@ class Chart extends StatelessWidget {
                 future: productFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    productList = snapshot.data!;
                     return Column(
                       children: snapshot.data!,
                     );
@@ -79,7 +81,37 @@ class Chart extends StatelessWidget {
                     color: kPrimaryColor,
                     borderRadius: BorderRadius.circular(8)),
               ),
-              onTap: () {},
+              onTap: () async {
+                debugPrint("object");
+                WideProductCard wideProductCard = productList!.first;
+                final resBody = jsonEncode(<String, dynamic>{
+                  'userId': 'ac723ce6-11d2-11ec-82a8-0242ac130003',
+                  'products': productList!
+                      .map((e) => <String, dynamic>{
+                            "id": "d7c6d7a4-186c-11ec-b6fd-23e8ea136663",
+                            "name": e.merk,
+                            "price": e.price,
+                            "weight": e.weight,
+                            "perUnit": 100,
+                            "total": e.total
+                          })
+                      .toList()
+                });
+                debugPrint(resBody);
+                final response = await http.post(
+                    Uri.parse(HTTPBASEURL + "/transaction"),
+                    headers: <String, String>{
+                      'Content-Type': 'application/json'
+                    },
+                    body: resBody);
+                if (response.statusCode == 200) {
+                  final Map<String, dynamic> message =
+                      jsonDecode(response.body)['metaData'];
+                  debugPrint(message.toString());
+                }
+                debugPrint(response.statusCode.toString());
+                debugPrint(jsonDecode(response.body).toString());
+              },
             ),
           )
         ]),

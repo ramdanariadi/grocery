@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
-import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/WideProductCard.dart';
 import 'package:http/http.dart' as http;
 
@@ -45,7 +44,7 @@ class RecomendationProducts extends StatelessWidget {
 
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
     final response =
-        await http.get(Uri.parse("${HTTPBASEURL}/product/recommendation"));
+        await http.get(Uri.parse('$HTTPBASEURL/product/recommendation'));
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['response'];
