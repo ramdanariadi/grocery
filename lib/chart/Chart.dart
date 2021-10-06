@@ -92,7 +92,7 @@ class Chart extends StatelessWidget {
                               message: 'message',
                               callback: () {
                                 Navigator.pushNamed(context, Home.routeName);
-                              git},
+                              },
                             )));
                 // debugPrint("object");
                 // WideProductCard wideProductCard = productList!.first;
