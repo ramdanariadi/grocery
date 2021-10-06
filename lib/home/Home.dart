@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:grocery/constrant.dart';
@@ -13,6 +12,7 @@ import 'package:grocery/home/SearchBar.dart';
 enum BottomIcons { Home, Favorite, Search, Account }
 
 class Home extends StatelessWidget {
+  static final String routeName = '/';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
