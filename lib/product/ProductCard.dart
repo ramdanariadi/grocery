@@ -5,6 +5,7 @@ import 'package:grocery/product/ProductDetail.dart';
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
+    required this.id,
     required this.merk,
     required this.category,
     required this.weight,
@@ -12,6 +13,7 @@ class ProductCard extends StatelessWidget {
     required this.imageUrl,
   }) : super(key: key);
 
+  final String id;
   final String merk;
   final String category;
   final int weight;
@@ -20,6 +22,7 @@ class ProductCard extends StatelessWidget {
 
   factory ProductCard.fromJson(Map<String, dynamic> item) {
     return new ProductCard(
+        id: item['id'],
         merk: item['name'],
         category: item['category'],
         weight: item['weight'],
@@ -50,8 +53,8 @@ class ProductCard extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, ProductDetail.routeName,
-                  arguments: ProductArguments(
-                      merk, category, weight, price, imageUrl));
+                  arguments: ProductArguments(id: this.id, merk:
+                      merk, category: category, weight: weight, price: price, imageUrl: imageUrl));
             },
             child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
                 ? Image.asset('images/notFound.png')
@@ -104,6 +107,7 @@ class ProductCard extends StatelessWidget {
 }
 
 class ProductArguments {
+  final String id;
   final String merk;
   final String category;
   final int weight;
@@ -111,5 +115,10 @@ class ProductArguments {
   final String imageUrl;
 
   ProductArguments(
-      this.merk, this.category, this.weight, this.price, this.imageUrl);
+      {required this.id,
+      required this.merk,
+      required this.category,
+      required this.weight,
+      required this.price,
+      required this.imageUrl});
 }

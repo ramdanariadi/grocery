@@ -8,6 +8,8 @@ import 'package:grocery/product/ProductDetail.dart';
 class WideProductCard extends StatefulWidget {
   WideProductCard({
     Key? key,
+    required this.callback,
+    required this.id,
     required this.merk,
     required this.category,
     required this.weight,
@@ -16,21 +18,27 @@ class WideProductCard extends StatefulWidget {
     required this.imageUrl,
   }) : super(key: key);
 
+  final String id;
   final String merk;
   final int weight;
   final int price;
   final String category;
   final String imageUrl;
   int total;
+  final VoidCallback callback;
 
-  factory WideProductCard.fromJson(Map<String, dynamic> item) {
+  factory WideProductCard.fromJson(
+      Map<String, dynamic> item, VoidCallback callback) {
     return new WideProductCard(
-        merk: item['name'],
-        weight: item['weight'],
-        price: item['price'],
-        total: item['total'],
-        category: item['category'],
-        imageUrl: item['imageUrl']);
+      id: item['id'],
+      merk: item['name'],
+      weight: item['weight'],
+      price: item['price'],
+      total: item['total'],
+      category: item['category'],
+      imageUrl: item['imageUrl'],
+      callback: callback,
+    );
   }
 
   @override
@@ -55,6 +63,7 @@ class _WideProductCard extends State<WideProductCard> {
       if (context == 'plus') widget.total++;
       if (context == 'minus') widget.total--;
     });
+    widget.callback();
   }
 
   @override
@@ -64,7 +73,11 @@ class _WideProductCard extends State<WideProductCard> {
     return Container(
       width: size.width,
       height: cardHeight,
-      margin: EdgeInsets.only(top: kDefaultPadding / 2),
+      margin: EdgeInsets.only(
+          top: kDefaultPadding / 2,
+          bottom: kDefaultPadding / 6,
+          left: kDefaultPadding,
+          right: kDefaultPadding),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -85,8 +98,13 @@ class _WideProductCard extends State<WideProductCard> {
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, ProductDetail.routeName,
-                      arguments: ProductArguments(widget.merk, widget.category,
-                          widget.weight, widget.price, widget.imageUrl));
+                      arguments: ProductArguments(
+                          id: widget.id,
+                          merk: widget.merk,
+                          category: widget.category,
+                          weight: widget.weight,
+                          price: widget.price,
+                          imageUrl: widget.imageUrl));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

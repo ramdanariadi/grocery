@@ -8,9 +8,7 @@ class Alert extends StatelessWidget {
   final Alerts icon;
   final VoidCallback callback;
   const Alert(
-      {required this.icon,
-      required this.message,
-      required this.callback});
+      {required this.icon, required this.message, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,22 @@ class Alert extends StatelessWidget {
       body: Stack(
         children: [
           Center(
-            child: Image.asset("images/icons/success.png"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("images/icons/success.png"),
+                Container(
+                  margin: EdgeInsets.only(top: 28),
+                  child: Text(
+                    this.message,
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(67, 67, 67, 1)),
+                  ),
+                )
+              ],
+            ),
           ),
           Positioned(
             bottom: 10,

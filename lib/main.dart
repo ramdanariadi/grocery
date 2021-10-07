@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
 
           return MaterialPageRoute(builder: (context) {
             return ProductDetail(
+                id: args.id,
                 merk: args.merk,
                 category: args.category,
                 price: args.price,

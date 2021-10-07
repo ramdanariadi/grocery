@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/constrant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
 
 class ProductDetail extends StatefulWidget {
   static final routeName = '/detailProduct';
 
+  final String id;
   final String merk;
   final String category;
   final int weight;
@@ -16,6 +18,7 @@ class ProductDetail extends StatefulWidget {
 
   const ProductDetail(
       {Key? key,
+      required this.id,
       required this.merk,
       required this.category,
       required this.weight,
@@ -47,10 +50,10 @@ class _ProductDetail extends State<ProductDetail> {
     final response;
     if (productLoved) {
       response = await http.delete(Uri.parse(HTTPBASEURL +
-          '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663'));
+          '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     } else {
       response = await http.post(Uri.parse(HTTPBASEURL +
-          '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663'));
+          '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     }
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -70,20 +73,22 @@ class _ProductDetail extends State<ProductDetail> {
 
   Future<void> addToChart() async {
     final response = await http.post(Uri.parse(HTTPBASEURL +
-        '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663'));
+        '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}/$_count'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {
         Fluttertoast.showToast(msg: "yeay product added");
+        Navigator.pushNamed(context, Home.routeName);
       }
     } else {
       Fluttertoast.showToast(msg: "opps something wrong");
+      debugPrint(response.body.toString());
     }
   }
 
   Future<void> isLiked() async {
     final response = await http.get(Uri.parse(HTTPBASEURL +
-        '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663'));
+        '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       Fluttertoast.showToast(msg: "loved", toastLength: Toast.LENGTH_LONG);
