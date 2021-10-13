@@ -3,6 +3,8 @@ import 'package:grocery/chart/Chart.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
+import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:grocery/products/Products.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,6 +38,20 @@ class MyApp extends StatelessWidget {
         if (setting.name == Chart.routeName) {
           return MaterialPageRoute(builder: (context) {
             return Chart();
+          });
+        }
+
+        if (setting.name == Products.routeName) {
+          return MaterialPageRoute(builder: (context) {
+            return Products();
+          });
+        }
+
+        if (setting.name == ProductGroupGridItems.routeName) {
+          final args = setting.arguments as ProductGroupGridItemsArgs;
+          return MaterialPageRoute(builder: (context) {
+            return new ProductGroupGridItems(
+                title: args.title, categoryId: args.categoryId);
           });
         }
 

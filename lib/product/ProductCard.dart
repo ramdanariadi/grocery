@@ -3,15 +3,16 @@ import 'package:grocery/constrant.dart';
 import 'package:grocery/product/ProductDetail.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    Key? key,
-    required this.id,
-    required this.merk,
-    required this.category,
-    required this.weight,
-    required this.price,
-    required this.imageUrl,
-  }) : super(key: key);
+  ProductCard(
+      {Key? key,
+      required this.id,
+      required this.merk,
+      required this.category,
+      required this.weight,
+      required this.price,
+      required this.imageUrl,
+      this.margin})
+      : super(key: key);
 
   final String id;
   final String merk;
@@ -19,15 +20,19 @@ class ProductCard extends StatelessWidget {
   final int weight;
   final int price;
   final String imageUrl;
+  double? margin;
 
-  factory ProductCard.fromJson(Map<String, dynamic> item) {
+  factory ProductCard.fromJson(Map<String, dynamic> item,
+      {double? margin = null}) {
     return new ProductCard(
-        id: item['id'],
-        merk: item['name'],
-        category: item['category'],
-        weight: item['weight'],
-        price: item['price'],
-        imageUrl: '${item['imageUrl']}');
+      id: item['id'],
+      merk: item['name'],
+      category: item['category'],
+      weight: item['weight'],
+      price: item['price'],
+      imageUrl: '${item['imageUrl']}',
+      margin: margin,
+    );
   }
 
   @override
@@ -37,7 +42,8 @@ class ProductCard extends StatelessWidget {
     return Container(
       width: size.width * 0.4,
       margin: EdgeInsets.only(
-          left: kDefaultPadding / 2, right: kDefaultPadding / 2),
+          left: margin != null ? margin! : kDefaultPadding / 2,
+          right: margin != null ? margin! : kDefaultPadding / 2),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -53,8 +59,13 @@ class ProductCard extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, ProductDetail.routeName,
-                  arguments: ProductArguments(id: this.id, merk:
-                      merk, category: category, weight: weight, price: price, imageUrl: imageUrl));
+                  arguments: ProductArguments(
+                      id: this.id,
+                      merk: merk,
+                      category: category,
+                      weight: weight,
+                      price: price,
+                      imageUrl: imageUrl));
             },
             child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
                 ? Image.asset('images/notFound.png')

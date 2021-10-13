@@ -13,6 +13,13 @@ class TitleAndMoreButton extends StatelessWidget {
   final String moreButtonTitle;
   final VoidCallback moreFunction;
 
+  factory TitleAndMoreButton.fromJson(Map<String, dynamic> json, VoidCallback callback) {
+    return new TitleAndMoreButton(
+        title: json['title'],
+        moreButtonTitle: json['moreButtonTitle'],
+        moreFunction: callback);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

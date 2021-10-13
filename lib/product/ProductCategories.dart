@@ -1,36 +1,58 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:http/http.dart' as http;
 
 class ProductCategories extends StatelessWidget {
-  const ProductCategories({
+  ProductCategories({
     Key? key,
   }) : super(key: key);
 
+  Future<List<ProductCategory>>? categoryFuture;
+
+  Future<List<ProductCategory>> fetchCategories() async {
+    final response = await http.get(Uri.parse("$HTTPBASEURL/category"));
+    if (response.statusCode == 200) {
+      List<dynamic> listCategory = jsonDecode(response.body)['response'];
+      List<ProductCategory> productCategories = listCategory
+          .map((e) => ProductCategory.fromJson(e,
+                  (String categoryId, String title, BuildContext context) {
+                Navigator.pushNamed(context, ProductGroupGridItems.routeName,
+                    arguments: ProductGroupGridItemsArgs(
+                        title: title, categoryId: categoryId));
+              }))
+          .toList();
+      return productCategories;
+    } else {
+      throw new Exception("Failed load categories");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    categoryFuture = this.fetchCategories();
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          ProductCategory(title: "All", onTap: () {}),
-          ProductCategory(
-            title: "Vegetables",
-            imageUrl: "images/icons/vegetables.png",
-            onTap: () {},
-          ),
-          ProductCategory(
-            title: "Fish",
-            imageUrl: "images/icons/fish.png",
-            onTap: () {},
-          ),
-          ProductCategory(
-            title: "Fastfood",
-            imageUrl: "images/icons/FastFood.png",
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
+        scrollDirection: Axis.horizontal,
+        child: FutureBuilder<List<ProductCategory>>(
+          future: categoryFuture,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Row(
+                children: snapshot.data!,
+              );
+            }
+
+            if (snapshot.hasError) {
+              return Text("Failed load category");
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ));
   }
 }
 
@@ -38,19 +60,33 @@ class ProductCategory extends StatelessWidget {
   ProductCategory({
     Key? key,
     String? imageUrl,
+    required this.id,
     required this.title,
     required this.onTap,
   }) : super(key: key) {
     this.imageUrl = imageUrl;
   }
+
+  factory ProductCategory.fromJson(Map<String, dynamic> json, Function onTap) {
+    return new ProductCategory(
+      id: json['id'],
+      title: json['category'],
+      onTap: onTap,
+      imageUrl: json['imageUrl'],
+    );
+  }
+
   String? imageUrl;
   final String title;
-  final VoidCallback onTap;
+  final String id;
+  final Function onTap;
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       child: GestureDetector(
-        onTap: this.onTap,
+        onTap: () {
+          this.onTap(this.id, this.title, context);
+        },
         child: Container(
           margin:
               EdgeInsets.only(left: kDefaultPadding, bottom: kDefaultPadding),
@@ -74,7 +110,7 @@ class ProductCategory extends StatelessWidget {
             children: [
               Container(
                   child: this.imageUrl != null
-                      ? Image.asset(this.imageUrl.toString())
+                      ? Image.network(this.imageUrl.toString())
                       : null),
               SizedBox(
                 width: this.imageUrl != null ? kDefaultPadding / 2 : 0,

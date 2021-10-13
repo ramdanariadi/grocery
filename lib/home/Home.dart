@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        BottomNavBar()
+        BottomNavBar(active: Home.routeName),
       ]),
     );
   }

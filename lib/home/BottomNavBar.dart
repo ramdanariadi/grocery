@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Chart.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/home/Home.dart';
+import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:grocery/products/Products.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    Key? key,
-  }) : super(key: key);
+  BottomNavBar({Key? key, required String this.active}) : super(key: key);
+
+  final String active;
+  final home = [Home.routeName];
+  final product = [Products.routeName,ProductGroupGridItems.routeName];
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +32,26 @@ class BottomNavBar extends StatelessWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           GestureDetector(
-              onTap: () {}, child: Image.asset("images/icons/Home.png")),
+              onTap: () {
+                Navigator.pushNamed(context, Home.routeName);
+              },
+              child: home.contains(active)
+                  ? Image.asset("images/icons/HomeActive.png")
+                  : Image.asset("images/icons/Home.png")),
           GestureDetector(
-              onTap: () {}, child: Image.asset("images/icons/Category.png")),
+              onTap: () {
+                Navigator.pushNamed(context, Products.routeName);
+              },
+              child: product.contains(active)
+                  ? Image.asset("images/icons/CategoryActive.png")
+                  : Image.asset("images/icons/Category.png")),
           GestureDetector(
-              onTap: () {}, child: Image.asset("images/icons/UserOutline.png")),
+              onTap: () {}, child: Image.asset("images/icons/User.png")),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Chart.routeName);
               },
-              child: Image.asset("images/icons/ShoppingCartOutline.png"))
+              child: Image.asset("images/icons/Cart.png"))
         ]),
       ),
     );

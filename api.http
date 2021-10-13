@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "id": "99f90103-186c-11ec-b6fd-b74e3419320a",
   "category": "Fruits",
-  "imageUrl": "notFound.png"
+  "imageUrl": null
 }
 
 ### All Category
@@ -53,6 +53,10 @@ GET https://tunas-grocery.herokuapp.com/api/v1/product
 
 ### GET PRODUCT BY ID
 GET https://tunas-grocery.herokuapp.com/api/v1/product/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+
+
+### GET PRODUCT BY CATEGORY ID
+GET https://tunas-grocery.herokuapp.com/api/v1/product/category/8c2c184e-11d2-11ec-82a8-0242ac130003
 
 ### DESTROY PRODUCT ID
 DELETE https://tunas-grocery.herokuapp.com/api/v1/product/a3c02e8c-11d2-11ec-82a8-0242ac130003

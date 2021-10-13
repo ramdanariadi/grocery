@@ -13,6 +13,14 @@ class LabelWithActionButton extends StatelessWidget {
   final String actionButtonTitle;
   final VoidCallback press;
 
+  factory LabelWithActionButton.fromJson(
+      Map<String, dynamic> json, VoidCallback callback) {
+    return new LabelWithActionButton(
+        title: json['title'],
+        actionButtonTitle: json['actionButtonTitle'],
+        press: callback);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
