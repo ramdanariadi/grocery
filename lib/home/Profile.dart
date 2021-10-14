@@ -3,6 +3,20 @@ import 'package:grocery/constrant.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Profile extends StatelessWidget {
+  String getGreting() {
+    DateTime time = DateTime.now();
+    int hour = time.hour;
+    if (hour.clamp(12, 18) == hour) {
+      return "Good afternoon";
+    }
+
+    if (hour.clamp(18, 24) == hour) {
+      return "Good evening";
+    }
+
+    return "Good morning";
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,7 +35,7 @@ class Profile extends StatelessWidget {
                 Container(
                   // margin: EdgeInsets.only(bottom: 9),
                   child: Text(
-                    "Good Morning",
+                    this.getGreting(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

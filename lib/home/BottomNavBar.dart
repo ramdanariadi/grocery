@@ -4,13 +4,15 @@ import 'package:grocery/constrant.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/profile/Profile.dart';
 
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({Key? key, required String this.active}) : super(key: key);
 
   final String active;
   final home = [Home.routeName];
-  final product = [Products.routeName,ProductGroupGridItems.routeName];
+  final product = [Products.routeName, ProductGroupGridItems.routeName];
+  final profile = [Profile.routeName];
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,12 @@ class BottomNavBar extends StatelessWidget {
                   ? Image.asset("images/icons/CategoryActive.png")
                   : Image.asset("images/icons/Category.png")),
           GestureDetector(
-              onTap: () {}, child: Image.asset("images/icons/User.png")),
+              onTap: () {
+                Navigator.pushNamed(context, Profile.routeName);
+              },
+              child: profile.contains(active)
+                  ? Image.asset("images/icons/UserActive.png")
+                  : Image.asset("images/icons/User.png")),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Chart.routeName);
