@@ -10,6 +10,7 @@ class WideProductCard extends StatefulWidget {
     Key? key,
     required this.callback,
     required this.id,
+    required this.productId,
     required this.merk,
     required this.category,
     required this.weight,
@@ -19,6 +20,7 @@ class WideProductCard extends StatefulWidget {
   }) : super(key: key);
 
   final String id;
+  final String productId;
   final String merk;
   final int weight;
   final int price;
@@ -31,6 +33,7 @@ class WideProductCard extends StatefulWidget {
       Map<String, dynamic> item, VoidCallback callback) {
     return new WideProductCard(
       id: item['id'],
+      productId: item['product'],
       merk: item['name'],
       weight: item['weight'],
       price: item['price'],

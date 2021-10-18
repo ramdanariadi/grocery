@@ -1,6 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:grocery/constrant.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/constrant.dart';
+import 'package:grocery/custom_widget/Button.dart';
+import 'package:http/http.dart' as http;
 import 'ProductCard.dart';
 import 'ProductDetail.dart';
 
@@ -21,6 +25,20 @@ class WideProductCard extends StatelessWidget {
   final int price;
   final String category;
   final String imageUrl;
+
+  Future<void> addToChart() async {
+    final response = await http.post(Uri.parse(HTTPBASEURL +
+        '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1'));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      if (responseBody['metaData']['code'] == 201) {
+        Fluttertoast.showToast(msg: "yeay product added");
+      }
+    } else {
+      Fluttertoast.showToast(msg: "opps something wrong");
+      debugPrint(response.body.toString());
+    }
+  }
 
   factory WideProductCard.fromJson(Map<String, dynamic> item) {
     return new WideProductCard(
@@ -56,8 +74,13 @@ class WideProductCard extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, ProductDetail.routeName,
-                  arguments: ProductArguments(id:id,
-                      merk: merk, category: category,weight: weight,price: price,imageUrl: imageUrl));
+                  arguments: ProductArguments(
+                      id: id,
+                      merk: merk,
+                      category: category,
+                      weight: weight,
+                      price: price,
+                      imageUrl: imageUrl));
             },
             child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
                 ? Image.asset(
@@ -106,9 +129,18 @@ class WideProductCard extends StatelessWidget {
                 SizedBox(
                   width: kDefaultPadding,
                 ),
-                GestureDetector(
-                    onTap: () {},
-                    child: Image.asset("images/icons/plus_icon.png"))
+                Button(
+                    text: "plus",
+                    child: Image.asset(
+                      "images/icons/PlusOutline.png",
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                    width: 30,
+                    height: 30,
+                    onTap: () {
+                      this.addToChart();
+                    })
               ],
             ),
           )

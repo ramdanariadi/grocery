@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:http/http.dart' as http;
@@ -26,8 +27,10 @@ class ProductCategories extends StatelessWidget {
           .toList();
       return productCategories;
     } else {
-      throw new Exception("Failed load categories");
+      Fluttertoast.showToast(
+          msg: "Failed load category", toastLength: Toast.LENGTH_LONG);
     }
+    return List<ProductCategory>.empty();
   }
 
   @override

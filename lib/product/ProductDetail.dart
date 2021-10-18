@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/constrant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
 
@@ -253,28 +254,22 @@ class _ProductDetail extends State<ProductDetail> {
             ),
           ),
           Positioned(
-            bottom: 10,
-            child: GestureDetector(
-              child: Container(
-                width: size.width - (kDefaultPadding * 2),
-                height: size.height / 11,
-                padding: EdgeInsets.all(kDefaultPadding),
-                child: Center(
+            bottom: 0,
+            child: Center(
+              child: Button(
+                  margin: EdgeInsets.all(0),
                   child: Text(
-                    "Add to cart",
+                    'Add to cart',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w200),
                   ),
-                ),
-                decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              onTap: () {
-                this.addToChart();
-              },
+                  width: size.width - (kDefaultPadding * 2),
+                  height: size.height / 11,
+                  onTap: () {
+                    this.addToChart();
+                  }),
             ),
           )
         ]),

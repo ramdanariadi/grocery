@@ -87,31 +87,11 @@ Content-Type: application/json
 }
 
 
-
-# {
-#   "userId": "9f6c6a4e-6b3f-44f7-ac6a-4e6b3fe4f750",
-#   "products": [
-#     {
-#       "id": "60579a98-e62e-11eb-b661-95eb20afe2f3",
-#       "name": "Banana",
-#       "price": 1000,
-#       "weight": 1000,
-#       "perUnit": 100,
-#       "total": 2
-#     },
-#     {
-#       "id": "52635e66-e62e-11eb-b661-23efb168b9dd",
-#       "name": "Broccoli",
-#       "price": 1100,
-#       "weight": 1500,
-#       "perUnit": 100,
-#       "total": 3
-#     }
-#   ]
-# }
-
 ### GET CUSTOMER TRANSACTION
 GET https://tunas-grocery.herokuapp.com/api/v1/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003
+
+### DELETE CUSTOMER TRANSACTION
+DELETE https://tunas-grocery.herokuapp.com/api/v1/transaction/f43b0222-2fb0-11ec-927f-736840a44730
 
 ### CUSTOMER
 GET https://tunas-grocery.herokuapp.com/api/v1/customer
@@ -120,7 +100,7 @@ GET https://tunas-grocery.herokuapp.com/api/v1/customer
 POST https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663/2
 
 ### DESTROY CHART
-DELETE https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+DELETE https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/7866b1e5-187c-11ec-9e94-e9fbbd5e8748
 
 ### GET CUSTOMER CHART
 GET https://tunas-grocery.herokuapp.com/api/v1/chart/ac723ce6-11d2-11ec-82a8-0242ac130003

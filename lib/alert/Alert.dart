@@ -36,8 +36,21 @@ class Alert extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 10,
-            child: Button(text: "OK", width: size.width - (kDefaultPadding * 2), height: size.height / 11, callback: callback),
+            bottom: 0,
+            child: Center(
+              child: Button(
+                  margin: EdgeInsets.all(kDefaultPadding),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w200),
+                  ),
+                  width: size.width - (kDefaultPadding * 2),
+                  height: size.height / 11,
+                  onTap: callback),
+            ),
           )
         ],
       ),

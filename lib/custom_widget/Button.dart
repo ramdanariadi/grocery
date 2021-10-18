@@ -9,19 +9,23 @@ class Button extends StatelessWidget {
     EdgeInsets? this.padding,
     Color? this.color,
     TextStyle? this.textStyle,
-    required this.text,
+    Widget? this.child,
+    String? this.text,
     required this.width,
     required this.height,
-    required this.callback,
+    required this.onTap,
   }) : super(key: key) {
     this.margin = margin;
     this.padding = padding;
+    this.child = child;
+    this.text = text;
   }
 
-  final String text;
   final double width;
   final double height;
-  final Function callback;
+  final Function onTap;
+  String? text;
+  Widget? child;
   EdgeInsets? margin;
   EdgeInsets? padding;
   Color? color;
@@ -29,29 +33,29 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        margin: margin ?? EdgeInsets.all(10),
-        width: this.width,
-        height: this.height,
-        padding: padding ?? EdgeInsets.all(10),
-        child: Center(
-          child: Text(
-            this.text,
-            style: textStyle ??
-                TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w200),
-          ),
-        ),
-        decoration: BoxDecoration(
-            color: color ?? kPrimaryColor,
-            borderRadius: BorderRadius.circular(8)),
+    return Container(
+      margin: this.margin ?? EdgeInsets.all(10),
+      width: this.width,
+      height: this.height,
+      child: TextButton(
+        style: TextButton.styleFrom(
+            padding: this.padding ?? EdgeInsets.all(10),
+            backgroundColor: kPrimaryColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        child: this.child ??
+            Text(
+              this.text ?? 'Button',
+              style: textStyle ??
+                  TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w200),
+            ),
+        onPressed: () {
+          this.onTap();
+        },
       ),
-      onTap: () {
-        this.callback();
-      },
     );
   }
 }

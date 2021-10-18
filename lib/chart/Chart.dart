@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/chart/WideProductCard.dart';
 import 'package:grocery/home/Home.dart';
@@ -60,6 +61,45 @@ class _Chart extends State<Chart> {
     productFuture = this.fetchChart();
   }
 
+  Future<void> checkout() async {
+    this.countTotalPrice();
+    debugPrint("object");
+    final resBody = jsonEncode(<String, dynamic>{
+      'userId': 'ac723ce6-11d2-11ec-82a8-0242ac130003',
+      'products': productList!
+          .map((e) => <String, dynamic>{
+                "id": e.productId,
+                "name": e.merk,
+                "price": e.price,
+                "weight": e.weight,
+                "perUnit": 100,
+                "total": e.total
+              })
+          .toList()
+    });
+    debugPrint(resBody);
+    final response = await http.post(Uri.parse(HTTPBASEURL + "/transaction"),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: resBody);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> message =
+          jsonDecode(response.body)['metaData'];
+      debugPrint(message.toString());
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Alert(
+                    icon: Alerts.success,
+                    message: 'Successfully Order',
+                    callback: () {
+                      Navigator.pushNamed(context, Home.routeName);
+                    },
+                  )));
+    }
+    debugPrint(response.statusCode.toString());
+    debugPrint(jsonDecode(response.body).toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -71,7 +111,7 @@ class _Chart extends State<Chart> {
           padding: EdgeInsets.only(
             top: kDefaultPadding * 1.2,
             // right: kDefaultPadding,
-            bottom: size.height * 0.32,
+            bottom: size.height * 0.29,
             // left: kDefaultPadding
           ),
           color: kNaturanWhite,
@@ -95,11 +135,11 @@ class _Chart extends State<Chart> {
           ),
         ),
         Positioned(
-          bottom: 10,
+          bottom: 0,
           child: Container(
             padding: EdgeInsets.all(kDefaultPadding),
             width: size.width,
-            height: size.height * 0.3,
+            height: size.height * 0.29,
             decoration: BoxDecoration(
               color: Colors.white,
               // borderRadius: BorderRadius.only(
@@ -180,68 +220,22 @@ class _Chart extends State<Chart> {
                         )
                       ]),
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: size.width - (kDefaultPadding * 2),
-                    height: size.height / 11,
-                    padding: EdgeInsets.all(kDefaultPadding),
-                    child: Center(
-                      child: Text(
-                        "Checkout",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w200),
-                      ),
+                TextButton(
+                    onPressed: () {
+                      this.checkout();
+                    },
+                    child: Text(
+                      "Checkout",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w200),
                     ),
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  onTap: () async {
-                    this.countTotalPrice();
-                    // debugPrint("object");
-                    // WideProductCard wideProductCard = productList!.first;
-                    // final resBody = jsonEncode(<String, dynamic>{
-                    //   'userId': 'ac723ce6-11d2-11ec-82a8-0242ac130003',
-                    //   'products': productList!
-                    //       .map((e) => <String, dynamic>{
-                    //             "id": "d7c6d7a4-186c-11ec-b6fd-23e8ea136663",
-                    //             "name": e.merk,
-                    //             "price": e.price,
-                    //             "weight": e.weight,
-                    //             "perUnit": 100,
-                    //             "total": e.total
-                    //           })
-                    //       .toList()
-                    // });
-                    // debugPrint(resBody);
-                    // final response = await http.post(
-                    //     Uri.parse(HTTPBASEURL + "/transaction"),
-                    //     headers: <String, String>{
-                    //       'Content-Type': 'application/json'
-                    //     },
-                    //     body: resBody);
-                    // if (response.statusCode == 200) {
-                    //   final Map<String, dynamic> message =
-                    //       jsonDecode(response.body)['metaData'];
-                    //   debugPrint(message.toString());
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => Alert(
-                    //                 icon: Alerts.success,
-                    //                 message: 'Successfully Order',
-                    //                 callback: () {
-                    //                   Navigator.pushNamed(
-                    //                       context, Home.routeName);
-                    //                 },
-                    //               )));
-                    // }
-                    // debugPrint(response.statusCode.toString());
-                    // debugPrint(jsonDecode(response.body).toString());
-                  },
-                ),
+                    style: TextButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        minimumSize: Size(double.infinity, size.height / 11),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)))),
               ],
             ),
           ),

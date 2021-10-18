@@ -17,7 +17,7 @@ class Profile extends StatelessWidget {
       body: Stack(
         children: [
           Column(children: [
-            UserProfile(size: size),
+            UserProfile(),
             Container(
               width: size.width,
               margin: EdgeInsets.only(
@@ -188,12 +188,7 @@ class TransactionCard extends StatelessWidget {
 }
 
 class UserProfile extends StatelessWidget {
-  const UserProfile({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
-
-  final Size size;
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +236,7 @@ class UserProfile extends StatelessWidget {
                   EdgeInsets.only(left: 0, right: 0, top: kDefaultPadding / 2),
               padding: EdgeInsets.all(2),
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
-              callback: () {})
+              onTap: () {})
         ],
       ),
     );
