@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
+import 'package:http/http.dart' as http;
 
 class Profile extends StatelessWidget {
   static final String routeName = '/profile';
@@ -34,22 +36,7 @@ class Profile extends StatelessWidget {
                   right: kDefaultPadding,
                   bottom: kDefaultPadding / 2),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TransactionCard(),
-                    TransactionCard(),
-                    TransactionCard(),
-                    TransactionCard(),
-                    TransactionCard(),
-                    SizedBox(
-                      height: 100,
-                    )
-                  ],
-                ),
-              ),
-            )
+            Transactions()
           ]),
           BottomNavBar(active: Profile.routeName)
         ],
@@ -58,10 +45,78 @@ class Profile extends StatelessWidget {
   }
 }
 
-class TransactionCard extends StatelessWidget {
-  const TransactionCard({
+class Transactions extends StatelessWidget {
+  Transactions({
     Key? key,
   }) : super(key: key);
+
+  Future<List<TransactionCard>>? transactionFuture;
+
+  Future<List<TransactionCard>> fetchTransaction() async {
+    final response = await http.get(Uri.parse(
+        "$HTTPBASEURL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003"));
+    if (response.statusCode == 200) {
+      List<dynamic> listResponse = jsonDecode(response.body)['response'];
+      List<TransactionCard> transactionList =
+          listResponse.map((e) => TransactionCard.fromJson(e)).toList();
+      return transactionList;
+    } else {
+      throw new Exception("failed to load transaction");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    transactionFuture = this.fetchTransaction();
+    return Expanded(
+      child: FutureBuilder<List<Widget>>(
+        future: transactionFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Widget> list = snapshot.data!.map((e) => e).toList();
+            list.add(SizedBox(
+              height: 100,
+            ));
+            return ListView(children: list);
+          }
+          if (snapshot.hasError) {
+            Text("Failed load transaction");
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class TransactionCard extends StatelessWidget {
+  TransactionCard(
+      {Key? key,
+      String? imageUrl,
+      required this.name,
+      required this.total,
+      required this.totalPrice,
+      required this.totalPerProduct})
+      : super(key: key) {
+    this.imageUrl = imageUrl;
+  }
+
+  String? imageUrl;
+  final String name;
+  final int total;
+  final int totalPrice;
+  final int totalPerProduct;
+
+  factory TransactionCard.fromJson(Map<String, dynamic> json) {
+    return TransactionCard(
+        name: json['detailTransaction'][0]['name'],
+        imageUrl: json['detailTransaction'][0]['imageUrl'],
+        totalPerProduct: json['detailTransaction'][0]['total'],
+        total: json['detailTransaction'].length,
+        totalPrice: json['transaction']['totalPrice']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +142,10 @@ class TransactionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       child: Row(
         children: [
-          Image.asset('images/broccoli.jpeg'),
+          // Image.asset('images/notFound.png'),
+          this.imageUrl == null
+              ? Image.asset('images/notFound.png')
+              : Image.network(this.imageUrl!),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -95,15 +153,15 @@ class TransactionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Broccoli",
+                  this.name,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 Text(
-                  "2 pieces",
+                  "${this.totalPerProduct} piece${this.totalPerProduct > 1 ? 's' : ''}",
                   style: TextStyle(fontSize: 12),
                 ),
                 Text(
-                  "+1 product more",
+                  "+${this.total > 1 ? this.total - 1 : 0} product more",
                   style: TextStyle(fontSize: 12),
                 ),
                 RichText(
@@ -113,7 +171,7 @@ class TransactionCard extends StatelessWidget {
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                   TextSpan(
-                    text: "\$15",
+                    text: "\$${this.totalPrice}",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,

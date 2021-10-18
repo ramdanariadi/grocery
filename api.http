@@ -110,6 +110,8 @@ Content-Type: application/json
 #   ]
 # }
 
+### GET CUSTOMER TRANSACTION
+GET https://tunas-grocery.herokuapp.com/api/v1/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003
 
 ### CUSTOMER
 GET https://tunas-grocery.herokuapp.com/api/v1/customer

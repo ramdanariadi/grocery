@@ -75,26 +75,24 @@ class _Chart extends State<Chart> {
             // left: kDefaultPadding
           ),
           color: kNaturanWhite,
-          child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: FutureBuilder<List<WideProductCard>>(
-                future: productFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: snapshot.data!,
-                    );
-                  }
+          child: FutureBuilder<List<WideProductCard>>(
+            future: productFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView(
+                  children: snapshot.data!,
+                );
+              }
 
-                  if (snapshot.hasError) {
-                    return Text("Failed load chart");
-                  }
+              if (snapshot.hasError) {
+                return Text("Failed load chart");
+              }
 
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              )),
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
         ),
         Positioned(
           bottom: 10,

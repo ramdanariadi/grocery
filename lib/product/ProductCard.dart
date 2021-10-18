@@ -5,21 +5,23 @@ import 'package:grocery/product/ProductDetail.dart';
 class ProductCard extends StatelessWidget {
   ProductCard(
       {Key? key,
+      String? imageUrl,
       required this.id,
       required this.merk,
       required this.category,
       required this.weight,
       required this.price,
-      required this.imageUrl,
       this.margin})
-      : super(key: key);
+      : super(key: key) {
+    this.imageUrl = imageUrl;
+  }
 
   final String id;
   final String merk;
   final String category;
   final int weight;
   final int price;
-  final String imageUrl;
+  String? imageUrl;
   double? margin;
 
   factory ProductCard.fromJson(Map<String, dynamic> item,
@@ -30,7 +32,7 @@ class ProductCard extends StatelessWidget {
       category: item['category'],
       weight: item['weight'],
       price: item['price'],
-      imageUrl: '${item['imageUrl']}',
+      imageUrl: item['imageUrl'],
       margin: margin,
     );
   }
@@ -61,15 +63,15 @@ class ProductCard extends StatelessWidget {
               Navigator.pushNamed(context, ProductDetail.routeName,
                   arguments: ProductArguments(
                       id: this.id,
-                      merk: merk,
-                      category: category,
-                      weight: weight,
-                      price: price,
-                      imageUrl: imageUrl));
+                      merk: this.merk,
+                      category: this.category,
+                      weight: this.weight,
+                      price: this.price,
+                      imageUrl: this.imageUrl!));
             },
-            child: this.imageUrl == 'null' || this.imageUrl == 'notFound.png'
+            child: this.imageUrl == null
                 ? Image.asset('images/notFound.png')
-                : Image.network(this.imageUrl),
+                : Image.network(this.imageUrl!),
           ),
           Padding(
             padding: const EdgeInsets.all(kDefaultPadding / 2),
