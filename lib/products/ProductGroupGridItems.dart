@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/product/ProductCard.dart';
@@ -12,19 +13,31 @@ class ProductGroupGridItems extends StatelessWidget {
 
   final String title;
   final String categoryId;
+  String? url;
 
   Future<List<ProductCard>>? productFuture;
 
-  ProductGroupGridItems({required this.title, required this.categoryId});
+  ProductGroupGridItems(
+      {String? url, required this.title, required this.categoryId}) {
+    this.url = url;
+  }
 
   factory ProductGroupGridItems.fromJson(Map<String, dynamic> json) {
     return new ProductGroupGridItems(
         title: json['category'], categoryId: json['id']);
   }
 
+  factory ProductGroupGridItems.customUrl(String title, String? url) {
+    return new ProductGroupGridItems(
+      title: title,
+      categoryId: '',
+      url: url,
+    );
+  }
+
   Future<List<ProductCard>> fetchProduct() async {
-    final response = await http
-        .get(Uri.parse("$HTTPBASEURL/product/category/${this.categoryId}"));
+    final response = await http.get(Uri.parse(
+        this.url ?? "$HTTPBASEURL/product/category/${this.categoryId}"));
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['response'];
       List<ProductCard> productList = responseList
@@ -35,8 +48,9 @@ class ProductGroupGridItems extends StatelessWidget {
           .toList();
       return productList;
     } else {
-      throw Exception("failed laod product by category");
+      debugPrint(response.statusCode.toString());
     }
+    return List<ProductCard>.empty();
   }
 
   @override
@@ -82,7 +96,10 @@ class ProductGroupGridItems extends StatelessWidget {
 class ProductGroupGridItemsArgs {
   final String title;
   final String categoryId;
+  String? url;
 
-  const ProductGroupGridItemsArgs(
-      {required this.title, required this.categoryId});
+  ProductGroupGridItemsArgs(
+      {String? url, required this.title, required this.categoryId}) {
+    this.url = url;
+  }
 }

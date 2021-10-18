@@ -36,9 +36,12 @@ class LabelWithActionButton extends StatelessWidget {
             this.title,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          GestureDetector(
-              onTap: this.press,
-              child: Text(this.actionButtonTitle.toUpperCase()))
+          TextButton(
+              onPressed: this.press,
+              child: Text(
+                this.actionButtonTitle.toUpperCase(),
+                style: TextStyle(color: kShadownColor),
+              ))
         ],
       ),
     );

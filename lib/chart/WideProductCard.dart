@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/custom_widget/Button.dart';
 
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
@@ -64,7 +65,8 @@ class _WideProductCard extends State<WideProductCard> {
   void handleCountChange(context) {
     setState(() {
       if (context == 'plus') widget.total++;
-      if (context == 'minus') widget.total--;
+      if (context == 'minus')
+        widget.total < 1 ? widget.total = 0 : widget.total--;
     });
     widget.callback();
   }
@@ -95,124 +97,117 @@ class _WideProductCard extends State<WideProductCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, ProductDetail.routeName,
-                      arguments: ProductArguments(
-                          id: widget.id,
-                          merk: widget.merk,
-                          category: widget.category,
-                          weight: widget.weight,
-                          price: widget.price,
-                          imageUrl: widget.imageUrl));
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    widget.imageUrl == 'null' ||
-                            widget.imageUrl == 'notFound.png'
-                        ? Image.asset(
-                            'images/notFound.png',
-                            height: cardHeight * 0.6,
-                            width: size.width / 5,
-                          )
-                        : Image.network(
-                            widget.imageUrl,
-                            height: cardHeight * 0.6,
-                            width: size.width / 5,
-                          ),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "\$${widget.price}",
-                          style: TextStyle(
-                              height: 1.5,
-                              color: kBlackHint,
-                              fontWeight: FontWeight.bold)),
-                      TextSpan(
-                          text: "/kg",
-                          style: TextStyle(height: 1.5, color: kBlackHint)),
-                    ])),
-                  ],
-                ),
+          Expanded(
+            flex: 1,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ProductDetail.routeName,
+                    arguments: ProductArguments(
+                        id: widget.id,
+                        merk: widget.merk,
+                        category: widget.category,
+                        weight: widget.weight,
+                        price: widget.price,
+                        imageUrl: widget.imageUrl));
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.imageUrl == 'null' || widget.imageUrl == 'notFound.png'
+                      ? Image.asset(
+                          'images/notFound.png',
+                          height: cardHeight * 0.6,
+                          width: size.width / 5,
+                        )
+                      : Image.network(
+                          widget.imageUrl,
+                          height: cardHeight * 0.6,
+                          width: size.width / 5,
+                        ),
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: "\$${widget.price}",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "/kg",
+                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                  ])),
+                ],
               ),
-              Container(
-                height: cardHeight - (kDefaultPadding),
-                padding: EdgeInsets.all(kDefaultPadding / 2),
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: "${widget.merk}\n",
-                      style: TextStyle(
-                          height: 1.5,
-                          color: kBlackHint,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold)),
-                  TextSpan(
-                      text: "weight ",
-                      style: TextStyle(height: 1.5, color: kBlackHint)),
-                  TextSpan(
-                      text: "${widget.weight}g\n",
-                      style: TextStyle(
-                          height: 1.5,
-                          color: kBlackHint,
-                          fontWeight: FontWeight.w500)),
-                ])),
-              ),
-            ],
+            ),
           ),
-          Container(
-            height: size.height / 6,
-            padding: EdgeInsets.only(
-                top: kDefaultPadding / 2,
-                right: kDefaultPadding * 1.2,
-                bottom: kDefaultPadding / 2),
+          Expanded(
+            flex: 3,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SvgPicture.asset('images/icons/trashbin.svg'),
-                Row(
-                  children: [
-                    GestureDetector(
+                Container(
+                  padding: EdgeInsets.only(
+                      left: kDefaultPadding / 2, top: kDefaultPadding / 2),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: "${widget.merk}\n",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "weight ",
+                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                    TextSpan(
+                        text: "${widget.weight}g\n",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontWeight: FontWeight.w500)),
+                  ])),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: kDefaultPadding / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Button(
+                        width: 30,
+                        height: 30,
                         onTap: () {
-                          handleCountChange('minus');
+                          this.handleCountChange('minus');
                         },
-                        child: Container(
-                            width: 15,
-                            height: 15,
-                            decoration: BoxDecoration(
-                                color: Colors.white38,
-                                borderRadius: BorderRadius.circular(2)),
-                            child: SvgPicture.asset('images/icons/minus.svg'))),
-                    SizedBox(
-                      width: 13,
-                    ),
-                    Text(
-                      "${widget.total}",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: kBlackHint,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: 13,
-                    ),
-                    GestureDetector(
+                        margin: EdgeInsets.all(0),
+                        color: kNaturanWhite.withOpacity(0.5),
+                        child: SvgPicture.asset('images/icons/minus.svg'),
+                      ),
+                      SizedBox(
+                        width: 13,
+                      ),
+                      Text(
+                        "${widget.total}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: kBlackHint,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 13,
+                      ),
+                      Button(
+                        width: 30,
+                        height: 30,
                         onTap: () {
-                          handleCountChange('plus');
+                          this.handleCountChange('plus');
                         },
-                        child: Container(
-                            width: 15,
-                            height: 15,
-                            decoration: BoxDecoration(
-                                color: Colors.white38,
-                                borderRadius: BorderRadius.circular(2)),
-                            child: SvgPicture.asset('images/icons/plus.svg'))),
-                  ],
+                        margin: EdgeInsets.all(0),
+                        color: kNaturanWhite.withOpacity(0.5),
+                        child: SvgPicture.asset('images/icons/plus.svg'),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

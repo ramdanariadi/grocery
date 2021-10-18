@@ -8,6 +8,7 @@ import 'package:grocery/home/Profile.dart';
 import 'package:grocery/product/RecomendationProducts.dart';
 import 'package:grocery/product/TopProducts.dart';
 import 'package:grocery/home/SearchBar.dart';
+import 'package:grocery/products/ProductGroupGridItems.dart';
 
 enum BottomIcons { Home, Favorite, Search, Account }
 
@@ -33,13 +34,25 @@ class Home extends StatelessWidget {
               LabelWithActionButton(
                 title: "Top Products",
                 actionButtonTitle: "SHOW ALL",
-                press: () {},
+                press: () {
+                  Navigator.pushNamed(context, ProductGroupGridItems.routeName,
+                      arguments: ProductGroupGridItemsArgs(
+                          title: 'Top Products',
+                          categoryId: '',
+                          url: '$HTTPBASEURL/product/top'));
+                },
               ),
               TopProducts(),
               LabelWithActionButton(
-                title: "Recomendation",
+                title: "Recommendation",
                 actionButtonTitle: "SHOW ALL",
-                press: () {},
+                press: () {
+                  Navigator.pushNamed(context, ProductGroupGridItems.routeName,
+                      arguments: ProductGroupGridItemsArgs(
+                          title: 'Recommendation',
+                          categoryId: '',
+                          url: '$HTTPBASEURL/product/recommendation'));
+                },
               ),
               RecomendationProducts(),
               SizedBox(

@@ -46,8 +46,10 @@ class MyApp extends StatelessWidget {
         if (setting.name == ProductGroupGridItems.routeName) {
           final args = setting.arguments as ProductGroupGridItemsArgs;
           return MaterialPageRoute(
-              builder: (context) => ProductGroupGridItems(
-                  title: args.title, categoryId: args.categoryId));
+              builder: (context) => args.url == null
+                  ? ProductGroupGridItems(
+                      title: args.title, categoryId: args.categoryId)
+                  : ProductGroupGridItems.customUrl(args.title, args.url));
         }
 
         if (setting.name == Profile.routeName) {

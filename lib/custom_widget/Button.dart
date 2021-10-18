@@ -40,7 +40,7 @@ class Button extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
             padding: this.padding ?? EdgeInsets.all(10),
-            backgroundColor: kPrimaryColor,
+            backgroundColor: this.color ?? kPrimaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         child: this.child ??
