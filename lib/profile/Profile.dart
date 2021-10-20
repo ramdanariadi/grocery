@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
@@ -45,6 +43,7 @@ class Profile extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class Transactions extends StatelessWidget {
   Transactions({
     Key? key,
@@ -91,6 +90,7 @@ class Transactions extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TransactionCard extends StatelessWidget {
   TransactionCard(
       {Key? key,

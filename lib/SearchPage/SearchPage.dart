@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery/SearchPage/SearchBar.dart';
 import 'package:grocery/constrant.dart';
 
+// ignore: must_be_immutable
 class SearchPage extends StatelessWidget {
   static String routeName = '/searchpage';
   String? search;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery/constrant.dart';
 
+// ignore: must_be_immutable
 class LabelWithActionButton extends StatelessWidget {
   LabelWithActionButton({
     Key? key,
@@ -23,7 +23,6 @@ class LabelWithActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: padding ??
           EdgeInsets.only(left: kDefaultPadding, top: kDefaultPadding * 1.5),
@@ -31,15 +30,10 @@ class LabelWithActionButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-            onTap: () {
-              this.press(context);
-            },
-            child: SvgPicture.asset(
-              'images/icons/ChevronLeftOutline.svg',
-              height: size.width / 11,
-              width: size.width / 11,
-            ),
-          ),
+              onTap: () {
+                this.press(context);
+              },
+              child: Icon(Icons.arrow_back_ios_new, size: 32)),
           Padding(
             padding: const EdgeInsets.only(right: kDefaultPadding),
             child: Text(

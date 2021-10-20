@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/constrant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';
-import 'package:grocery/product/ProductCard.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class ProductDetail extends StatefulWidget {
   static final routeName = '/detailProduct';
 
@@ -39,7 +38,7 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetail extends State<ProductDetail> {
   int _count = 1;
-  String loveIcon = 'images/icons/Love.svg';
+  Icon loveIcon = Icon(Icons.favorite_outline, size: 30);
   bool productLoved = false;
   bool widgetExist = true;
 
@@ -48,7 +47,7 @@ class _ProductDetail extends State<ProductDetail> {
   void handleCountChange(context) {
     setState(() {
       if (context == 'plus') _count++;
-      if (context == 'minus') _count--;
+      if (context == 'minus') _count == 0 ? _count = 0 : _count--;
     });
   }
 
@@ -65,8 +64,9 @@ class _ProductDetail extends State<ProductDetail> {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       productLoved = responseBody['metaData']['code'] == 201;
       setState(() {
-        loveIcon =
-            productLoved ? 'images/icons/Loved.svg' : 'images/icons/Love.svg';
+        loveIcon = productLoved
+            ? Icon(Icons.favorite, size: 30, color: Colors.red)
+            : Icon(Icons.favorite_outline, size: 30);
       });
       Fluttertoast.showToast(
           msg: productLoved ? 'loved it' : 'unloved it',
@@ -100,8 +100,9 @@ class _ProductDetail extends State<ProductDetail> {
       Fluttertoast.showToast(msg: "loved", toastLength: Toast.LENGTH_LONG);
       productLoved = responseBody['metaData']['code'] == 200;
       setState(() {
-        loveIcon =
-            productLoved ? 'images/icons/Loved.svg' : 'images/icons/Love.svg';
+        loveIcon = productLoved
+            ? Icon(Icons.favorite, size: 30, color: Colors.red)
+            : Icon(Icons.favorite_outline, size: 30);
       });
     }
   }
@@ -114,7 +115,6 @@ class _ProductDetail extends State<ProductDetail> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     widgetExist = false;
   }
@@ -140,15 +140,10 @@ class _ProductDetail extends State<ProductDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: SvgPicture.asset(
-                        'images/icons/ChevronLeftOutline.svg',
-                        height: size.width / 10,
-                        width: size.width / 10,
-                      ),
-                    ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.arrow_back_ios_new, size: 32)),
                     GestureDetector(
                       onTap: () {
                         Fluttertoast.showToast(
@@ -157,9 +152,7 @@ class _ProductDetail extends State<ProductDetail> {
                       },
                       child: GestureDetector(
                         child: Container(
-                            margin: EdgeInsets.only(right: 8),
-                            child: SvgPicture.asset(loveIcon,
-                                height: size.width * 0.08)),
+                            margin: EdgeInsets.only(right: 8), child: loveIcon),
                         onTap: () {
                           this.like();
                         },
@@ -217,18 +210,17 @@ class _ProductDetail extends State<ProductDetail> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GestureDetector(
+                    InkWell(
                         onTap: () {
                           handleCountChange('minus');
                         },
                         child: Container(
                             width: 36,
                             height: 36,
-                            padding: EdgeInsets.all(kDefaultPadding / 2.7),
                             decoration: BoxDecoration(
-                                color: Colors.white38,
+                                color: kShadownColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
-                            child: SvgPicture.asset('images/icons/minus.svg'))),
+                            child: Icon(Icons.remove, size: 30))),
                     SizedBox(
                       width: 25,
                     ),
@@ -242,18 +234,20 @@ class _ProductDetail extends State<ProductDetail> {
                     SizedBox(
                       width: 25,
                     ),
-                    GestureDetector(
+                    InkWell(
                         onTap: () {
                           handleCountChange('plus');
                         },
                         child: Container(
                             width: 36,
                             height: 36,
-                            padding: EdgeInsets.all(kDefaultPadding / 2.7),
                             decoration: BoxDecoration(
-                                color: Colors.white38,
+                                color: kShadownColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
-                            child: SvgPicture.asset('images/icons/plus.svg'))),
+                            child: Icon(
+                              Icons.add,
+                              size: 30,
+                            ))),
                   ],
                 )
               ],

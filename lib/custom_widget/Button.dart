@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../constrant.dart';
 
+// ignore: must_be_immutable
 class Button extends StatelessWidget {
   Button({
     Key? key,
-    EdgeInsets? this.margin,
-    EdgeInsets? this.padding,
-    Color? this.color,
-    TextStyle? this.textStyle,
-    Widget? this.child,
-    String? this.text,
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+    Color? color,
+    TextStyle? textStyle,
+    Widget? child,
+    String? text,
     required this.width,
     required this.height,
     required this.onTap,
@@ -19,6 +20,7 @@ class Button extends StatelessWidget {
     this.padding = padding;
     this.child = child;
     this.text = text;
+    this.color = color;
   }
 
   final double width;

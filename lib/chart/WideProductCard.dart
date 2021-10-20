@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
-
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
 
+// ignore: must_be_immutable
 class WideProductCard extends StatefulWidget {
   WideProductCard({
     Key? key,
@@ -185,8 +184,13 @@ class _WideProductCard extends State<WideProductCard> {
                             this.handleCountChange('minus');
                           },
                           margin: EdgeInsets.all(0),
+                          padding: EdgeInsets.all(0),
                           color: kNaturanWhite.withOpacity(0.5),
-                          child: SvgPicture.asset('images/icons/minus.svg'),
+                          child: Icon(
+                            Icons.remove_outlined,
+                            color: kBlackHint,
+                            size: 15,
+                          ),
                         ),
                         SizedBox(
                           width: 13,
@@ -208,8 +212,13 @@ class _WideProductCard extends State<WideProductCard> {
                             this.handleCountChange('plus');
                           },
                           margin: EdgeInsets.all(0),
+                          padding: EdgeInsets.all(0),
                           color: kNaturanWhite.withOpacity(0.5),
-                          child: SvgPicture.asset('images/icons/plus.svg'),
+                          child: Icon(
+                            Icons.add,
+                            color: kBlackHint,
+                            size: 15,
+                          ),
                         ),
                       ],
                     ),

@@ -7,7 +7,7 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Profile.dart';
 
 class BottomNavBar extends StatelessWidget {
-  BottomNavBar({Key? key, required String this.active}) : super(key: key);
+  BottomNavBar({Key? key, required this.active}) : super(key: key);
 
   final String active;
   final home = [Home.routeName];
@@ -37,28 +37,42 @@ class BottomNavBar extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, Home.routeName);
               },
-              child: home.contains(active)
-                  ? Image.asset("images/icons/HomeActive.png")
-                  : Image.asset("images/icons/Home.png")),
+              child: Icon(Icons.home,
+                  size: 32,
+                  color: home.contains(active)
+                      ? kPrimaryColor
+                      : kIconOutlineColor)),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Products.routeName);
               },
-              child: product.contains(active)
-                  ? Image.asset("images/icons/CategoryActive.png")
-                  : Image.asset("images/icons/Category.png")),
-          GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Profile.routeName);
-              },
-              child: profile.contains(active)
-                  ? Image.asset("images/icons/UserActive.png")
-                  : Image.asset("images/icons/User.png")),
+              child: Icon(
+                Icons.grid_view_rounded,
+                size: 32,
+                color: product.contains(active)
+                    ? kPrimaryColor
+                    : kIconOutlineColor,
+              )),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Chart.routeName);
               },
-              child: Image.asset("images/icons/Cart.png"))
+              child: Icon(
+                Icons.shopping_bag,
+                size: 32,
+                color: kIconOutlineColor,
+              )),
+          GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Profile.routeName);
+              },
+              child: Icon(
+                Icons.account_circle_outlined,
+                size: 32,
+                color: profile.contains(active)
+                    ? kPrimaryColor
+                    : kIconOutlineColor,
+              ))
         ]),
       ),
     );

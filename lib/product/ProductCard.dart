@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
-import 'package:grocery/home/Home.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
   ProductCard(
       {Key? key,
@@ -30,8 +30,7 @@ class ProductCard extends StatelessWidget {
   String? imageUrl;
   double? margin;
 
-  factory ProductCard.fromJson(Map<String, dynamic> item,
-      {double? margin = null}) {
+  factory ProductCard.fromJson(Map<String, dynamic> item, {double? margin}) {
     return new ProductCard(
       id: item['id'],
       merk: item['name'],
@@ -131,13 +130,16 @@ class ProductCard extends StatelessWidget {
                   ])),
                   Button(
                       text: "plus",
-                      child: Image.asset(
-                        "images/icons/PlusOutline.png",
-                        width: double.infinity,
-                        height: double.infinity,
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
                       width: 30,
                       height: 30,
+                      padding: EdgeInsets.all(0),
                       onTap: () {
                         this.addToChart();
                       })

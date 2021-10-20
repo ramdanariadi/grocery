@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grocery/SearchPage/SearchBar.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/SearchPage/SearchPage.dart';
 
+// ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
   String? search;
   @override
@@ -39,17 +38,15 @@ class SearchBar extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      Navigator.pushNamed(context, SearchPage.routeName,
-                          arguments: SearchBarArgs(search: search));
-                    },
-                    child: SvgPicture.asset(
-                      "images/icons/SearchOutline.svg",
-                      height: 20,
-                      width: 20,
-                    ),
-                  )
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushNamed(context, SearchPage.routeName,
+                            arguments: SearchBarArgs(search: search));
+                      },
+                      child: Icon(
+                        Icons.search,
+                        size: 20,
+                      ))
                 ],
               )),
           // Container(

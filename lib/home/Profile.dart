@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
-import 'package:flutter_svg/svg.dart';
 
 class Profile extends StatelessWidget {
   String getGreting() {
@@ -54,7 +53,10 @@ class Profile extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SvgPicture.asset("images/icons/my_location.svg"),
+                    Icon(
+                      Icons.location_on_rounded,
+                      size: 22,
+                    ),
                     SizedBox(
                       width: 5,
                     ),

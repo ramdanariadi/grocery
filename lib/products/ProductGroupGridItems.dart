@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/products/LabelWIthActionButton.dart';
@@ -9,6 +8,7 @@ import 'package:grocery/product/ProductCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+// ignore: must_be_immutable
 class ProductGroupGridItems extends StatelessWidget {
   static final routeName = '/allProductByCategory';
 
@@ -57,7 +57,6 @@ class ProductGroupGridItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     productFuture = this.fetchProduct();
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [

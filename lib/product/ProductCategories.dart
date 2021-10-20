@@ -6,6 +6,7 @@ import 'package:grocery/constrant.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class ProductCategories extends StatelessWidget {
   ProductCategories({
     Key? key,
@@ -59,6 +60,7 @@ class ProductCategories extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ProductCategory extends StatelessWidget {
   ProductCategory({
     Key? key,

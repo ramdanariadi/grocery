@@ -6,7 +6,7 @@ const kBackGroundColor = Color.fromRGBO(237, 243, 242, 1);
 const kNaturanWhite = Color.fromRGBO(245, 245, 245, 1);
 const kBlackHint = Color.fromRGBO(61, 61, 61, 1);
 const kShadownColor = Color.fromRGBO(143, 143, 143, 1);
-
+const kIconOutlineColor = Color.fromRGBO(218, 220, 224, 1);
 const double kDefaultPadding = 20.0;
 
 const String HTTPBASEURL = 'https://tunas-grocery.herokuapp.com/api/v1';

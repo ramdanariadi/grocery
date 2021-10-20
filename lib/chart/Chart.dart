@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/alert/Alert.dart';
-import 'package:grocery/chart/WideProductCard.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
 import '../constrant.dart';
+import 'WideProductCard.dart';
 
 class Chart extends StatefulWidget {
   static final routeName = '/chart';

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
-import 'package:grocery/SearchPage/SearchPage.dart';
 
+// ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
   SearchBar({Key? key, String? search}) : super(key: key) {
     this.search = search;
@@ -46,17 +45,12 @@ class SearchBar extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      Fluttertoast.showToast(
-                          msg: "do search", toastLength: Toast.LENGTH_SHORT);
-                    },
-                    child: SvgPicture.asset(
-                      "images/icons/SearchOutline.svg",
-                      height: 20,
-                      width: 20,
-                    ),
-                  )
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Fluttertoast.showToast(
+                            msg: "do search", toastLength: Toast.LENGTH_SHORT);
+                      },
+                      child: Icon(Icons.search))
                 ],
               )),
         ],

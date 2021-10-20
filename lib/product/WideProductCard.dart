@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'ProductCard.dart';
 import 'ProductDetail.dart';
 
+// ignore: must_be_immutable
 class WideProductCard extends StatelessWidget {
   WideProductCard({
     Key? key,
@@ -136,13 +137,14 @@ class WideProductCard extends StatelessWidget {
                   ),
                   Button(
                       text: "plus",
-                      child: Image.asset(
-                        "images/icons/PlusOutline.png",
-                        width: double.infinity,
-                        height: double.infinity,
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 15,
                       ),
                       width: 30,
                       height: 30,
+                      padding: EdgeInsets.all(0),
                       onTap: () {
                         this.addToChart();
                       })
