@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grocery/SearchPage/SearchBar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/SearchPage/SearchPage.dart';
 
 class SearchBar extends StatelessWidget {
+  SearchBar({Key? key, String? search}) : super(key: key) {
+    this.search = search;
+  }
+
   String? search;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,6 +32,7 @@ class SearchBar extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: TextFormField(
+                        initialValue: search ?? '',
                         decoration: InputDecoration(
                           hintText: "Search",
                           enabledBorder: InputBorder.none,
@@ -35,14 +41,15 @@ class SearchBar extends StatelessWidget {
                         onChanged: (text) {
                           search = text;
                         },
+                        // autofocus: true,
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
                       FocusScope.of(context).unfocus();
-                      Navigator.pushNamed(context, SearchPage.routeName,
-                          arguments: SearchBarArgs(search: search));
+                      Fluttertoast.showToast(
+                          msg: "do search", toastLength: Toast.LENGTH_SHORT);
                     },
                     child: SvgPicture.asset(
                       "images/icons/SearchOutline.svg",
@@ -52,9 +59,6 @@ class SearchBar extends StatelessWidget {
                   )
                 ],
               )),
-          // Container(
-          //     margin: EdgeInsets.only(left: kDefaultPadding),
-          //     child: SvgPicture.asset("images/icons/Adjustments.svg"))
         ],
       ),
     );

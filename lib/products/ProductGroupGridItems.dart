@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
+import 'package:grocery/products/LabelWIthActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -60,31 +61,38 @@ class ProductGroupGridItems extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // LabelWithActionButton(
-          //     title: this.title, actionButtonTitle: '', press: () {}),
-          FutureBuilder<List<ProductCard>>(
-            future: productFuture,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return StaggeredGridView.countBuilder(
-                  crossAxisCount: 2,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      snapshot.data![index],
-                  staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
-                  mainAxisSpacing: kDefaultPadding / 2,
-                  // crossAxisSpacing: kDefaultPadding,
+          LabelWithActionButton(
+              title: this.title,
+              press: (context) {
+                Navigator.pop(context);
+              }),
+          Container(
+            margin: EdgeInsets.only(top: kDefaultPadding * 3),
+            child: FutureBuilder<List<ProductCard>>(
+              future: productFuture,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return StaggeredGridView.countBuilder(
+                    crossAxisCount: 2,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        snapshot.data![index],
+                    staggeredTileBuilder: (int index) =>
+                        new StaggeredTile.fit(1),
+                    mainAxisSpacing: kDefaultPadding / 2,
+                    // crossAxisSpacing: kDefaultPadding,
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  return Text("failed load product by category");
+                }
+
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              }
-
-              if (snapshot.hasError) {
-                return Text("failed load product by category");
-              }
-
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+              },
+            ),
           ),
           BottomNavBar(active: ProductGroupGridItems.routeName)
         ],

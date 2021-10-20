@@ -5,26 +5,31 @@ import 'package:grocery/constrant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';
+import 'package:grocery/product/ProductCard.dart';
 import 'package:http/http.dart' as http;
 
 class ProductDetail extends StatefulWidget {
   static final routeName = '/detailProduct';
 
   final String id;
+  final String tag;
   final String merk;
   final String category;
   final int weight;
   final int price;
-  final String imageUrl;
+  String? imageUrl;
 
-  const ProductDetail(
+  ProductDetail(
       {Key? key,
       required this.id,
+      required this.tag,
       required this.merk,
       required this.category,
       required this.weight,
       required this.price,
-      required this.imageUrl});
+      String? imageUrl}) {
+    this.imageUrl = imageUrl;
+  }
 
   @override
   _ProductDetail createState() {
@@ -184,10 +189,11 @@ class _ProductDetail extends State<ProductDetail> {
                 ),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: size.width * 0.7),
-                  child: widget.imageUrl == 'null' ||
-                          widget.imageUrl == 'notFound.png'
-                      ? Image.asset('images/notFound.png')
-                      : Image.network(widget.imageUrl),
+                  child: Hero(
+                      tag: widget.tag,
+                      child: widget.imageUrl == null
+                          ? Image.asset('images/notFound.png')
+                          : Image.network(widget.imageUrl!)),
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 28),

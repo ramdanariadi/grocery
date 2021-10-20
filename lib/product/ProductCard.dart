@@ -61,88 +61,91 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      width: size.width * 0.4,
-      margin: EdgeInsets.only(
-          left: margin != null ? margin! : kDefaultPadding / 2,
-          right: margin != null ? margin! : kDefaultPadding / 2),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0, 8),
-                color: kShadownColor.withOpacity(0.23),
-                spreadRadius: -10,
-                blurRadius: 20)
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ProductDetail.routeName,
+            arguments: ProductArguments(
+                id: this.id,
+                tag: this.id + 'top',
+                merk: this.merk,
+                category: this.category,
+                weight: this.weight,
+                price: this.price,
+                imageUrl: this.imageUrl!));
+      },
+      child: Container(
+        width: size.width * 0.4,
+        margin: EdgeInsets.only(
+            left: margin != null ? margin! : kDefaultPadding / 2,
+            right: margin != null ? margin! : kDefaultPadding / 2),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 8),
+                  color: kShadownColor.withOpacity(0.23),
+                  spreadRadius: -10,
+                  blurRadius: 20)
+            ],
+            borderRadius: BorderRadius.circular(8)),
+        child: Column(
+          children: [
+            Hero(
+                tag: this.id + 'top',
+                child: this.imageUrl == null
+                    ? Image.asset('images/notFound.png')
+                    : Image.network(this.imageUrl!)),
+            Padding(
+              padding: const EdgeInsets.all(kDefaultPadding / 2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: "${this.merk}\n",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "weight ",
+                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                    TextSpan(
+                        text: "${this.weight}g\n",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontWeight: FontWeight.w500)),
+                    TextSpan(
+                        text: "\$${this.price}",
+                        style: TextStyle(
+                            height: 1.5,
+                            color: kBlackHint,
+                            fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "/kg",
+                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                  ])),
+                  Button(
+                      text: "plus",
+                      child: Image.asset(
+                        "images/icons/PlusOutline.png",
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                      width: 30,
+                      height: 30,
+                      onTap: () {
+                        this.addToChart();
+                      })
+                ],
+              ),
+            )
           ],
-          borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, ProductDetail.routeName,
-                  arguments: ProductArguments(
-                      id: this.id,
-                      merk: this.merk,
-                      category: this.category,
-                      weight: this.weight,
-                      price: this.price,
-                      imageUrl: this.imageUrl!));
-            },
-            child: this.imageUrl == null
-                ? Image.asset('images/notFound.png')
-                : Image.network(this.imageUrl!),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding / 2),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: "${this.merk}\n",
-                      style: TextStyle(
-                          height: 1.5,
-                          color: kBlackHint,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
-                  TextSpan(
-                      text: "weight ",
-                      style: TextStyle(height: 1.5, color: kBlackHint)),
-                  TextSpan(
-                      text: "${this.weight}g\n",
-                      style: TextStyle(
-                          height: 1.5,
-                          color: kBlackHint,
-                          fontWeight: FontWeight.w500)),
-                  TextSpan(
-                      text: "\$${this.price}",
-                      style: TextStyle(
-                          height: 1.5,
-                          color: kBlackHint,
-                          fontWeight: FontWeight.bold)),
-                  TextSpan(
-                      text: "/kg",
-                      style: TextStyle(height: 1.5, color: kBlackHint)),
-                ])),
-                Button(
-                    text: "plus",
-                    child: Image.asset(
-                      "images/icons/PlusOutline.png",
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                    width: 30,
-                    height: 30,
-                    onTap: () {
-                      this.addToChart();
-                    })
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -150,6 +153,7 @@ class ProductCard extends StatelessWidget {
 
 class ProductArguments {
   final String id;
+  final String tag;
   final String merk;
   final String category;
   final int weight;
@@ -158,6 +162,7 @@ class ProductArguments {
 
   ProductArguments(
       {required this.id,
+      required this.tag,
       required this.merk,
       required this.category,
       required this.weight,

@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               Profile(),
-              SearchBar(),
+              Hero(tag:"searchbar",child: SearchBar()),
               ProductCategories(),
               LabelWithActionButton(
                 title: "Top Products",
