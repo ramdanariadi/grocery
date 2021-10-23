@@ -7,28 +7,28 @@ import 'package:http/http.dart' as http;
 import '../constrant.dart';
 import 'WideProductCard.dart';
 
-class Chart extends StatefulWidget {
-  static final routeName = '/chart';
+class Cart extends StatefulWidget {
+  static final routeName = '/cart';
 
   @override
   State<StatefulWidget> createState() {
-    return _Chart();
+    return _Cart();
   }
 }
 
-class _Chart extends State<Chart> {
+class _Cart extends State<Cart> {
   Future<List<WideProductCard>>? productFuture;
   List<WideProductCard>? productList;
   int totalPrice = 0;
 
-  Future<List<WideProductCard>> fetchChart() async {
+  Future<List<WideProductCard>> fetchCart() async {
     final response = await http.get(
-        Uri.parse(HTTPBASEURL + '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
+        Uri.parse(HTTPBASEURL + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
 
     if (response.statusCode == 200) {
-      List<dynamic> chart = jsonDecode(response.body)['response'];
+      List<dynamic> cart = jsonDecode(response.body)['response'];
       int tmpTotalPrice = 0;
-      List<WideProductCard> chartList = productList = chart.map((dynamic item) {
+      List<WideProductCard> cartList = productList = cart.map((dynamic item) {
         Map<String, dynamic> mapItem = item;
         tmpTotalPrice += int.parse(mapItem['price'].toString()) *
             int.parse(mapItem['total'].toString());
@@ -39,9 +39,9 @@ class _Chart extends State<Chart> {
       setState(() {
         totalPrice = tmpTotalPrice;
       });
-      return chartList;
+      return cartList;
     } else {
-      throw Exception("Failed load chart");
+      throw Exception("Failed load cart");
     }
   }
 
@@ -57,7 +57,7 @@ class _Chart extends State<Chart> {
   @override
   void initState() {
     super.initState();
-    productFuture = this.fetchChart();
+    productFuture = this.fetchCart();
   }
 
   Future<void> checkout() async {
@@ -72,7 +72,8 @@ class _Chart extends State<Chart> {
                 "price": e.price,
                 "weight": e.weight,
                 "perUnit": 100,
-                "total": e.total
+                "total": e.total,
+                "imageUrl": e.imageUrl
               })
           .toList()
     });
@@ -124,7 +125,7 @@ class _Chart extends State<Chart> {
               }
 
               if (snapshot.hasError) {
-                return Text("Failed load chart");
+                return Text("Failed load cart");
               }
 
               return Center(

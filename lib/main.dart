@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/chart/Chart.dart';
+import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/SearchPage/SearchPage.dart';
@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
                   imageUrl: args.imageUrl));
         }
 
-        if (setting.name == Chart.routeName) {
-          return MaterialPageRoute(builder: (context) => Chart());
+        if (setting.name == Cart.routeName) {
+          return MaterialPageRoute(builder: (context) => Cart());
         }
 
         if (setting.name == Products.routeName) {

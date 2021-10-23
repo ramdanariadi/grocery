@@ -44,7 +44,7 @@ class ProductCard extends StatelessWidget {
 
   Future<void> addToChart() async {
     final response = await http.post(Uri.parse(HTTPBASEURL +
-        '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1'));
+        '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1'));
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {

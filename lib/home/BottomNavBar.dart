@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/chart/Chart.dart';
+import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
@@ -33,9 +33,10 @@ class BottomNavBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(kDefaultPadding * 5)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          GestureDetector(
+          InkWell(
               onTap: () {
-                Navigator.pushNamed(context, Home.routeName);
+                if (ModalRoute.of(context)!.settings.name != Home.routeName)
+                  Navigator.pushNamed(context, Home.routeName);
               },
               child: Icon(Icons.home,
                   size: 32,
@@ -44,7 +45,8 @@ class BottomNavBar extends StatelessWidget {
                       : kIconOutlineColor)),
           GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Products.routeName);
+                if (ModalRoute.of(context)!.settings.name != Products.routeName)
+                  Navigator.pushNamed(context, Products.routeName);
               },
               child: Icon(
                 Icons.grid_view_rounded,
@@ -55,7 +57,8 @@ class BottomNavBar extends StatelessWidget {
               )),
           GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Chart.routeName);
+                if (ModalRoute.of(context)!.settings.name != Cart.routeName)
+                  Navigator.pushNamed(context, Cart.routeName);
               },
               child: Icon(
                 Icons.shopping_bag,
