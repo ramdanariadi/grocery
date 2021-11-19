@@ -7,6 +7,7 @@ import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/Profile.dart';
 
 void main() {
@@ -20,10 +21,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       initialRoute: Home.routeName,
-      routes: {
-        '/': (context) => Home(),
-      },
       onGenerateRoute: (setting) {
+        if (setting.name == Home.routeName) {
+          return MaterialPageRoute(builder: (context) => Home());
+        }
+
+        if (setting.name == Login.routeName) {
+          return MaterialPageRoute(builder: (context) => Login());
+        }
+
         if (setting.name == SearchPage.routeName) {
           final args = setting.arguments as SearchBarArgs;
           return CustomPageRoute(

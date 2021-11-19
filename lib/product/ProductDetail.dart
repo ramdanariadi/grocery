@@ -83,7 +83,7 @@ class _ProductDetail extends State<ProductDetail> {
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {
-        Fluttertoast.showToast(msg: "yeay product added");
+        // Fluttertoast.showToast(msg: "yeay product added");
         Navigator.pushNamed(context, Home.routeName);
       }
     } else {
@@ -97,7 +97,7 @@ class _ProductDetail extends State<ProductDetail> {
         '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
-      Fluttertoast.showToast(msg: "loved", toastLength: Toast.LENGTH_LONG);
+      // Fluttertoast.showToast(msg: "loved", toastLength: Toast.LENGTH_LONG);
       productLoved = responseBody['metaData']['code'] == 200;
       setState(() {
         loveIcon = productLoved
@@ -146,9 +146,9 @@ class _ProductDetail extends State<ProductDetail> {
                         child: Icon(Icons.arrow_back_ios_new, size: 32)),
                     GestureDetector(
                       onTap: () {
-                        Fluttertoast.showToast(
-                            msg: 'loved it ${widget.merk}',
-                            toastLength: Toast.LENGTH_LONG);
+                        // Fluttertoast.showToast(
+                        //     msg: 'loved it ${widget.merk}',
+                        //     toastLength: Toast.LENGTH_LONG);
                       },
                       child: GestureDetector(
                         child: Container(

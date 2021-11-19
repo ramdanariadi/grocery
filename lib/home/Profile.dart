@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/profile/Login.dart';
 
 class Profile extends StatelessWidget {
   String getGreting() {
@@ -69,13 +70,18 @@ class Profile extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(244, 244, 252, 1),
-                  borderRadius: BorderRadius.circular(8)),
-              child: Image.asset("images/default_user_image_profile.png"))
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Login.routeName);
+            },
+            child: Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 244, 252, 1),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Image.asset("images/default_user_image_profile.png")),
+          )
         ],
       ),
     );

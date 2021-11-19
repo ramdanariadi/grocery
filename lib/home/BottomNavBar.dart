@@ -36,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
           InkWell(
               onTap: () {
                 if (ModalRoute.of(context)!.settings.name != Home.routeName)
-                  Navigator.pushNamed(context, Home.routeName);
+                  Navigator.popAndPushNamed(context, Home.routeName);
               },
               child: Icon(Icons.home,
                   size: 32,
@@ -46,7 +46,7 @@ class BottomNavBar extends StatelessWidget {
           GestureDetector(
               onTap: () {
                 if (ModalRoute.of(context)!.settings.name != Products.routeName)
-                  Navigator.pushNamed(context, Products.routeName);
+                  Navigator.popAndPushNamed(context, Products.routeName);
               },
               child: Icon(
                 Icons.grid_view_rounded,
@@ -58,7 +58,7 @@ class BottomNavBar extends StatelessWidget {
           GestureDetector(
               onTap: () {
                 if (ModalRoute.of(context)!.settings.name != Cart.routeName)
-                  Navigator.pushNamed(context, Cart.routeName);
+                  Navigator.popAndPushNamed(context, Cart.routeName);
               },
               child: Icon(
                 Icons.shopping_bag,
@@ -67,7 +67,7 @@ class BottomNavBar extends StatelessWidget {
               )),
           GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Profile.routeName);
+                Navigator.popAndPushNamed(context, Profile.routeName);
               },
               child: Icon(
                 Icons.account_circle_outlined,
