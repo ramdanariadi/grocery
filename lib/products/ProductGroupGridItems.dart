@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
-import 'package:grocery/products/LabelWIthActionButton.dart';
+import 'package:grocery/products/LabelWithActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -66,7 +66,6 @@ class ProductGroupGridItems extends StatelessWidget {
                 Navigator.pop(context);
               }),
           Container(
-            margin: EdgeInsets.only(top: kDefaultPadding * 3),
             child: FutureBuilder<List<ProductCard>>(
               future: productFuture,
               builder: (context, snapshot) {

@@ -29,12 +29,12 @@ POST https://tunas-grocery.herokuapp.com/api/v1/product
 Content-Type: application/json
 
 {
-  "name": "Radish",
+  "name": "Salmon",
   "price": 10,
   "weight": 1000,
   "perUnit": 100,
   "description": "Good for health",
-  "category": "8c2c184e-11d2-11ec-82a8-0242ac130003"
+  "category": "d8aad587-1766-11ec-8093-7382d5d6f97f"
 }
 
 ### UPDATE PRODUCT

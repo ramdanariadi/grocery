@@ -16,15 +16,8 @@ class SearchPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: kDefaultPadding),
-        child: Hero(tag: "searchbar", child: SearchBar(search: this.search)),
+        child: SearchBar(),
       ),
     );
-  }
-}
-
-class SearchBarArgs {
-  String? search;
-  SearchBarArgs({String? search}) {
-    this.search = search;
   }
 }

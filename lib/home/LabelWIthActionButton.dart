@@ -29,7 +29,7 @@ class LabelWithActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? EdgeInsets.all(kDefaultPadding),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

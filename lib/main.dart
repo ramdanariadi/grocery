@@ -31,12 +31,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == SearchPage.routeName) {
-          final args = setting.arguments as SearchBarArgs;
-          return CustomPageRoute(
-              child: SearchPage(
-                search: args.search,
-              ),
-              transitionDuration: 500);
+          return CustomPageRoute(child: SearchPage(), transitionDuration: 500);
         }
 
         if (setting.name == ProductDetail.routeName) {

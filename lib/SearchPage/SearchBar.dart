@@ -4,11 +4,7 @@ import 'package:grocery/constrant.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
-  SearchBar({Key? key, String? search}) : super(key: key) {
-    this.search = search;
-  }
-
-  String? search;
+  SearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +27,13 @@ class SearchBar extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: TextFormField(
-                        initialValue: search ?? '',
+                        autofocus: true,
                         decoration: InputDecoration(
                           hintText: "Search",
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                         ),
-                        onChanged: (text) {
-                          search = text;
-                        },
+                        onChanged: (text) {},
                         // autofocus: true,
                       ),
                     ),

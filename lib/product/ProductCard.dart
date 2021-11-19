@@ -92,8 +92,14 @@ class ProductCard extends StatelessWidget {
             Hero(
                 tag: this.id + 'top',
                 child: this.imageUrl == null
-                    ? Image.asset('images/notFound.png')
-                    : Image.network(this.imageUrl!)),
+                    ? Image.asset(
+                        'images/notFound.png',
+                        height: 120,
+                      )
+                    : Image.network(
+                        this.imageUrl!,
+                        height: 120,
+                      )),
             Padding(
               padding: const EdgeInsets.all(kDefaultPadding / 2),
               child: Row(

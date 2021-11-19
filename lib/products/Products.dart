@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/home/BottomNavBar.dart';
+import 'package:grocery/home/Home.dart';
+import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/ProductGroupItems.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,22 +32,29 @@ class Products extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: FutureBuilder<List<ProductGroupItems>>(
-              future: groupsFuture,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
-                    children: snapshot.data!,
+          Container(
+            margin: EdgeInsets.only(top: kDefaultPadding * 1.2),
+            child: SingleChildScrollView(
+              child: FutureBuilder<List<ProductGroupItems>>(
+                future: groupsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    snapshot.data!.add(ProductGroupItems(
+                        title: "",
+                        actionButtonTitle: "",
+                        categoryId: "ba3e987a-12bb-484c-aeef-33d49da62f74"));
+                    return Column(
+                      children: snapshot.data!,
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Text("failed load data");
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                }
-                if (snapshot.hasError) {
-                  return Text("failed load data");
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
           ),
           BottomNavBar(
