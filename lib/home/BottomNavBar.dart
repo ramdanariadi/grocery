@@ -4,7 +4,7 @@ import 'package:grocery/constrant.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
-import 'package:grocery/profile/Profile.dart';
+import 'package:grocery/profile/MyAccount.dart';
 
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({Key? key, required this.active}) : super(key: key);
@@ -12,7 +12,7 @@ class BottomNavBar extends StatelessWidget {
   final String active;
   final home = [Home.routeName];
   final product = [Products.routeName, ProductGroupGridItems.routeName];
-  final profile = [Profile.routeName];
+  final profile = [MyAccount.routeName];
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class BottomNavBar extends StatelessWidget {
               )),
           GestureDetector(
               onTap: () {
-                Navigator.popAndPushNamed(context, Profile.routeName);
+                Navigator.popAndPushNamed(context, MyAccount.routeName);
               },
               child: Icon(
                 Icons.account_circle_outlined,

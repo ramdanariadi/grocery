@@ -8,7 +8,7 @@ import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Login.dart';
-import 'package:grocery/profile/Profile.dart';
+import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/profile/Register.dart';
 
 void main() {
@@ -69,8 +69,8 @@ class MyApp extends StatelessWidget {
                   : ProductGroupGridItems.customUrl(args.title, args.url));
         }
 
-        if (setting.name == Profile.routeName) {
-          return MaterialPageRoute(builder: (context) => Profile());
+        if (setting.name == MyAccount.routeName) {
+          return CustomPageRoute(child: MyAccount());
         }
 
         assert(false, 'need to implement ${setting.name}');

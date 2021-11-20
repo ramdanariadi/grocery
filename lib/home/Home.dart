@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               Profile(),
-              Hero(tag:"searchbar",child: SearchBar()),
+              SearchBar(),
               ProductCategories(),
               LabelWithActionButton(
                 title: "Top Products",

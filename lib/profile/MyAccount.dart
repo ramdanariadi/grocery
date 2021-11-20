@@ -6,7 +6,7 @@ import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 import 'package:http/http.dart' as http;
 
-class Profile extends StatelessWidget {
+class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class Profile extends StatelessWidget {
             ),
             Transactions()
           ]),
-          BottomNavBar(active: Profile.routeName)
+          BottomNavBar(active: MyAccount.routeName)
         ],
       ),
     );
@@ -200,7 +200,10 @@ class UserProfile extends StatelessWidget {
         children: [
           Row(children: [
             Container(
-              child: Image.asset('images/default_user_image_profile.png'),
+              child: Hero(
+                child: Image.asset('images/default_user_image_profile.png'),
+                tag: "user-profile",
+              ),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: kNaturanWhite,

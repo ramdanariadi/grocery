@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
-import 'package:grocery/profile/Login.dart';
+import 'package:grocery/profile/MyAccount.dart';
 
 class Profile extends StatelessWidget {
   String getGreting() {
@@ -72,7 +72,7 @@ class Profile extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, Login.routeName);
+              Navigator.pushNamed(context, MyAccount.routeName);
             },
             child: Container(
                 width: 72,
@@ -80,7 +80,10 @@ class Profile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 244, 252, 1),
                     borderRadius: BorderRadius.circular(8)),
-                child: Image.asset("images/default_user_image_profile.png")),
+                child: Hero(
+                  child: Image.asset("images/default_user_image_profile.png"),
+                  tag: "user-profile",
+                )),
           )
         ],
       ),
