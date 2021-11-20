@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constrant.dart';
@@ -10,15 +12,25 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/profile/Register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+SharedPreferences? sharedPreferences;
+
 class MyApp extends StatelessWidget {
+  static Future init() async {
+    if (sharedPreferences == null) {
+      sharedPreferences = await SharedPreferences.getInstance();
+    }
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    MyApp.init();
     return MaterialApp(
       title: 'Flutter Demo',
       initialRoute: Home.routeName,
@@ -70,7 +82,9 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == MyAccount.routeName) {
-          
+          if (sharedPreferences != null && (sharedPreferences!.getBool("authenticated") == null || sharedPreferences!.getBool("authenticated")!)) {
+            return MaterialPageRoute(builder: (context) => Login());
+          }
           return CustomPageRoute(child: MyAccount());
         }
 
