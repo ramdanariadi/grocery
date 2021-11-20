@@ -70,6 +70,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == MyAccount.routeName) {
+          
           return CustomPageRoute(child: MyAccount());
         }
 
