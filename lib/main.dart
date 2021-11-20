@@ -9,6 +9,7 @@ import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/Profile.dart';
+import 'package:grocery/profile/Register.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +29,10 @@ class MyApp extends StatelessWidget {
 
         if (setting.name == Login.routeName) {
           return MaterialPageRoute(builder: (context) => Login());
+        }
+
+        if (setting.name == Register.routeName) {
+          return MaterialPageRoute(builder: (context) => Register());
         }
 
         if (setting.name == SearchPage.routeName) {

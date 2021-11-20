@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constrant.dart';
-import 'package:grocery/profile/Register.dart';
 
-class Login extends StatefulWidget {
-  static String routeName = '/login';
+class Register extends StatefulWidget {
+  static String routeName = '/register';
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Register> {
   bool showPassword = false;
 
   @override
@@ -45,13 +44,13 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Sign in",
+                "Sign up",
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22),
               ),
               Container(
                 margin: EdgeInsets.only(top: 24),
                 child: Text(
-                  "Welcome back",
+                  "Create an account here",
                   style: TextStyle(fontSize: 14),
                 ),
               ),
@@ -79,6 +78,76 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     hintText: "Username",
+                    hintStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: hintColor,
+                        letterSpacing: -0.2),
+                  ),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: focusColor.withOpacity(0.7),
+                      letterSpacing: -0.2),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 30),
+                child: TextField(
+                  cursorColor: focusColor,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: outlineColor, width: 1.5)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: focusColor, width: 1.5)),
+                    prefixIcon: Container(
+                      child: Icon(
+                        Icons.phone_iphone,
+                        color: prefixIconColor,
+                      ),
+                      padding: EdgeInsets.only(right: 9),
+                      margin: EdgeInsets.only(right: 19, bottom: 3.5),
+                      height: 10,
+                      decoration: BoxDecoration(
+                        border: Border(
+                            right: BorderSide(color: outlineColor, width: 1.5)),
+                      ),
+                    ),
+                    hintText: "Mobile Number",
+                    hintStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: hintColor,
+                        letterSpacing: -0.2),
+                  ),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: focusColor.withOpacity(0.7),
+                      letterSpacing: -0.2),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 30),
+                child: TextField(
+                  cursorColor: focusColor,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: outlineColor, width: 1.5)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: focusColor, width: 1.5)),
+                    prefixIcon: Container(
+                      child: Icon(
+                        Icons.email_outlined,
+                        color: prefixIconColor,
+                      ),
+                      padding: EdgeInsets.only(right: 9),
+                      margin: EdgeInsets.only(right: 19, bottom: 3.5),
+                      height: 10,
+                      decoration: BoxDecoration(
+                        border: Border(
+                            right: BorderSide(color: outlineColor, width: 1.5)),
+                      ),
+                    ),
+                    hintText: "Email",
                     hintStyle: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: hintColor,
@@ -145,7 +214,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 179),
+                    margin: EdgeInsets.only(top: 40),
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
@@ -159,14 +228,14 @@ class _LoginState extends State<Login> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(top: 60),
+                margin: EdgeInsets.only(top: 40),
                 child: Row(children: [
-                  Text("New member? ", style: TextStyle(color: hintColor)),
+                  Text("Already member? ", style: TextStyle(color: hintColor)),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, Register.routeName);
+                      Navigator.pop(context);
                     },
-                    child: Text("Sign up",
+                    child: Text("Sign in",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w500)),
                   )
