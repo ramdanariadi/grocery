@@ -1,0 +1,134 @@
+### LOGIN
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/login
+Content-Type: application/json
+
+{
+  "username" : "admin",
+  "password" : "admin"
+}
+
+### STORE CATEGORY
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2dyb2NlcnktYmFjay1lbmQtN2RubHRzaXF0YS1ldC5hLnJ1bi5hcHAvYXBpL3YxL2xvZ2luIiwiZXhwIjoxNjM3NDg2NDM2fQ.rRMgFl2ftHICKiQ2YjLvZd5hpYQQV84t1rXfP-ohrxI
+
+{
+    "category":"Fruits",
+    "imageUrl":null
+}
+
+### Update Category
+PUT https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2dyb2NlcnktYmFjay1lbmQtN2RubHRzaXF0YS1ldC5hLnJ1bi5hcHAvYXBpL3YxL2xvZ2luIiwiZXhwIjoxNjM3NDg2NDM2fQ.rRMgFl2ftHICKiQ2YjLvZd5hpYQQV84t1rXfP-ohrxI
+
+{
+  "id": "8c2c184e-11d2-11ec-82a8-0242ac130003",
+  "category": "Vegetables",
+  "imageUrl": "https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/icons%2Fvegetables.png?alt=media&token=f04e7678-0cbd-4b6f-9553-4f0335f8a1aa"
+}
+
+### All Category
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/category
+
+### Get Category by Id
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+
+### PRODUCT
+### STORE PRODUCT
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2dyb2NlcnktYmFjay1lbmQtN2RubHRzaXF0YS1ldC5hLnJ1bi5hcHAvYXBpL3YxL2xvZ2luIiwiZXhwIjoxNjM3NDg2NDM2fQ.rRMgFl2ftHICKiQ2YjLvZd5hpYQQV84t1rXfP-ohrxI
+
+{
+         "weight":1000,
+         "price":10,
+         "category":"8843ba90-4aa2-11ec-a47f-af75c0d94aab",
+         "imageUrl":"https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/products%2Forange.jpeg?alt=media&token=f1131f6f-2812-4f64-8aa8-8dea7dbb8d09",
+         "name":"Orange",
+  "perUnit": 100,
+  "description": "Good for health"
+},
+
+### UPDATE PRODUCT
+PUT https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product
+Content-Type: application/json
+
+{
+  "name": "Banana",
+  "id": "5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f",
+  "imageUrl": "https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/products%2Fbanana.jpg?alt=media&token=aea8a0f7-7ef9-44e2-9662-802f66185be1",
+  "price": 10
+}
+
+###  GET ALL PRODUCT
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product
+
+### GET PRODUCT BY ID
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+
+
+### GET PRODUCT BY CATEGORY ID
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+
+### DESTROY PRODUCT ID
+DELETE https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/c2b73af3-4aa5-11ec-b916-ef50ac19fa4c
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2dyb2NlcnktYmFjay1lbmQtN2RubHRzaXF0YS1ldC5hLnJ1bi5hcHAvYXBpL3YxL2xvZ2luIiwiZXhwIjoxNjM3NDg2NDM2fQ.rRMgFl2ftHICKiQ2YjLvZd5hpYQQV84t1rXfP-ohrxI
+
+
+### TOP PRODUCT
+### STORE TOP PRODUCT
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/top/a3c02e8c-11d2-11ec-82a8-0242ac130003
+
+### GET ALL TOP PRODUCT
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/top
+
+### RECOMMEDATION PRODUCT
+### STORE RECOMMEDATION PRODUCT
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/recommendation/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+
+### GET ALL RECOMMEDATION PRODUCT
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/product/recommendation
+
+### TRANSACTION
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/transaction
+Content-Type: application/json
+
+{
+  "userId":"ac723ce6-11d2-11ec-82a8-0242ac130003",
+  "products": [
+    {"id": "d7c6d7a4-186c-11ec-b6fd-23e8ea136663", "name": "Carrot", "price": 10, "weight": 1000, "perUnit": 100, "total": 2}
+  ]
+}
+
+
+### GET CUSTOMER TRANSACTION
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003
+
+### DELETE CUSTOMER TRANSACTION
+DELETE https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/transaction/b25bfd97-3007-11ec-8d6b-a9270818bed5
+
+### CUSTOMER
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/customer
+
+### STORE CART
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663/2
+
+### DESTROY CART
+DELETE https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/7866b1e5-187c-11ec-9e94-e9fbbd5e8748
+
+### GET CUSTOMER CART
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003
+
+### STORE WISHLIST
+POST https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### GET WISHLIST
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### DESTROY WISHLIST
+DELETE https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+
+### GET CUSTOMER WISHLIST
+GET https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003
