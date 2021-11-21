@@ -4,7 +4,6 @@ import 'package:grocery/SearchPage/SearchPage.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
-  String? search;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

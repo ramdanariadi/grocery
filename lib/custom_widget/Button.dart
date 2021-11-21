@@ -16,44 +16,43 @@ class Button extends StatelessWidget {
     required this.height,
     required this.onTap,
   }) : super(key: key) {
-    this.margin = margin;
-    this.padding = padding;
-    this.child = child;
-    this.text = text;
-    this.color = color;
-  }
-
-  final double width;
-  final double height;
-  final Function onTap;
-  String? text;
-  Widget? child;
-  EdgeInsets? margin;
-  EdgeInsets? padding;
-  Color? color;
-  TextStyle? textStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: this.margin ?? EdgeInsets.all(10),
-      width: this.width,
-      height: this.height,
-      child: TextButton(
-        style: TextButton.styleFrom(
-            padding: this.padding ?? EdgeInsets.all(10),
-            backgroundColor: this.color ?? kPrimaryColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        child: this.child ??
-            Text(
-              this.text ?? 'Button',
+    this.margin = margin ?? EdgeInsets.all(10);
+    this.padding = padding ?? EdgeInsets.all(10);
+    this.text = text ?? 'Button';
+    this.child = child ?? Text(
+              this.text,
               style: textStyle ??
                   TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w200),
-            ),
+            );
+    this.color = color ?? kPrimaryColor;
+  }
+
+  final double width;
+  final double height;
+  final Function onTap;
+  late String text;
+  late Widget child;
+  late EdgeInsets margin;
+  late EdgeInsets padding;
+  late Color color;
+  TextStyle? textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: this.margin,
+      width: this.width,
+      height: this.height,
+      child: TextButton(
+        style: TextButton.styleFrom(
+            padding: this.padding,
+            backgroundColor: this.color,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        child: this.child,
         onPressed: () {
           this.onTap();
         },

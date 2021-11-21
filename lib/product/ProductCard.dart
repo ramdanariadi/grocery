@@ -17,9 +17,10 @@ class ProductCard extends StatelessWidget {
       required this.category,
       required this.weight,
       required this.price,
-      this.margin})
+      double? margin})
       : super(key: key) {
     this.imageUrl = imageUrl;
+    this.margin = margin ?? kDefaultPadding / 2;
   }
 
   final String id;
@@ -28,7 +29,7 @@ class ProductCard extends StatelessWidget {
   final int weight;
   final int price;
   String? imageUrl;
-  double? margin;
+  late double margin;
 
   factory ProductCard.fromJson(Map<String, dynamic> item, {double? margin}) {
     return new ProductCard(
@@ -75,8 +76,8 @@ class ProductCard extends StatelessWidget {
       child: Container(
         width: size.width * 0.4,
         margin: EdgeInsets.only(
-            left: margin != null ? margin! : kDefaultPadding / 2,
-            right: margin != null ? margin! : kDefaultPadding / 2),
+            left: margin,
+            right: margin),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [

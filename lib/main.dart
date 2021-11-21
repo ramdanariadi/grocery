@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constrant.dart';
@@ -18,13 +16,11 @@ void main() {
   runApp(MyApp());
 }
 
-SharedPreferences? sharedPreferences;
+late SharedPreferences sharedPreferences;
 
 class MyApp extends StatelessWidget {
   static Future init() async {
-    if (sharedPreferences == null) {
-      sharedPreferences = await SharedPreferences.getInstance();
-    }
+    sharedPreferences = await SharedPreferences.getInstance();
   }
 
   // This widget is the root of your application.
@@ -82,7 +78,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == MyAccount.routeName) {
-          if (sharedPreferences != null && (sharedPreferences!.getBool("authenticated") == null || sharedPreferences!.getBool("authenticated")!)) {
+          if ((sharedPreferences.getBool("authenticated") ?? false)) {
             return MaterialPageRoute(builder: (context) => Login());
           }
           return CustomPageRoute(child: MyAccount());
@@ -96,11 +92,12 @@ class MyApp extends StatelessWidget {
 }
 
 class CustomPageRoute<T> extends PageRoute<T> {
-  CustomPageRoute({required this.child, int? transitionDuration}) {
+  CustomPageRoute({required this.child, int transitionDuration = 0}) {
     this.duration = transitionDuration;
+
   }
   final Widget child;
-  int? duration;
+  late int duration;
 
   @override
   Color? get barrierColor => kBlackHint;
@@ -118,5 +115,5 @@ class CustomPageRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Duration get transitionDuration => Duration(milliseconds: duration ?? 1000);
+  Duration get transitionDuration => Duration(milliseconds: duration);
 }

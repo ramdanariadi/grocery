@@ -13,7 +13,7 @@ class ProductGroupItems extends StatelessWidget {
   final String actionButtonTitle;
   final String categoryId;
 
-  Future<List<ProductCard>>? productFuture;
+  late Future<List<ProductCard>> productFuture;
 
   ProductGroupItems(
       {required this.title,

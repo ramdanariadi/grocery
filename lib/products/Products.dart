@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class Products extends StatelessWidget {
   static final routeName = '/products';
 
-  Future<List<ProductGroupItems>>? groupsFuture;
+  late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
     final response = await http.get(Uri.parse("$HTTPBASEURL/category"));

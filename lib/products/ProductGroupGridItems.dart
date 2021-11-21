@@ -14,13 +14,13 @@ class ProductGroupGridItems extends StatelessWidget {
 
   final String title;
   final String categoryId;
-  String? url;
+  late String url;
 
   Future<List<ProductCard>>? productFuture;
 
   ProductGroupGridItems(
       {String? url, required this.title, required this.categoryId}) {
-    this.url = url;
+    this.url = url ?? "$HTTPBASEURL/product/category/${this.categoryId}";
   }
 
   factory ProductGroupGridItems.fromJson(Map<String, dynamic> json) {
@@ -38,7 +38,7 @@ class ProductGroupGridItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct() async {
     final response = await http.get(Uri.parse(
-        this.url ?? "$HTTPBASEURL/product/category/${this.categoryId}"));
+        this.url));
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['response'];
       List<ProductCard> productList = responseList

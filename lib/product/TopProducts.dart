@@ -11,7 +11,7 @@ class TopProducts extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<List<ProductCard>>? futureProductList;
+  late Future<List<ProductCard>> futureProductList;
 
   void initState() {
     futureProductList = this.fetchProduct();

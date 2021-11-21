@@ -17,8 +17,8 @@ class Cart extends StatefulWidget {
 }
 
 class _Cart extends State<Cart> {
-  Future<List<WideProductCard>>? productFuture;
-  List<WideProductCard>? productList;
+  late Future<List<WideProductCard>> productFuture;
+  late List<WideProductCard> productList;
   int totalPrice = 0;
 
   Future<List<WideProductCard>> fetchCart() async {
@@ -48,7 +48,7 @@ class _Cart extends State<Cart> {
   void countTotalPrice() {
     totalPrice = 0;
     setState(() {
-      productList?.forEach((element) {
+      productList.forEach((element) {
         totalPrice += element.price * element.total;
       });
     });
@@ -65,7 +65,7 @@ class _Cart extends State<Cart> {
     debugPrint("object");
     final resBody = jsonEncode(<String, dynamic>{
       'userId': 'ac723ce6-11d2-11ec-82a8-0242ac130003',
-      'products': productList!
+      'products': productList
           .map((e) => <String, dynamic>{
                 "id": e.productId,
                 "name": e.merk,

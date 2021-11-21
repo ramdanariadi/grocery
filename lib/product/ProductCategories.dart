@@ -12,7 +12,7 @@ class ProductCategories extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<List<ProductCategory>>? categoryFuture;
+  late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
     final response = await http.get(Uri.parse("$HTTPBASEURL/category"));

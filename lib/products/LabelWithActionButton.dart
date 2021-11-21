@@ -9,12 +9,12 @@ class LabelWithActionButton extends StatelessWidget {
     required this.title,
     required this.press,
   }) : super(key: key) {
-    this.padding = padding;
+    this.padding = padding ?? EdgeInsets.only(left: kDefaultPadding, top: kDefaultPadding * 1.5);
   }
 
   final String title;
   final Function press;
-  EdgeInsets? padding;
+  late EdgeInsets padding;
 
   factory LabelWithActionButton.fromJson(
       Map<String, dynamic> json, Function callback) {
@@ -24,8 +24,7 @@ class LabelWithActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ??
-          EdgeInsets.only(left: kDefaultPadding, top: kDefaultPadding * 1.5),
+      padding: padding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

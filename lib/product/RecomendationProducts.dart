@@ -11,7 +11,7 @@ class RecomendationProducts extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<List<WideProductCard>>? futureProduct;
+  late Future<List<WideProductCard>> futureProduct;
 
   void init() {
     futureProduct = this.fetchRecomendedProduct();

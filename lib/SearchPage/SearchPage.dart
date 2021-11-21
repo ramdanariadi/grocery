@@ -5,11 +5,6 @@ import 'package:grocery/constrant.dart';
 // ignore: must_be_immutable
 class SearchPage extends StatelessWidget {
   static String routeName = '/searchpage';
-  String? search;
-
-  SearchPage({String? search}) {
-    this.search = search;
-  }
 
   @override
   Widget build(BuildContext context) {
