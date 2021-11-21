@@ -77,9 +77,9 @@ class _ProductDetail extends State<ProductDetail> {
     }
   }
 
-  Future<void> addToChart() async {
+  Future<void> addToCart() async {
     final response = await http.post(Uri.parse(HTTPBASEURL +
-        '/chart/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}/$_count'));
+        '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}/$_count'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {
@@ -268,7 +268,7 @@ class _ProductDetail extends State<ProductDetail> {
                   width: size.width - (kDefaultPadding * 2),
                   height: size.height / 11,
                   onTap: () {
-                    this.addToChart();
+                    this.addToCart();
                   }),
             ),
           )

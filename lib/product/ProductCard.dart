@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
                 category: this.category,
                 weight: this.weight,
                 price: this.price,
-                imageUrl: this.imageUrl!));
+                imageUrl: this.imageUrl));
       },
       child: Container(
         width: size.width * 0.4,
@@ -167,7 +167,7 @@ class ProductArguments {
   final String category;
   final int weight;
   final int price;
-  final String imageUrl;
+  String? imageUrl;
 
   ProductArguments(
       {required this.id,
