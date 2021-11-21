@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constrant.dart';
 
 class Register extends StatefulWidget {
@@ -23,6 +24,11 @@ class _LoginState extends State<Register> {
     Color prefixIconColor = Color.fromRGBO(0, 24, 51, 0.6);
     Color hintColor = Color.fromRGBO(193, 199, 208, 1);
     Color focusColor = Color.fromRGBO(143, 146, 151, 1);
+
+    // textfield controller
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -57,6 +63,7 @@ class _LoginState extends State<Register> {
               Container(
                 margin: EdgeInsets.only(top: 60),
                 child: TextField(
+                  controller: usernameController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -92,6 +99,7 @@ class _LoginState extends State<Register> {
               Container(
                 margin: EdgeInsets.only(top: 30),
                 child: TextField(
+                  controller: passwordController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -215,14 +223,22 @@ class _LoginState extends State<Register> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 40),
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
+                    child: Ink(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor, shape: BoxShape.circle),
+                      child: InkWell(
                         borderRadius: BorderRadius.circular(64),
-                        color: kPrimaryColor),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
+                        onTap: () {
+                          Fluttertoast.showToast(
+                              msg: "${usernameController.text}");
+                        },
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

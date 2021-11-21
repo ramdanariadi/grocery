@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constrant.dart';
+import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/profile/Register.dart';
 
 class Login extends StatefulWidget {
@@ -24,6 +27,11 @@ class _LoginState extends State<Login> {
     Color prefixIconColor = Color.fromRGBO(0, 24, 51, 0.6);
     Color hintColor = Color.fromRGBO(193, 199, 208, 1);
     Color focusColor = Color.fromRGBO(143, 146, 151, 1);
+
+    // textfield controller
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -58,6 +66,7 @@ class _LoginState extends State<Login> {
               Container(
                 margin: EdgeInsets.only(top: 60),
                 child: TextField(
+                  controller: usernameController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -93,6 +102,7 @@ class _LoginState extends State<Login> {
               Container(
                 margin: EdgeInsets.only(top: 30),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: !showPassword,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
@@ -146,14 +156,31 @@ class _LoginState extends State<Login> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 179),
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
+                    child: Ink(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor, shape: BoxShape.circle),
+                      child: InkWell(
                         borderRadius: BorderRadius.circular(64),
-                        color: kPrimaryColor),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
+                        onTap: () async {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "${usernameController.text} - ${passwordController.text}");
+                          bool authenticated = await HttpRequestService.login(
+                              usernameController.text, passwordController.text);
+                          if (authenticated) {
+                            Navigator.popAndPushNamed(
+                                context, MyAccount.routeName);
+                          } else {
+                            Fluttertoast.showToast(msg: "not authenticated");
+                          }
+                        },
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

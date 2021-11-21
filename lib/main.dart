@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == MyAccount.routeName) {
-          if ((sharedPreferences.getBool("authenticated") ?? false)) {
+          if (!(sharedPreferences.getBool("authenticated") ?? false)) {
             return MaterialPageRoute(builder: (context) => Login());
           }
           return CustomPageRoute(child: MyAccount());
@@ -94,7 +94,6 @@ class MyApp extends StatelessWidget {
 class CustomPageRoute<T> extends PageRoute<T> {
   CustomPageRoute({required this.child, int transitionDuration = 0}) {
     this.duration = transitionDuration;
-
   }
   final Widget child;
   late int duration;
