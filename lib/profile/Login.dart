@@ -15,6 +15,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool showPassword = false;
 
+  // textfield controller
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -27,10 +31,6 @@ class _LoginState extends State<Login> {
     Color prefixIconColor = Color.fromRGBO(0, 24, 51, 0.6);
     Color hintColor = Color.fromRGBO(193, 199, 208, 1);
     Color focusColor = Color.fromRGBO(143, 146, 151, 1);
-
-    // textfield controller
-    final usernameController = TextEditingController();
-    final passwordController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -101,7 +101,7 @@ class _LoginState extends State<Login> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 30),
-                child: TextField(
+                child: TextFormField(
                   controller: passwordController,
                   obscureText: !showPassword,
                   cursorColor: focusColor,
@@ -128,17 +128,19 @@ class _LoginState extends State<Login> {
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          debugPrint("show password");
                           setState(() {
                             showPassword = !showPassword;
                           });
                         },
-                        icon: Icon(
-                          !showPassword
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                          color: prefixIconColor,
-                        ),
+                        icon: !showPassword
+                            ? Icon(
+                                Icons.visibility_off_outlined,
+                                color: prefixIconColor,
+                              )
+                            : Icon(
+                                Icons.visibility_outlined,
+                                color: prefixIconColor,
+                              ),
                       ),
                       hintText: "Password",
                       hintStyle: TextStyle(

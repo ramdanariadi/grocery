@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductDetail.dart';
+import 'package:grocery/profile/Login.dart';
 import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
@@ -44,8 +46,10 @@ class ProductCard extends StatelessWidget {
   }
 
   Future<void> addToChart() async {
-    final response = await http.post(Uri.parse(HTTPBASEURL +
-        '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1'));
+    final response = await HttpRequestService.post(
+        url:
+            '$HTTPBASEURL/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
+        needHeader: true);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {
@@ -75,9 +79,7 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         width: size.width * 0.4,
-        margin: EdgeInsets.only(
-            left: margin,
-            right: margin),
+        margin: EdgeInsets.only(left: margin, right: margin),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -147,8 +149,12 @@ class ProductCard extends StatelessWidget {
                       width: 30,
                       height: 30,
                       padding: EdgeInsets.all(0),
-                      onTap: () {
-                        this.addToChart();
+                      onTap: () async {
+                        if (await HttpRequestService.isAuthenticated()) {
+                          this.addToChart();
+                        } else {
+                          Navigator.pushNamed(context, Login.routeName);
+                        }
                       })
                 ],
               ),

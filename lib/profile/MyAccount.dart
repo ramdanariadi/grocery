@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/BottomNavBar.dart';
@@ -53,8 +54,10 @@ class Transactions extends StatelessWidget {
   Future<List<TransactionCard>>? transactionFuture;
 
   Future<List<TransactionCard>> fetchTransaction() async {
-    final response = await http.get(Uri.parse(
-        "$HTTPBASEURL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003"));
+    final response = await HttpRequestService.get(
+        url:
+            "$HTTPBASEURL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
+        needHeader: true);
     if (response.statusCode == 200) {
       List<dynamic> listResponse = jsonDecode(response.body)['response'];
       List<TransactionCard> transactionList =

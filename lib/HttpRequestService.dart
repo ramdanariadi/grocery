@@ -6,16 +6,32 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpRequestService {
-  static Future<http.Response> get({required String url}) async {
-    final dynamic response =
-        await http.get(Uri.parse(url), headers: await getHeaders());
-    if (response.statusCode == 200) {
-      return response;
-    }
+  static Future<http.Response> get(
+      {required String url, bool needHeader = false}) async {
+    final response = await http.get(Uri.parse(url),
+        headers: needHeader ? await getHeaders() : null);
+    debugPrint("Response body " + response.body.toString());
 
     if (response.statusCode == 403) {
       refreshToken();
     }
+    return response;
+  }
+
+  static Future<http.Response> post(
+      {required String url, bool needHeader = false, Object? body}) async {
+    final response = await http.post(Uri.parse(url),
+        body: body, headers: needHeader ? await getHeaders() : null);
+
+    debugPrint("Response " +
+        response.body.toString() +
+        " code : " +
+        response.statusCode.toString());
+
+    if (response.statusCode == 403) {
+      await refreshToken();
+    }
+
     return response;
   }
 
@@ -32,12 +48,20 @@ class HttpRequestService {
     };
 
     final response =
-        await http.post(Uri.parse("$HTTPBASEURL/user/token"), headers: headers);
+        await http.get(Uri.parse("$HTTPBASEURL/user/token"), headers: headers);
 
+    await sharedPreferences.setBool("authenticated", false);
+    debugPrint("response get token : " +
+        response.body.toString() +
+        " code : " +
+        response.statusCode.toString());
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body);
-      sharedPreferences.setString("access_token", tokens['access_token']);
-      sharedPreferences.setString("refresh_token", tokens['refresh_token']);
+      await sharedPreferences.setString("access_token", tokens['access_token']);
+      await sharedPreferences.setString(
+          "refresh_token", tokens['refresh_token']);
+      await sharedPreferences.setBool("authenticated", true);
+      debugPrint("refresh token : " + tokens.toString());
     } else {
       return false;
     }
@@ -80,7 +104,14 @@ class HttpRequestService {
       "Authorization": "Bearer ${accessToken.trim()}"
     };
 
+    debugPrint("Headers : " + headers.toString());
+
     return headers;
+  }
+
+  static Future<bool> isAuthenticated() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool("authenticated") ?? false;
   }
 }
 

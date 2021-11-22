@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constrant.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
-import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class ProductCategories extends StatelessWidget {
@@ -15,7 +14,7 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await http.get(Uri.parse("$HTTPBASEURL/category"));
+    final response = await HttpRequestService.get(url: "$HTTPBASEURL/category");
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['response'];
       List<ProductCategory> productCategories = listCategory
