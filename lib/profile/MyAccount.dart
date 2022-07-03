@@ -56,7 +56,7 @@ class Transactions extends StatelessWidget {
   Future<List<TransactionCard>> fetchTransaction() async {
     final response = await HttpRequestService.get(
         url:
-            "$HTTPBASEURL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
+            "$HTTP_BASE_URL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
         needHeader: true);
     if (response.statusCode == 200) {
       List<dynamic> listResponse = jsonDecode(response.body)['response'];
@@ -139,7 +139,7 @@ class TransactionCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 offset: Offset(0, 8),
-                color: kShadownColor.withOpacity(0.23),
+                color: kShadowColor.withOpacity(0.23),
                 spreadRadius: -10,
                 blurRadius: 20)
           ],
@@ -210,7 +210,7 @@ class UserProfile extends StatelessWidget {
               ),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: kNaturanWhite,
+                  color: kNaturalWhite,
                   borderRadius: BorderRadius.circular(10)),
             ),
             Padding(

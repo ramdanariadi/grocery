@@ -29,7 +29,7 @@ class ProductGroupItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct() async {
     final response = await http
-        .get(Uri.parse("$HTTPBASEURL/product/category/${this.categoryId}"));
+        .get(Uri.parse("$HTTP_BASE_URL/product/category/${this.categoryId}"));
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['response'];
       List<ProductCard> productList =

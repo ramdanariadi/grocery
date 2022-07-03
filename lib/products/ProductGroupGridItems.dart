@@ -20,7 +20,7 @@ class ProductGroupGridItems extends StatelessWidget {
 
   ProductGroupGridItems(
       {String? url, required this.title, required this.categoryId}) {
-    this.url = url ?? "$HTTPBASEURL/product/category/${this.categoryId}";
+    this.url = url ?? "$HTTP_BASE_URL/product/category/${this.categoryId}";
   }
 
   factory ProductGroupGridItems.fromJson(Map<String, dynamic> json) {

@@ -41,7 +41,7 @@ class LabelWithActionButton extends StatelessWidget {
               onPressed: this.press,
               child: Text(
                 this.actionButtonTitle.toUpperCase(),
-                style: TextStyle(color: kShadownColor),
+                style: TextStyle(color: kShadowColor),
               ))
         ],
       ),

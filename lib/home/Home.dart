@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
                       arguments: ProductGroupGridItemsArgs(
                           title: 'Top Products',
                           categoryId: '',
-                          url: '$HTTPBASEURL/product/top'));
+                          url: '$HTTP_BASE_URL/product/top'));
                 },
               ),
               TopProducts(),
@@ -50,7 +50,7 @@ class Home extends StatelessWidget {
                       arguments: ProductGroupGridItemsArgs(
                           title: 'Recommendation',
                           categoryId: '',
-                          url: '$HTTPBASEURL/product/recommendation'));
+                          url: '$HTTP_BASE_URL/product/recommendation'));
                 },
               ),
               RecomendationProducts(),

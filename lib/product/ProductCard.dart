@@ -48,7 +48,7 @@ class ProductCard extends StatelessWidget {
   Future<void> addToChart() async {
     final response = await HttpRequestService.post(
         url:
-            '$HTTPBASEURL/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
+            '$HTTP_BASE_URL/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
         needHeader: true);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -85,7 +85,7 @@ class ProductCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                   offset: Offset(0, 8),
-                  color: kShadownColor.withOpacity(0.23),
+                  color: kShadowColor.withOpacity(0.23),
                   spreadRadius: -10,
                   blurRadius: 20)
             ],

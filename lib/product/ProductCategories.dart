@@ -14,7 +14,7 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.get(url: "$HTTPBASEURL/category");
+    final response = await HttpRequestService.get(url: "$HTTP_BASE_URL/category");
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['response'];
       List<ProductCategory> productCategories = listCategory
@@ -100,12 +100,12 @@ class ProductCategory extends StatelessWidget {
               top: kDefaultPadding / 2,
               bottom: kDefaultPadding / 2),
           decoration: BoxDecoration(
-              color: kNaturanWhite,
+              color: kNaturalWhite,
               boxShadow: [
                 BoxShadow(
                     blurRadius: 2,
                     offset: Offset(0, 2),
-                    color: kShadownColor.withOpacity(0.12),
+                    color: kShadowColor.withOpacity(0.12),
                     spreadRadius: 0)
               ],
               borderRadius: BorderRadius.circular(40)),

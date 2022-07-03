@@ -54,10 +54,10 @@ class _ProductDetail extends State<ProductDetail> {
   Future<void> like() async {
     final response;
     if (productLoved) {
-      response = await http.delete(Uri.parse(HTTPBASEURL +
+      response = await http.delete(Uri.parse(HTTP_BASE_URL +
           '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     } else {
-      response = await http.post(Uri.parse(HTTPBASEURL +
+      response = await http.post(Uri.parse(HTTP_BASE_URL +
           '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     }
     if (response.statusCode == 200 && widgetExist) {
@@ -78,7 +78,7 @@ class _ProductDetail extends State<ProductDetail> {
   }
 
   Future<void> addToCart() async {
-    final response = await http.post(Uri.parse(HTTPBASEURL +
+    final response = await http.post(Uri.parse(HTTP_BASE_URL +
         '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}/$_count'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -93,7 +93,7 @@ class _ProductDetail extends State<ProductDetail> {
   }
 
   Future<void> isLiked() async {
-    final response = await http.get(Uri.parse(HTTPBASEURL +
+    final response = await http.get(Uri.parse(HTTP_BASE_URL +
         '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -130,7 +130,7 @@ class _ProductDetail extends State<ProductDetail> {
             right: kDefaultPadding,
             bottom: kDefaultPadding,
             left: kDefaultPadding),
-        color: kNaturanWhite,
+        color: kNaturalWhite,
         child: Stack(children: [
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -175,7 +175,7 @@ class _ProductDetail extends State<ProductDetail> {
                   child: Text(
                     widget.category,
                     style: TextStyle(
-                        color: kShadownColor,
+                        color: kShadowColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w200),
                   ),
@@ -218,7 +218,7 @@ class _ProductDetail extends State<ProductDetail> {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                                color: kShadownColor.withOpacity(0.1),
+                                color: kShadowColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Icon(Icons.remove, size: 30))),
                     SizedBox(
@@ -242,7 +242,7 @@ class _ProductDetail extends State<ProductDetail> {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                                color: kShadownColor.withOpacity(0.1),
+                                color: kShadowColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Icon(
                               Icons.add,

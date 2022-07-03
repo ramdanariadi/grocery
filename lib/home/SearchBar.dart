@@ -21,7 +21,7 @@ class SearchBar extends StatelessWidget {
                 width: size.width - kDefaultPadding * 2,
                 padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 decoration: BoxDecoration(
-                    color: kNaturanWhite,
+                    color: kNaturalWhite,
                     borderRadius: BorderRadius.circular(kDefaultPadding - 8)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -101,7 +101,7 @@ class _WideProductCard extends State<WideProductCard> {
             boxShadow: [
               BoxShadow(
                   offset: Offset(0, 8),
-                  color: kShadownColor.withOpacity(0.23),
+                  color: kShadowColor.withOpacity(0.23),
                   spreadRadius: -10,
                   blurRadius: 20)
             ],
@@ -185,7 +185,7 @@ class _WideProductCard extends State<WideProductCard> {
                           },
                           margin: EdgeInsets.all(0),
                           padding: EdgeInsets.all(0),
-                          color: kNaturanWhite.withOpacity(0.5),
+                          color: kNaturalWhite.withOpacity(0.5),
                           child: Icon(
                             Icons.remove_outlined,
                             color: kBlackHint,
@@ -213,7 +213,7 @@ class _WideProductCard extends State<WideProductCard> {
                           },
                           margin: EdgeInsets.all(0),
                           padding: EdgeInsets.all(0),
-                          color: kNaturanWhite.withOpacity(0.5),
+                          color: kNaturalWhite.withOpacity(0.5),
                           child: Icon(
                             Icons.add,
                             color: kBlackHint,

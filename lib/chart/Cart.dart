@@ -23,7 +23,7 @@ class _Cart extends State<Cart> {
 
   Future<List<WideProductCard>> fetchCart() async {
     final response = await http.get(
-        Uri.parse(HTTPBASEURL + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
+        Uri.parse(HTTP_BASE_URL + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
 
     if (response.statusCode == 200) {
       List<dynamic> cart = jsonDecode(response.body)['response'];
@@ -78,7 +78,7 @@ class _Cart extends State<Cart> {
           .toList()
     });
     debugPrint(resBody);
-    final response = await http.post(Uri.parse(HTTPBASEURL + "/transaction"),
+    final response = await http.post(Uri.parse(HTTP_BASE_URL + "/transaction"),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: resBody);
     if (response.statusCode == 200) {
@@ -114,7 +114,7 @@ class _Cart extends State<Cart> {
             bottom: size.height * 0.29,
             // left: kDefaultPadding
           ),
-          color: kNaturanWhite,
+          color: kNaturalWhite,
           child: FutureBuilder<List<WideProductCard>>(
             future: productFuture,
             builder: (context, snapshot) {

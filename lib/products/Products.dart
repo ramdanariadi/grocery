@@ -13,7 +13,7 @@ class Products extends StatelessWidget {
   late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
-    final response = await http.get(Uri.parse("$HTTPBASEURL/category"));
+    final response = await http.get(Uri.parse("$HTTP_BASE_URL/category"));
     if (response.statusCode == 200) {
       List<dynamic> categories = jsonDecode(response.body)['response'];
       List<ProductGroupItems> productGroupItems =

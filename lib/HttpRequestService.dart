@@ -48,7 +48,7 @@ class HttpRequestService {
     };
 
     final response =
-        await http.get(Uri.parse("$HTTPBASEURL/user/token"), headers: headers);
+        await http.get(Uri.parse("$HTTP_BASE_URL/user/token"), headers: headers);
 
     await sharedPreferences.setBool("authenticated", false);
     debugPrint("response get token : " +
@@ -73,7 +73,7 @@ class HttpRequestService {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map<String, String> body = {"username": username, "password": password};
     final response =
-        await http.post(Uri.parse("$HTTPBASEURL/login"), body: body);
+        await http.post(Uri.parse("$HTTP_BASE_URL/login"), body: body);
     debugPrint('Response : ' + response.body.toString());
     debugPrint('has code : ' + response.statusCode.toString());
     debugPrint(body.toString());
