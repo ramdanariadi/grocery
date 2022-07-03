@@ -9,4 +9,4 @@ const kShadowColor = Color.fromRGBO(143, 143, 143, 1);
 const kIconOutlineColor = Color.fromRGBO(218, 220, 224, 1);
 const double kDefaultPadding = 20.0;
 
-const String HTTP_BASE_URL = 'https://grocery-back-end-7dnltsiqta-et.a.run.app/api/v1';
+const String HTTP_BASE_URL = '';
