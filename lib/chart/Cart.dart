@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
-import '../constrant.dart';
+import '../constant.dart';
 import 'WideProductCard.dart';
 
 class Cart extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 
 class TitleAndMoreButton extends StatelessWidget {
   const TitleAndMoreButton({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Cart.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/SearchPage/SearchPage.dart';
 import 'package:grocery/product/ProductCard.dart';

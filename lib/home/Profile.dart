@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 import 'package:grocery/profile/MyAccount.dart';
 
 class Profile extends StatelessWidget {

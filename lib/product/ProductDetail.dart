@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';

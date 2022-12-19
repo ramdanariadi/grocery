@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constrant.dart';
+import 'package:grocery/constant.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
