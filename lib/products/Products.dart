@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/products/ProductGroupItems.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +12,7 @@ class Products extends StatelessWidget {
   late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
-    final response = await http.get(Uri.parse("$HTTP_BASE_URL/category"));
+    final response = await http.get(Uri.parse(Application.httBaseUrl + "/category"));
     if (response.statusCode == 200) {
       List<dynamic> categories = jsonDecode(response.body)['response'];
       List<ProductGroupItems> productGroupItems =
@@ -31,7 +30,7 @@ class Products extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: kDefaultPadding * 1.2),
+            margin: EdgeInsets.only(top: Application.defaultPadding * 1.2),
             child: SingleChildScrollView(
               child: FutureBuilder<List<ProductGroupItems>>(
                 future: groupsFuture,

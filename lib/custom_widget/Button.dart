@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constant.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class Button extends StatelessWidget {
@@ -27,7 +26,7 @@ class Button extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w200),
             );
-    this.color = color ?? kPrimaryColor;
+    this.color = color ?? ApplicationColor.naturalWhite;
   }
 
   final double width;

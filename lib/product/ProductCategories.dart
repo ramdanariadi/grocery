@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/HttpRequestService.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 
 // ignore: must_be_immutable
@@ -14,7 +15,7 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.get(url: "$HTTP_BASE_URL/category");
+    final response = await HttpRequestService.get(url: Application.httBaseUrl + "/category");
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['response'];
       List<ProductCategory> productCategories = listCategory
@@ -93,19 +94,19 @@ class ProductCategory extends StatelessWidget {
         },
         child: Container(
           margin:
-              EdgeInsets.only(left: kDefaultPadding, bottom: kDefaultPadding),
+              EdgeInsets.only(left: Application.defaultPadding, bottom: Application.defaultPadding),
           padding: EdgeInsets.only(
-              left: kDefaultPadding,
-              right: kDefaultPadding,
-              top: kDefaultPadding / 2,
-              bottom: kDefaultPadding / 2),
+              left: Application.defaultPadding,
+              right: Application.defaultPadding,
+              top: Application.defaultPadding / 2,
+              bottom: Application.defaultPadding / 2),
           decoration: BoxDecoration(
-              color: kNaturalWhite,
+              color: ApplicationColor.naturalWhite,
               boxShadow: [
                 BoxShadow(
                     blurRadius: 2,
                     offset: Offset(0, 2),
-                    color: kShadowColor.withOpacity(0.12),
+                    color: ApplicationColor.shadowColor.withOpacity(0.12),
                     spreadRadius: 0)
               ],
               borderRadius: BorderRadius.circular(40)),
@@ -117,7 +118,7 @@ class ProductCategory extends StatelessWidget {
                       ? Image.network(this.imageUrl.toString())
                       : null),
               SizedBox(
-                width: this.imageUrl != null ? kDefaultPadding / 2 : 0,
+                width: this.imageUrl != null ? Application.defaultPadding / 2 : 0,
               ),
               Text(this.title,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal))

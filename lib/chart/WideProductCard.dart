@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
@@ -92,16 +93,16 @@ class _WideProductCard extends State<WideProductCard> {
         width: size.width,
         height: cardHeight,
         margin: EdgeInsets.only(
-            top: kDefaultPadding / 2,
-            bottom: kDefaultPadding / 6,
-            left: kDefaultPadding,
-            right: kDefaultPadding),
+            top: Application.defaultPadding / 2,
+            bottom: Application.defaultPadding / 6,
+            left: Application.defaultPadding,
+            right: Application.defaultPadding),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
               BoxShadow(
                   offset: Offset(0, 8),
-                  color: kShadowColor.withOpacity(0.23),
+                  color: ApplicationColor.shadowColor.withOpacity(0.23),
                   spreadRadius: -10,
                   blurRadius: 20)
             ],
@@ -135,11 +136,11 @@ class _WideProductCard extends State<WideProductCard> {
                         text: "\$${widget.price}",
                         style: TextStyle(
                             height: 1.5,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: "/kg",
-                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
                   ])),
                 ],
               ),
@@ -151,29 +152,29 @@ class _WideProductCard extends State<WideProductCard> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                        left: kDefaultPadding / 2, top: kDefaultPadding / 2),
+                        left: Application.defaultPadding / 2, top: Application.defaultPadding / 2),
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(
                           text: "${widget.merk}\n",
                           style: TextStyle(
                               height: 1.5,
-                              color: kBlackHint,
+                              color: ApplicationColor.blackHint,
                               fontSize: 18,
                               fontWeight: FontWeight.bold)),
                       TextSpan(
                           text: "weight ",
-                          style: TextStyle(height: 1.5, color: kBlackHint)),
+                          style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
                       TextSpan(
                           text: "${widget.weight}g\n",
                           style: TextStyle(
                               height: 1.5,
-                              color: kBlackHint,
+                              color: ApplicationColor.blackHint,
                               fontWeight: FontWeight.w500)),
                     ])),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: kDefaultPadding / 2),
+                    margin: EdgeInsets.only(right: Application.defaultPadding / 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -185,10 +186,10 @@ class _WideProductCard extends State<WideProductCard> {
                           },
                           margin: EdgeInsets.all(0),
                           padding: EdgeInsets.all(0),
-                          color: kNaturalWhite.withOpacity(0.5),
+                          color: ApplicationColor.naturalWhite.withOpacity(0.5),
                           child: Icon(
                             Icons.remove_outlined,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             size: 15,
                           ),
                         ),
@@ -199,7 +200,7 @@ class _WideProductCard extends State<WideProductCard> {
                           "${widget.total}",
                           style: TextStyle(
                               fontSize: 18,
-                              color: kBlackHint,
+                              color: ApplicationColor.blackHint,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -213,10 +214,10 @@ class _WideProductCard extends State<WideProductCard> {
                           },
                           margin: EdgeInsets.all(0),
                           padding: EdgeInsets.all(0),
-                          color: kNaturalWhite.withOpacity(0.5),
+                          color: ApplicationColor.naturalWhite.withOpacity(0.5),
                           child: Icon(
                             Icons.add,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             size: 15,
                           ),
                         ),

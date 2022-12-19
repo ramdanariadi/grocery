@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +48,7 @@ class HttpRequestService {
     };
 
     final response =
-        await http.get(Uri.parse("$HTTP_BASE_URL/user/token"), headers: headers);
+        await http.get(Uri.parse(Application.httBaseUrl + "/user/token"), headers: headers);
 
     await sharedPreferences.setBool("authenticated", false);
     debugPrint("response get token : " +
@@ -73,7 +73,7 @@ class HttpRequestService {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map<String, String> body = {"username": username, "password": password};
     final response =
-        await http.post(Uri.parse("$HTTP_BASE_URL/login"), body: body);
+        await http.post(Uri.parse(Application.httBaseUrl + "/login"), body: body);
     debugPrint('Response : ' + response.body.toString());
     debugPrint('has code : ' + response.statusCode.toString());
     debugPrint(body.toString());

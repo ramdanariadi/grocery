@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/HttpRequestService.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/profile/Register.dart';
 
 class Login extends StatefulWidget {
-  static String routeName = '/login';
+  static final String routeName = '/login';
 
   @override
   State<Login> createState() => _LoginState();
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding * 2),
+          padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -162,7 +163,7 @@ class _LoginState extends State<Login> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                          color: kPrimaryColor, shape: BoxShape.circle),
+                          color: ApplicationColor.primaryColor, shape: BoxShape.circle),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(64),
                         onTap: () async {

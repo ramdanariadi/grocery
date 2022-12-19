@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/profile/MyAccount.dart';
 
 class Profile extends StatelessWidget {
@@ -22,7 +22,7 @@ class Profile extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height * 0.17,
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: EdgeInsets.all(Application.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

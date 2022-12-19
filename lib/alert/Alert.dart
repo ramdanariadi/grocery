@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/custom_widget/Button.dart';
 
 enum Alerts { success }
@@ -39,7 +39,7 @@ class Alert extends StatelessWidget {
             bottom: 0,
             child: Center(
               child: Button(
-                  margin: EdgeInsets.all(kDefaultPadding),
+                  margin: EdgeInsets.all(Application.defaultPadding),
                   child: Text(
                     'OK',
                     style: TextStyle(
@@ -47,7 +47,7 @@ class Alert extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w200),
                   ),
-                  width: size.width - (kDefaultPadding * 2),
+                  width: size.width - (Application.defaultPadding * 2),
                   height: size.height / 11,
                   onTap: callback),
             ),

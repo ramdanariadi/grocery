@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Cart.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
@@ -19,18 +20,18 @@ class BottomNavBar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        padding: EdgeInsets.all(kDefaultPadding),
-        margin: EdgeInsets.all(kDefaultPadding * 0.8),
+        padding: EdgeInsets.all(Application.defaultPadding),
+        margin: EdgeInsets.all(Application.defaultPadding * 0.8),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
               BoxShadow(
                   offset: Offset(0, 8),
                   blurRadius: 10,
-                  color: kShadowColor.withOpacity(0.23),
+                  color: ApplicationColor.shadowColor.withOpacity(0.23),
                   spreadRadius: 0)
             ],
-            borderRadius: BorderRadius.circular(kDefaultPadding * 5)),
+            borderRadius: BorderRadius.circular(Application.defaultPadding * 5)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
@@ -41,8 +42,8 @@ class BottomNavBar extends StatelessWidget {
               child: Icon(Icons.home,
                   size: 32,
                   color: home.contains(active)
-                      ? kPrimaryColor
-                      : kIconOutlineColor)),
+                      ? ApplicationColor.primaryColor
+                      : ApplicationColor.iconOutlineColor)),
           GestureDetector(
               onTap: () {
                 if (ModalRoute.of(context)!.settings.name != Products.routeName)
@@ -52,8 +53,8 @@ class BottomNavBar extends StatelessWidget {
                 Icons.grid_view_rounded,
                 size: 32,
                 color: product.contains(active)
-                    ? kPrimaryColor
-                    : kIconOutlineColor,
+                    ? ApplicationColor.primaryColor
+                    : ApplicationColor.iconOutlineColor,
               )),
           GestureDetector(
               onTap: () {
@@ -63,7 +64,7 @@ class BottomNavBar extends StatelessWidget {
               child: Icon(
                 Icons.shopping_bag,
                 size: 32,
-                color: kIconOutlineColor,
+                color: ApplicationColor.iconOutlineColor,
               )),
           GestureDetector(
               onTap: () {
@@ -73,8 +74,8 @@ class BottomNavBar extends StatelessWidget {
                 Icons.account_circle_outlined,
                 size: 32,
                 color: profile.contains(active)
-                    ? kPrimaryColor
-                    : kIconOutlineColor,
+                    ? ApplicationColor.primaryColor
+                    : ApplicationColor.iconOutlineColor,
               ))
         ]),
       ),

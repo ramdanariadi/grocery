@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 import 'package:grocery/product/ProductCategories.dart';
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: kDefaultPadding / 100,
+        toolbarHeight: Application.defaultPadding / 100,
         backgroundColor: Colors.transparent,
       ),
       body: Stack(children: [
@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
                       arguments: ProductGroupGridItemsArgs(
                           title: 'Top Products',
                           categoryId: '',
-                          url: '$HTTP_BASE_URL/product/top'));
+                          url: Application.httBaseUrl + '/product/top'));
                 },
               ),
               TopProducts(),
@@ -50,7 +50,7 @@ class Home extends StatelessWidget {
                       arguments: ProductGroupGridItemsArgs(
                           title: 'Recommendation',
                           categoryId: '',
-                          url: '$HTTP_BASE_URL/product/recommendation'));
+                          url: Application.httBaseUrl + '/product/recommendation'));
                 },
               ),
               RecomendationProducts(),

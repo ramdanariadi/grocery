@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/HttpRequestService.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/profile/Login.dart';
-import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
       double? margin})
       : super(key: key) {
     this.imageUrl = imageUrl;
-    this.margin = margin ?? kDefaultPadding / 2;
+    this.margin = margin ?? Application.defaultPadding / 2;
   }
 
   final String id;
@@ -48,7 +48,7 @@ class ProductCard extends StatelessWidget {
   Future<void> addToChart() async {
     final response = await HttpRequestService.post(
         url:
-            '$HTTP_BASE_URL/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
+            Application.httBaseUrl + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
         needHeader: true);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -85,7 +85,7 @@ class ProductCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                   offset: Offset(0, 8),
-                  color: kShadowColor.withOpacity(0.23),
+                  color: ApplicationColor.naturalWhite.withOpacity(0.23),
                   spreadRadius: -10,
                   blurRadius: 20)
             ],
@@ -104,7 +104,7 @@ class ProductCard extends StatelessWidget {
                         height: 120,
                       )),
             Padding(
-              padding: const EdgeInsets.all(kDefaultPadding / 2),
+              padding: EdgeInsets.all(Application.defaultPadding / 2),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,27 +115,27 @@ class ProductCard extends StatelessWidget {
                         text: "${this.merk}\n",
                         style: TextStyle(
                             height: 1.5,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             fontSize: 16,
                             fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: "weight ",
-                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
                     TextSpan(
                         text: "${this.weight}g\n",
                         style: TextStyle(
                             height: 1.5,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             fontWeight: FontWeight.w500)),
                     TextSpan(
                         text: "\$${this.price}",
                         style: TextStyle(
                             height: 1.5,
-                            color: kBlackHint,
+                            color: ApplicationColor.blackHint,
                             fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: "/kg",
-                        style: TextStyle(height: 1.5, color: kBlackHint)),
+                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
                   ])),
                   Button(
                       text: "plus",

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 
 class TitleAndMoreButton extends StatelessWidget {
   const TitleAndMoreButton({
@@ -24,7 +24,7 @@ class TitleAndMoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: kDefaultPadding, left: kDefaultPadding, right: kDefaultPadding),
+          top: Application.defaultPadding, left: Application.defaultPadding, right: Application.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

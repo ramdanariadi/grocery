@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/HttpRequestService.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/products/LabelWithActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
@@ -20,7 +19,7 @@ class ProductGroupGridItems extends StatelessWidget {
 
   ProductGroupGridItems(
       {String? url, required this.title, required this.categoryId}) {
-    this.url = url ?? "$HTTP_BASE_URL/product/category/${this.categoryId}";
+    this.url = url ?? Application.httBaseUrl + "/product/category/${this.categoryId}";
   }
 
   factory ProductGroupGridItems.fromJson(Map<String, dynamic> json) {
@@ -43,7 +42,7 @@ class ProductGroupGridItems extends StatelessWidget {
       List<ProductCard> productList = responseList
           .map((e) => ProductCard.fromJson(
                 e,
-                margin: kDefaultPadding / 4,
+                margin: Application.defaultPadding / 4,
               ))
           .toList();
       return productList;
@@ -76,8 +75,8 @@ class ProductGroupGridItems extends StatelessWidget {
                         snapshot.data![index],
                     staggeredTileBuilder: (int index) =>
                         new StaggeredTile.fit(1),
-                    mainAxisSpacing: kDefaultPadding / 2,
-                    // crossAxisSpacing: kDefaultPadding,
+                    mainAxisSpacing: Application.defaultPadding / 2,
+                    // crossAxisSpacing: Application.defaultPadding,
                   );
                 }
 

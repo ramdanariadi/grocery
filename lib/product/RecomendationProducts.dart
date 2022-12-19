@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/product/WideProductCard.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +23,7 @@ class RecomendationProducts extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding / 2),
+          padding: EdgeInsets.all(Application.defaultPadding / 2),
           child: FutureBuilder<List<WideProductCard>>(
             future: futureProduct,
             builder: (context, snapshot) {
@@ -45,7 +45,7 @@ class RecomendationProducts extends StatelessWidget {
 
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
     final response =
-        await http.get(Uri.parse('$HTTP_BASE_URL/product/recommendation'));
+        await http.get(Uri.parse(Application.httBaseUrl + '/product/recommendation'));
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['response'];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class LabelWithActionButton extends StatelessWidget {
@@ -10,7 +11,7 @@ class LabelWithActionButton extends StatelessWidget {
     required this.actionButtonTitle,
     required this.press,
   }) : super(key: key) {
-    this.padding = padding ?? EdgeInsets.symmetric(horizontal: kDefaultPadding);
+    this.padding = padding ?? EdgeInsets.symmetric(horizontal: Application.defaultPadding);
   }
 
   final String title;
@@ -41,7 +42,7 @@ class LabelWithActionButton extends StatelessWidget {
               onPressed: this.press,
               child: Text(
                 this.actionButtonTitle.toUpperCase(),
-                style: TextStyle(color: kShadowColor),
+                style: TextStyle(color: ApplicationColor.shadowColor),
               ))
         ],
       ),

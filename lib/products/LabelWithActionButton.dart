@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class LabelWithActionButton extends StatelessWidget {
@@ -9,7 +10,7 @@ class LabelWithActionButton extends StatelessWidget {
     required this.title,
     required this.press,
   }) : super(key: key) {
-    this.padding = padding ?? EdgeInsets.only(left: kDefaultPadding, top: kDefaultPadding * 1.5);
+    this.padding = padding ?? EdgeInsets.only(left: Application.defaultPadding, top: Application.defaultPadding * 1.5);
   }
 
   final String title;
@@ -34,11 +35,11 @@ class LabelWithActionButton extends StatelessWidget {
               },
               child: Icon(Icons.arrow_back_ios_new, size: 32)),
           Padding(
-            padding: const EdgeInsets.only(right: kDefaultPadding),
+            padding: EdgeInsets.only(right: Application.defaultPadding),
             child: Text(
               this.title,
               style: TextStyle(
-                  fontSize: 22, color: kBlackHint, fontWeight: FontWeight.bold),
+                  fontSize: 22, color: ApplicationColor.blackHint, fontWeight: FontWeight.bold),
             ),
           ),
         ],

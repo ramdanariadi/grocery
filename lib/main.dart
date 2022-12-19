@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/chart/Cart.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/SearchPage/SearchPage.dart';
 import 'package:grocery/product/ProductCard.dart';
@@ -99,7 +99,7 @@ class CustomPageRoute<T> extends PageRoute<T> {
   late int duration;
 
   @override
-  Color? get barrierColor => kBlackHint;
+  Color? get barrierColor => ApplicationColor.blackHint;
 
   @override
   String? get barrierLabel => '';

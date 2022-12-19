@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
@@ -54,10 +55,10 @@ class _ProductDetail extends State<ProductDetail> {
   Future<void> like() async {
     final response;
     if (productLoved) {
-      response = await http.delete(Uri.parse(HTTP_BASE_URL +
+      response = await http.delete(Uri.parse(Application.httBaseUrl +
           '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     } else {
-      response = await http.post(Uri.parse(HTTP_BASE_URL +
+      response = await http.post(Uri.parse(Application.httBaseUrl +
           '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     }
     if (response.statusCode == 200 && widgetExist) {
@@ -78,7 +79,7 @@ class _ProductDetail extends State<ProductDetail> {
   }
 
   Future<void> addToCart() async {
-    final response = await http.post(Uri.parse(HTTP_BASE_URL +
+    final response = await http.post(Uri.parse(Application.httBaseUrl +
         '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}/$_count'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -93,7 +94,7 @@ class _ProductDetail extends State<ProductDetail> {
   }
 
   Future<void> isLiked() async {
-    final response = await http.get(Uri.parse(HTTP_BASE_URL +
+    final response = await http.get(Uri.parse(Application.httBaseUrl +
         '/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/${widget.id}'));
     if (response.statusCode == 200 && widgetExist) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -126,11 +127,11 @@ class _ProductDetail extends State<ProductDetail> {
       body: Container(
         height: size.height,
         padding: EdgeInsets.only(
-            top: kDefaultPadding * 1.4,
-            right: kDefaultPadding,
-            bottom: kDefaultPadding,
-            left: kDefaultPadding),
-        color: kNaturalWhite,
+            top: Application.defaultPadding * 1.4,
+            right: Application.defaultPadding,
+            bottom: Application.defaultPadding,
+            left: Application.defaultPadding),
+        color: ApplicationColor.naturalWhite,
         child: Stack(children: [
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -165,7 +166,7 @@ class _ProductDetail extends State<ProductDetail> {
                   child: Text(
                     widget.merk,
                     style: TextStyle(
-                        color: kTextColor,
+                        color: ApplicationColor.textColor,
                         fontSize: 28,
                         fontWeight: FontWeight.bold),
                   ),
@@ -175,7 +176,7 @@ class _ProductDetail extends State<ProductDetail> {
                   child: Text(
                     widget.category,
                     style: TextStyle(
-                        color: kShadowColor,
+                        color: ApplicationColor.shadowColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w200),
                   ),
@@ -197,12 +198,12 @@ class _ProductDetail extends State<ProductDetail> {
                           style: TextStyle(
                               height: 2,
                               fontSize: 24,
-                              color: kBlackHint,
+                              color: ApplicationColor.blackHint,
                               fontWeight: FontWeight.bold)),
                       TextSpan(
                           text: " /kg",
                           style: TextStyle(
-                              height: 2, fontSize: 24, color: kBlackHint)),
+                              height: 2, fontSize: 24, color: ApplicationColor.blackHint)),
                     ]),
                   ),
                 ),
@@ -218,7 +219,7 @@ class _ProductDetail extends State<ProductDetail> {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                                color: kShadowColor.withOpacity(0.1),
+                                color: ApplicationColor.shadowColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Icon(Icons.remove, size: 30))),
                     SizedBox(
@@ -228,7 +229,7 @@ class _ProductDetail extends State<ProductDetail> {
                       "$_count",
                       style: TextStyle(
                           fontSize: 24,
-                          color: kBlackHint,
+                          color: ApplicationColor.blackHint,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -242,7 +243,7 @@ class _ProductDetail extends State<ProductDetail> {
                             width: 36,
                             height: 36,
                             decoration: BoxDecoration(
-                                color: kShadowColor.withOpacity(0.1),
+                                color: ApplicationColor.shadowColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Icon(
                               Icons.add,
@@ -265,7 +266,7 @@ class _ProductDetail extends State<ProductDetail> {
                         fontSize: 20,
                         fontWeight: FontWeight.w200),
                   ),
-                  width: size.width - (kDefaultPadding * 2),
+                  width: size.width - (Application.defaultPadding * 2),
                   height: size.height / 11,
                   onTap: () {
                     this.addToCart();

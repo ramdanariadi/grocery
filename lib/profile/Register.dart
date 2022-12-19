@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 class Register extends StatefulWidget {
   static String routeName = '/register';
@@ -45,7 +46,7 @@ class _LoginState extends State<Register> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding * 2),
+          padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -227,7 +228,7 @@ class _LoginState extends State<Register> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                          color: kPrimaryColor, shape: BoxShape.circle),
+                          color: ApplicationColor.primaryColor, shape: BoxShape.circle),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(64),
                         onTap: () {

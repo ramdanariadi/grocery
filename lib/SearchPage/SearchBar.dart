@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
@@ -10,17 +11,17 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: EdgeInsets.all(Application.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
               height: 45,
-              width: size.width - kDefaultPadding * 2,
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              width: size.width - Application.defaultPadding * 2,
+              padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding),
               decoration: BoxDecoration(
-                  color: kNaturalWhite,
-                  borderRadius: BorderRadius.circular(kDefaultPadding - 8)),
+                  color: ApplicationColor.naturalWhite,
+                  borderRadius: BorderRadius.circular(Application.defaultPadding - 8)),
               child: Row(
                 children: [
                   Expanded(

@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery/alert/Alert.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:http/http.dart' as http;
-import '../constant.dart';
 import 'WideProductCard.dart';
 
 class Cart extends StatefulWidget {
@@ -23,7 +24,7 @@ class _Cart extends State<Cart> {
 
   Future<List<WideProductCard>> fetchCart() async {
     final response = await http.get(
-        Uri.parse(HTTP_BASE_URL + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
+        Uri.parse(Application.httBaseUrl + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
 
     if (response.statusCode == 200) {
       List<dynamic> cart = jsonDecode(response.body)['response'];
@@ -78,7 +79,7 @@ class _Cart extends State<Cart> {
           .toList()
     });
     debugPrint(resBody);
-    final response = await http.post(Uri.parse(HTTP_BASE_URL + "/transaction"),
+    final response = await http.post(Uri.parse(Application.httBaseUrl + "/transaction"),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: resBody);
     if (response.statusCode == 200) {
@@ -109,12 +110,12 @@ class _Cart extends State<Cart> {
           height: size.height,
           width: size.width,
           padding: EdgeInsets.only(
-            top: kDefaultPadding * 1.2,
-            // right: kDefaultPadding,
+            top: Application.defaultPadding * 1.2,
+            // right: Application.defaultPadding,
             bottom: size.height * 0.29,
-            // left: kDefaultPadding
+            // left: Application.defaultPadding
           ),
-          color: kNaturalWhite,
+          color: ApplicationColor.naturalWhite,
           child: FutureBuilder<List<WideProductCard>>(
             future: productFuture,
             builder: (context, snapshot) {
@@ -137,7 +138,7 @@ class _Cart extends State<Cart> {
         Positioned(
           bottom: 0,
           child: Container(
-            padding: EdgeInsets.all(kDefaultPadding),
+            padding: EdgeInsets.all(Application.defaultPadding),
             width: size.width,
             height: size.height * 0.29,
             decoration: BoxDecoration(
@@ -150,7 +151,7 @@ class _Cart extends State<Cart> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
-                      right: kDefaultPadding, bottom: kDefaultPadding / 4),
+                      right: Application.defaultPadding, bottom: Application.defaultPadding / 4),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -172,7 +173,7 @@ class _Cart extends State<Cart> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                      right: kDefaultPadding, bottom: kDefaultPadding / 4),
+                      right: Application.defaultPadding, bottom: Application.defaultPadding / 4),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -195,12 +196,12 @@ class _Cart extends State<Cart> {
                 Container(
                   height: 1,
                   color: Color.fromRGBO(176, 176, 176, 0.8),
-                  width: size.width - kDefaultPadding * 2,
-                  margin: EdgeInsets.only(bottom: kDefaultPadding / 4),
+                  width: size.width - Application.defaultPadding * 2,
+                  margin: EdgeInsets.only(bottom: Application.defaultPadding / 4),
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                      right: kDefaultPadding, bottom: kDefaultPadding),
+                      right: Application.defaultPadding, bottom: Application.defaultPadding),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -232,7 +233,7 @@ class _Cart extends State<Cart> {
                           fontWeight: FontWeight.w200),
                     ),
                     style: TextButton.styleFrom(
-                        backgroundColor: kPrimaryColor,
+                        backgroundColor: ApplicationColor.primaryColor,
                         minimumSize: Size(double.infinity, size.height / 11),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)))),

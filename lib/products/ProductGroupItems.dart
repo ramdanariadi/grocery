@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
@@ -29,7 +28,7 @@ class ProductGroupItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct() async {
     final response = await http
-        .get(Uri.parse("$HTTP_BASE_URL/product/category/${this.categoryId}"));
+        .get(Uri.parse(Application.httBaseUrl + "/product/category/${this.categoryId}"));
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['response'];
       List<ProductCard> productList =

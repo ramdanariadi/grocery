@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/HttpRequestService.dart';
-import 'package:grocery/constant.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
@@ -21,9 +20,9 @@ class MyAccount extends StatelessWidget {
             Container(
               width: size.width,
               margin: EdgeInsets.only(
-                  bottom: kDefaultPadding,
-                  left: kDefaultPadding,
-                  right: kDefaultPadding),
+                  bottom: Application.defaultPadding,
+                  left: Application.defaultPadding,
+                  right: Application.defaultPadding),
               height: 2,
               color: Colors.black12,
             ),
@@ -32,9 +31,9 @@ class MyAccount extends StatelessWidget {
               actionButtonTitle: "",
               press: () {},
               padding: EdgeInsets.only(
-                  left: kDefaultPadding,
-                  right: kDefaultPadding,
-                  bottom: kDefaultPadding / 2),
+                  left: Application.defaultPadding,
+                  right: Application.defaultPadding,
+                  bottom: Application.defaultPadding / 2),
             ),
             Transactions()
           ]),
@@ -56,7 +55,7 @@ class Transactions extends StatelessWidget {
   Future<List<TransactionCard>> fetchTransaction() async {
     final response = await HttpRequestService.get(
         url:
-            "$HTTP_BASE_URL/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
+            Application.httBaseUrl + "/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
         needHeader: true);
     if (response.statusCode == 200) {
       List<dynamic> listResponse = jsonDecode(response.body)['response'];
@@ -126,11 +125,11 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          left: kDefaultPadding,
-          right: kDefaultPadding,
-          bottom: kDefaultPadding / 4,
-          top: kDefaultPadding / 4),
-      padding: EdgeInsets.all(kDefaultPadding / 3),
+          left: Application.defaultPadding,
+          right: Application.defaultPadding,
+          bottom: Application.defaultPadding / 4,
+          top: Application.defaultPadding / 4),
+      padding: EdgeInsets.all(Application.defaultPadding / 3),
       width: double.infinity,
       height: 100,
       constraints: BoxConstraints(maxHeight: 150),
@@ -139,7 +138,7 @@ class TransactionCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 offset: Offset(0, 8),
-                color: kShadowColor.withOpacity(0.23),
+                color: ApplicationColor.shadowColor.withOpacity(0.23),
                 spreadRadius: -10,
                 blurRadius: 20)
           ],
@@ -199,7 +198,7 @@ class UserProfile extends StatelessWidget {
     return Container(
       height: 220,
       padding: EdgeInsets.only(
-          top: 100, left: kDefaultPadding, right: kDefaultPadding),
+          top: 100, left: Application.defaultPadding, right: Application.defaultPadding),
       child: Column(
         children: [
           Row(children: [
@@ -210,7 +209,7 @@ class UserProfile extends StatelessWidget {
               ),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: kNaturalWhite,
+                  color: ApplicationColor.naturalWhite,
                   borderRadius: BorderRadius.circular(10)),
             ),
             Padding(
@@ -240,7 +239,7 @@ class UserProfile extends StatelessWidget {
               width: double.infinity,
               height: 29,
               margin:
-                  EdgeInsets.only(left: 0, right: 0, top: kDefaultPadding / 2),
+                  EdgeInsets.only(left: 0, right: 0, top: Application.defaultPadding / 2),
               padding: EdgeInsets.all(2),
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
               onTap: () {})
