@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/home/BottomNavBar.dart';
+import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/home/Profile.dart';
@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        BottomNavBar(active: Home.routeName),
+        BottomNavBar(activeRoute: Home.routeName),
       ]),
     );
   }

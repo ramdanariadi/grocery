@@ -21,7 +21,6 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.17,
       padding: EdgeInsets.all(Application.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

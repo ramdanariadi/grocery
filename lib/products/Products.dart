@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/home/BottomNavBar.dart';
+import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/products/ProductGroupItems.dart';
 import 'package:http/http.dart' as http;
 
@@ -55,7 +55,7 @@ class Products extends StatelessWidget {
             ),
           ),
           BottomNavBar(
-            active: Products.routeName,
+            activeRoute: Products.routeName,
           )
         ],
       ),

@@ -8,12 +8,12 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/MyAccount.dart';
 
 class BottomNavBar extends StatelessWidget {
-  BottomNavBar({Key? key, required this.active}) : super(key: key);
+  BottomNavBar({Key? key, required this.activeRoute}) : super(key: key);
 
-  final String active;
-  final home = [Home.routeName];
-  final product = [Products.routeName, ProductGroupGridItems.routeName];
-  final profile = [MyAccount.routeName];
+  final String activeRoute;
+  final homeRoutes = [Home.routeName];
+  final productRoutes = [Products.routeName, ProductGroupGridItems.routeName];
+  final profileRoutes = [MyAccount.routeName];
 
   @override
   Widget build(BuildContext context) {
@@ -36,30 +36,30 @@ class BottomNavBar extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
               onTap: () {
-                if (ModalRoute.of(context)!.settings.name != Home.routeName)
-                  Navigator.popAndPushNamed(context, Home.routeName);
+                if (this.activeRoute != Home.routeName)
+                  Navigator.pushNamed(context, Home.routeName);
               },
               child: Icon(Icons.home,
                   size: 32,
-                  color: home.contains(active)
+                  color: homeRoutes.contains(activeRoute)
                       ? ApplicationColor.primaryColor
                       : ApplicationColor.iconOutlineColor)),
           GestureDetector(
               onTap: () {
-                if (ModalRoute.of(context)!.settings.name != Products.routeName)
-                  Navigator.popAndPushNamed(context, Products.routeName);
+                if (this.activeRoute != Products.routeName)
+                  Navigator.pushNamed(context, Products.routeName);
               },
               child: Icon(
                 Icons.grid_view_rounded,
                 size: 32,
-                color: product.contains(active)
+                color: productRoutes.contains(activeRoute)
                     ? ApplicationColor.primaryColor
                     : ApplicationColor.iconOutlineColor,
               )),
           GestureDetector(
               onTap: () {
-                if (ModalRoute.of(context)!.settings.name != Cart.routeName)
-                  Navigator.popAndPushNamed(context, Cart.routeName);
+                if (this.activeRoute != Cart.routeName)
+                  Navigator.pushNamed(context, Cart.routeName);
               },
               child: Icon(
                 Icons.shopping_bag,
@@ -68,12 +68,12 @@ class BottomNavBar extends StatelessWidget {
               )),
           GestureDetector(
               onTap: () {
-                Navigator.popAndPushNamed(context, MyAccount.routeName);
+                Navigator.pushNamed(context, MyAccount.routeName);
               },
               child: Icon(
                 Icons.account_circle_outlined,
                 size: 32,
-                color: profile.contains(active)
+                color: profileRoutes.contains(activeRoute)
                     ? ApplicationColor.primaryColor
                     : ApplicationColor.iconOutlineColor,
               ))

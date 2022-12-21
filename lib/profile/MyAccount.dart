@@ -4,7 +4,7 @@ import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
-import 'package:grocery/home/BottomNavBar.dart';
+import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 
 class MyAccount extends StatelessWidget {
@@ -37,7 +37,7 @@ class MyAccount extends StatelessWidget {
             ),
             Transactions()
           ]),
-          BottomNavBar(active: MyAccount.routeName)
+          BottomNavBar(activeRoute: MyAccount.routeName)
         ],
       ),
     );

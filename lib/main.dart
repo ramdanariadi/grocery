@@ -61,6 +61,9 @@ class MyApp extends StatelessWidget {
         }
 
         if (setting.name == Cart.routeName) {
+          if (!(sharedPreferences.getBool("authenticated") ?? false)) {
+            return MaterialPageRoute(builder: (context) => Login());
+          }
           return MaterialPageRoute(builder: (context) => Cart());
         }
 
