@@ -1,9 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/products/ProductGroupItems.dart';
-import 'package:http/http.dart' as http;
+import 'package:grocery/services/HttpRequestService.dart';
 
 // ignore: must_be_immutable
 class Products extends StatelessWidget {
@@ -12,7 +12,7 @@ class Products extends StatelessWidget {
   late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
-    final response = await http.get(Uri.parse(Application.httBaseUrl + "/category"));
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + "/category");
     if (response.statusCode == 200) {
       List<dynamic> categories = jsonDecode(response.body)['response'];
       List<ProductGroupItems> productGroupItems =
@@ -54,9 +54,9 @@ class Products extends StatelessWidget {
               ),
             ),
           ),
-          BottomNavBar(
-            activeRoute: Products.routeName,
-          )
+          // BottomNavBar(
+          //   activeRoute: Products.routeName,
+          // )
         ],
       ),
     );

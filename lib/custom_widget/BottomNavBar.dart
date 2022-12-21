@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -36,8 +39,9 @@ class BottomNavBar extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
               onTap: () {
+                log("home clicked " + this.activeRoute);
                 if (this.activeRoute != Home.routeName)
-                  Navigator.pushNamed(context, Home.routeName);
+                  GoRouter.of(context).go(Home.routeName);
               },
               child: Icon(Icons.home,
                   size: 32,
@@ -46,8 +50,9 @@ class BottomNavBar extends StatelessWidget {
                       : ApplicationColor.iconOutlineColor)),
           GestureDetector(
               onTap: () {
+                log("product clicked " + this.activeRoute);
                 if (this.activeRoute != Products.routeName)
-                  Navigator.pushNamed(context, Products.routeName);
+                  GoRouter.of(context).go(Products.routeName);
               },
               child: Icon(
                 Icons.grid_view_rounded,

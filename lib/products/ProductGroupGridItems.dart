@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:grocery/HttpRequestService.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/products/LabelWithActionButton.dart';
@@ -36,7 +36,7 @@ class ProductGroupGridItems extends StatelessWidget {
   }
 
   Future<List<ProductCard>> fetchProduct() async {
-    final response = await HttpRequestService.get(url: this.url);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: this.url);
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['response'];
       List<ProductCard> productList = responseList

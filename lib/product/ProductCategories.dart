@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/HttpRequestService.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
@@ -15,7 +15,7 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.get(url: Application.httBaseUrl + "/category");
+    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category");
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['response'];
       List<ProductCategory> productCategories = listCategory

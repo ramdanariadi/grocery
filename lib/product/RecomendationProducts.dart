@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/product/WideProductCard.dart';
-import 'package:http/http.dart' as http;
+import 'package:grocery/services/HttpRequestService.dart';
 
 // ignore: must_be_immutable
 class RecomendationProducts extends StatelessWidget {
@@ -44,8 +44,7 @@ class RecomendationProducts extends StatelessWidget {
   }
 
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
-    final response =
-        await http.get(Uri.parse(Application.httBaseUrl + '/product/recommendation'));
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/product/recommendation');
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['response'];

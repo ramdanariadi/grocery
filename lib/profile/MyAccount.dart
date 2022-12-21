@@ -1,11 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:grocery/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
-import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 
 class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
@@ -37,7 +37,6 @@ class MyAccount extends StatelessWidget {
             ),
             Transactions()
           ]),
-          BottomNavBar(activeRoute: MyAccount.routeName)
         ],
       ),
     );
@@ -53,10 +52,8 @@ class Transactions extends StatelessWidget {
   Future<List<TransactionCard>>? transactionFuture;
 
   Future<List<TransactionCard>> fetchTransaction() async {
-    final response = await HttpRequestService.get(
-        url:
-            Application.httBaseUrl + "/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003",
-        needHeader: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, 
+      url: Application.httBaseUrl + "/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003", isSecure: true);
     if (response.statusCode == 200) {
       List<dynamic> listResponse = jsonDecode(response.body)['response'];
       List<TransactionCard> transactionList =

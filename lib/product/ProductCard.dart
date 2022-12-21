@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/HttpRequestService.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
@@ -46,10 +46,10 @@ class ProductCard extends StatelessWidget {
   }
 
   Future<void> addToChart() async {
-    final response = await HttpRequestService.post(
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST,
         url:
             Application.httBaseUrl + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/${this.id}/1',
-        needHeader: true);
+        isSecure: true);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (responseBody['metaData']['code'] == 201) {

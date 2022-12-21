@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/custom_widget/BottomNavBar.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
-import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/home/Profile.dart';
+import 'package:grocery/home/SearchBar.dart';
+import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/product/RecomendationProducts.dart';
 import 'package:grocery/product/TopProducts.dart';
-import 'package:grocery/home/SearchBar.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 
 enum BottomIcons { Home, Favorite, Search, Account }
@@ -60,7 +59,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        BottomNavBar(activeRoute: Home.routeName),
+        // BottomNavBar(activeRoute: Home.routeName),
       ]),
     );
   }
