@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
     required this.height,
     required this.onTap,
   }) : super(key: key) {
-    this.margin = margin ?? EdgeInsets.all(10);
+    this.margin = margin ?? EdgeInsets.all(0);
     this.padding = padding ?? EdgeInsets.all(10);
     this.text = text ?? 'Button';
     this.child = child ?? Text(

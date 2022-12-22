@@ -1,11 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:grocery/services/HttpRequestService.dart';
-import 'package:grocery/constants/Application.dart';
-import 'package:grocery/custom_widget/BottomNavBar.dart';
-import 'package:grocery/products/LabelWithActionButton.dart';
-import 'package:grocery/product/ProductCard.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:grocery/constants/Application.dart';
+import 'package:grocery/product/ProductCard.dart';
+import 'package:grocery/products/LabelWithActionButton.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 
 // ignore: must_be_immutable
 class ProductGroupGridItems extends StatelessWidget {
@@ -90,7 +90,7 @@ class ProductGroupGridItems extends StatelessWidget {
               },
             ),
           ),
-          BottomNavBar(activeRoute: ProductGroupGridItems.routeName)
+          // BottomNavBar(activeRoute: ProductGroupGridItems.routeName)
         ],
       ),
     );

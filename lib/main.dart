@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routerConfig: GoRouter(
         navigatorKey: _rootNavigatorKey,
+        initialLocation: Home.routeName,
         routes: [
         ShellRoute(
           builder: (context, state, child) => ScaffoldBottomActionBar(child: child,),
