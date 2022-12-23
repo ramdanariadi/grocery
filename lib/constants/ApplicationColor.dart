@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 class ApplicationColor{
-  static final primaryColor = Color.fromRGBO(255, 132, 76, 1);
+  static final primaryColor = Color.fromRGBO(79, 173, 104, 1);
+  // Color.fromRGBO(69, 160, 93, 1);
+  // Color.fromRGBO(255, 132, 76, 1);
   static final textColor = Color.fromRGBO(0, 0, 0, 1);
   static final backGroundColor = Color.fromRGBO(237, 243, 242, 1);
   static final naturalWhite = Color.fromRGBO(245, 245, 245, 1);

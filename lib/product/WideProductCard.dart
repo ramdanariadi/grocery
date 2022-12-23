@@ -136,6 +136,7 @@ class WideProductCard extends StatelessWidget {
                   ),
                   Button(
                       text: "plus",
+                      color: ApplicationColor.primaryColor,
                       child: Icon(
                         Icons.add,
                         color: Colors.white,

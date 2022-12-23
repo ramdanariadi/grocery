@@ -139,6 +139,7 @@ class ProductCard extends StatelessWidget {
                   ])),
                   Button(
                       text: "plus",
+                      color: ApplicationColor.primaryColor,
                       child: Center(
                         child: Icon(
                           Icons.add,

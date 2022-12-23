@@ -11,6 +11,7 @@ class Button extends StatelessWidget {
     TextStyle? textStyle,
     Widget? child,
     String? text,
+    BorderRadius? borderRadius,
     required this.width,
     required this.height,
     required this.onTap,
@@ -27,6 +28,7 @@ class Button extends StatelessWidget {
                       fontWeight: FontWeight.w200),
             );
     this.color = color ?? ApplicationColor.naturalWhite;
+    this.borderRadius = borderRadius ?? BorderRadius.circular(8);
   }
 
   final double width;
@@ -37,20 +39,21 @@ class Button extends StatelessWidget {
   late EdgeInsets margin;
   late EdgeInsets padding;
   late Color color;
-  TextStyle? textStyle;
-
+  late TextStyle textStyle;
+  late BorderRadius borderRadius;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: this.margin,
       width: this.width,
       height: this.height,
+      padding: this.padding,
       child: TextButton(
         style: TextButton.styleFrom(
-            padding: this.padding,
             backgroundColor: this.color,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                RoundedRectangleBorder(borderRadius: borderRadius)),
         child: this.child,
         onPressed: () {
           this.onTap();

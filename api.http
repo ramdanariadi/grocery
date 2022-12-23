@@ -1,118 +1,241 @@
-### STORE CATEGORY
-POST https://tunas-grocery.herokuapp.com/api/v1/category
+### register
+POST http://localhost:8080/api/v1/user/register
 Content-Type: application/json
 
 {
-  "category": "Fruits",
-  "imageUrl": null
+  "username": "admin",
+  "password": "rahasia"
 }
 
-### Update Category
-PUT https://tunas-grocery.herokuapp.com/api/v1/category
+### login
+POST http://localhost:8080/api/v1/login
 Content-Type: application/json
 
 {
-  "id": "99f90103-186c-11ec-b6fd-b74e3419320a",
-  "category": "Fruits",
+  "username": "admin",
+  "password": "rahasia"
+}
+
+###
+GET http://localhost:8080/api/v1/user/token
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+
+###
+POST http://localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+{
+  "category": "Vegetables",
+  "imageUrl": "notfound.png"
+}
+
+### GET CATEGORY BY ID
+GET http://localhost:8080/api/v1/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### GET CATEGORY
+GET https://tunas-grocery.masuk.web.id/category.php
+Content-Type: application/json
+
+
+### GET ALL CATEGORY
+GET http://localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+
+### UPDATE CATEGORY
+PUT http://localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+
+{
+  "id": "8c2c184e-11d2-11ec-82a8-0242ac130003",
+  "category": "Fast food",
   "imageUrl": null
 }
 
-### All Category
-GET https://tunas-grocery.herokuapp.com/api/v1/category
+### DESTROY CATEGORY
+DELETE http://localhost:8080/api/v1/category/25bf7094-7d45-11ed-9d53-f45c89b11b13
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### Get Category by Id
-GET https://tunas-grocery.herokuapp.com/api/v1/category/8c2c184e-11d2-11ec-82a8-0242ac130003
 
 ### PRODUCT
-### STORE PRODUCT
-POST https://tunas-grocery.herokuapp.com/api/v1/product
+POST http://localhost:8080/api/v1/product
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
 
 {
-  "name": "Salmon",
+  "name": "Carrot",
   "price": 10,
   "weight": 1000,
   "perUnit": 100,
   "description": "Good for health",
-  "category": "d8aad587-1766-11ec-8093-7382d5d6f97f"
+  "imageUrl" : null,
+  "categoryId": "8c2c184e-11d2-11ec-82a8-0242ac130003"
 }
 
-### UPDATE PRODUCT
-PUT https://tunas-grocery.herokuapp.com/api/v1/product
+###
+PUT http://localhost:8080/api/v1/product
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 {
-  "name": "Banana",
-  "id": "5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f",
-  "imageUrl": "https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/products%2Fbanana.jpg?alt=media&token=aea8a0f7-7ef9-44e2-9662-802f66185be1",
-  "price": 10
+  "id": "a3c02e8c-11d2-11ec-82a8-0242ac130003",
+  "name": "BLACK",
+  "price": 10,
+  "weight": 1000,
+  "perUnit": 100,
+  "description": "Good for health",
+  "imageUrl" : null,
+  "categoryId": "8c2c184e-11d2-11ec-82a8-0242ac130003"
 }
 
-###  GET ALL PRODUCT
-GET https://tunas-grocery.herokuapp.com/api/v1/product
+### GET ALL PRODUCT
+GET http://localhost:8080/api/v1/product
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET PRODUCT BY ID
-GET https://tunas-grocery.herokuapp.com/api/v1/product/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
+### GET TOP PRODUCT
+GET http://localhost:8080/api/v1/product/top
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
+### GET RECOMMENDED PRODUCT
+GET http://localhost:8080/api/v1/product/recommended
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET PRODUCT BY CATEGORY ID
-GET https://tunas-grocery.herokuapp.com/api/v1/product/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+### DELETE PRODUCT
+DELETE http://localhost:8080/api/v1/product/03d5d220-7d54-11ed-b6e2-f45c89b11b13
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### DESTROY PRODUCT ID
-DELETE https://tunas-grocery.herokuapp.com/api/v1/product/a3c02e8c-11d2-11ec-82a8-0242ac130003
+### PRODUCT BY ID
+GET http://localhost:8080/api/v1/product/a3c02e8c-11d2-11ec-82a8-0242ac130003
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### PRODUCT BY CATEGORY
+GET http://localhost:8080/api/v1/product/category/8c2c184e-11d2-11ec-82a8-0242ac130003
 
 ### TOP PRODUCT
-### STORE TOP PRODUCT
-POST https://tunas-grocery.herokuapp.com/api/v1/product/top/a3c02e8c-11d2-11ec-82a8-0242ac130003
-
-### GET ALL TOP PRODUCT
-GET https://tunas-grocery.herokuapp.com/api/v1/product/top
-
-### RECOMMEDATION PRODUCT
-### STORE RECOMMEDATION PRODUCT
-POST https://tunas-grocery.herokuapp.com/api/v1/product/recommendation/5bebe205-186d-11ec-b6fd-bbc6ac7a7e9f
-
-### GET ALL RECOMMEDATION PRODUCT
-GET https://tunas-grocery.herokuapp.com/api/v1/product/recommendation
-
-### TRANSACTION
-POST https://tunas-grocery.herokuapp.com/api/v1/transaction
+POST http://localhost:8080/api/v1/product/top/a3c02e8c-11d2-11ec-82a8-0242ac130003
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+###
+GET http://localhost:8080/api/v1/product/top
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### MAKE TRANSACTION
+POST http://localhost:8080/api/v1/transaction
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 {
-  "userId":"ac723ce6-11d2-11ec-82a8-0242ac130003",
+  "userId": "bf80843e-0dba-4b0c-bcb4-faeaec5e53fa",
   "products": [
-    {"id": "d7c6d7a4-186c-11ec-b6fd-23e8ea136663", "name": "Carrot", "price": 10, "weight": 1000, "perUnit": 100, "total": 2}
+    {
+      "id": "a3c02e8c-11d2-11ec-82a8-0242ac130003",
+      "total": 2
+    }
   ]
 }
 
+### GET TRANSACTION BY ID
+GET http://localhost:8080/api/v1/transaction/de0f77d0-7dcb-11ed-b6b4-f45c89b11b13
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET CUSTOMER TRANSACTION
-GET https://tunas-grocery.herokuapp.com/api/v1/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003
+### GET TRANSACTION BY USER ID
+GET http://localhost:8080/api/v1/transaction/user/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### DELETE CUSTOMER TRANSACTION
-DELETE https://tunas-grocery.herokuapp.com/api/v1/transaction/b25bfd97-3007-11ec-8d6b-a9270818bed5
+### DESTROY TRANSACTION BY ID
+DELETE http://localhost:8080/api/v1/transaction/de0f77d0-7dcb-11ed-b6b4-f45c89b11b13
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### CUSTOMER
-GET https://tunas-grocery.herokuapp.com/api/v1/customer
+### USER
+GET http://localhost:8080/api/v1/user
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 ### STORE CART
-POST https://tunas-grocery.herokuapp.com/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663/2
+POST http://localhost:8080/api/v1/cart/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/a3c02e8c-11d2-11ec-82a8-0242ac130003/2
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 ### DESTROY CART
-DELETE https://tunas-grocery.herokuapp.com/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003/7866b1e5-187c-11ec-9e94-e9fbbd5e8748
+DELETE http://localhost:8080/api/v1/cart/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/e46cd1f2-7d69-11ed-9bb1-f45c89b11b13
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET CUSTOMER CART
-GET https://tunas-grocery.herokuapp.com/api/v1/cart/ac723ce6-11d2-11ec-82a8-0242ac130003
+### GET USER CART
+GET http://localhost:8080/api/v1/cart/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### STORE WISHLIST
-POST https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+### ADD WISHLIST
+POST http://localhost:8080/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/a3c02e8c-11d2-11ec-82a8-0242ac130003
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET WISHLIST
-GET https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+### GET USER WISHLIST
+GET http://localhost:8080/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### DESTROY WISHLIST
-DELETE https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003/d7c6d7a4-186c-11ec-b6fd-23e8ea136663
+### DESTROY USER WISHLIST
+DELETE http://localhost:8080/api/v1/wishlist/bf80843e-0dba-4b0c-bcb4-faeaec5e53fa/8c934506-7d64-11ed-8570-f45c89b11b13
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
-### GET CUSTOMER WISHLIST
-GET https://tunas-grocery.herokuapp.com/api/v1/wishlist/ac723ce6-11d2-11ec-82a8-0242ac130003
+
+### get all user
+GET http://localhost:8080/api/v1/user/all
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### grant role to user
+POST http://localhost:8080/api/v1/user/role/fc81ccd7-98aa-11ec-ba07-b78370c9a109/5d3337d8-98ab-11ec-ba07-c940688411f4
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### revote role from user
+DELETE http://localhost:8080/api/v1/user/role/1/4
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### get all roles
+GET http://localhost:8080/api/v1/role/all
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+### save role
+POST http://localhost:8080/api/v1/role
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+{
+  "name" : "USER"
+}
+
+### get role by id
+GET http://localhost:8080/api/v1/role/4
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
+
+###
+GET http://localhost:8080/api/v1/user/all
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno

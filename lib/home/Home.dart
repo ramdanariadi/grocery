@@ -53,9 +53,9 @@ class Home extends StatelessWidget {
                 },
               ),
               RecomendationProducts(),
-              SizedBox(
-                height: size.height / 9,
-              )
+              // SizedBox(
+              //   height: size.height / 9,
+              // )
             ],
           ),
         ),

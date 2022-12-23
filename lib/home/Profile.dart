@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: size.width * 0.5,
+            width: size.width * 0.6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -44,7 +44,7 @@ class Profile extends StatelessWidget {
                 Container(
                   // margin: EdgeInsets.only(bottom: 9),
                   child: Text(
-                    "Ghazi",
+                    "Ari",
                     style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      "Tlogomas, Malang",
+                      "Lombok, West Nusa Tenggara",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ],

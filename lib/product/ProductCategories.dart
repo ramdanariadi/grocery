@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -15,9 +16,9 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category");
+    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category.php");
     if (response.statusCode == 200) {
-      List<dynamic> listCategory = jsonDecode(response.body)['response'];
+      List<dynamic> listCategory = jsonDecode(response.body)['data'];
       List<ProductCategory> productCategories = listCategory
           .map((e) => ProductCategory.fromJson(e,
                   (String categoryId, String title, BuildContext context) {
@@ -49,7 +50,22 @@ class ProductCategories extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
-              return Text("Failed load category");
+              return Button(
+                  width: 82, 
+                  height: 40, 
+                  onTap: (){
+                    
+                  }, 
+                  padding: EdgeInsets.all(4),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ApplicationColor.blackHint.withOpacity(0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("retry", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: ApplicationColor.blackHint),),
+                    Icon(Icons.replay_outlined, size: 18,color: ApplicationColor.blackHint,),
+                  ],
+                ));
             }
 
             return Center(
