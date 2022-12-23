@@ -161,17 +161,14 @@ class WideProductCard extends StatelessWidget {
 
 
 class FakeWidgeProductCard extends StatelessWidget {
-  const FakeWidgeProductCard({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
-
-  final Size size;
+  const FakeWidgeProductCard({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.65,
+      margin: EdgeInsets.only(left: Application.defaultPadding / 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
