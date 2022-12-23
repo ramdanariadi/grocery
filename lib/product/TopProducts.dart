@@ -5,6 +5,7 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class TopProducts extends StatelessWidget {
@@ -49,11 +50,15 @@ class TopProducts extends StatelessWidget {
                     Text("retry", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: ApplicationColor.blackHint),),
                     Icon(Icons.replay_outlined, size: 18,color: ApplicationColor.blackHint,),
                   ],
-                ));              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                ));              
               }
+              return Shimmer.fromColors(
+                baseColor: ApplicationColor.shimmerBaseColor,
+                highlightColor: ApplicationColor.shimmerHighlightColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [FakeProductCard(),FakeProductCard(),FakeProductCard()]),
+              );
             },
           )),
     );
