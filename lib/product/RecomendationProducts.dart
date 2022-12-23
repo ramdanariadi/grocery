@@ -23,7 +23,6 @@ class RecomendationProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.init();
-    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
@@ -59,8 +58,8 @@ class RecomendationProducts extends StatelessWidget {
                 highlightColor: ApplicationColor.shimmerHighlightColor,
                 child: Row(
                   children: [
-                    FakeWidgeProductCard(size: size),
-                    FakeWidgeProductCard(size: size)
+                    FakeWidgeProductCard(),
+                    FakeWidgeProductCard()
                   ],
                 ),
               );
