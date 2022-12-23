@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
+import 'package:grocery/custom_widget/Skeleteon.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'ProductCard.dart';
 import 'ProductDetail.dart';
@@ -153,6 +154,44 @@ class WideProductCard extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class FakeWidgeProductCard extends StatelessWidget {
+  const FakeWidgeProductCard({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size.width * 0.65,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Skeleton(widht: size.width / 5, height: 80),
+          Padding(
+            padding: EdgeInsets.all(Application.defaultPadding / 2.5),
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Skeleton(widht: size.width / 5, height: 12),
+                  SizedBox(height: 10,),
+                  Skeleton(widht: size.width / 4, height: 12),
+                  SizedBox(height: 10,),
+                  Skeleton(widht: size.width / 5, height: 12)
+              ],),
+            ),
+          ),
+          Skeleton(widht: 30, height: 30)
+        ],
       ),
     );
   }
