@@ -45,8 +45,6 @@ Content-Type: application/json
 ### GET ALL CATEGORY
 GET http://localhost:8080/api/v1/category
 Content-Type: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
-
 
 ### UPDATE CATEGORY
 PUT http://localhost:8080/api/v1/category
@@ -105,12 +103,10 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVz
 ### GET TOP PRODUCT
 GET http://localhost:8080/api/v1/product/top
 Content-Type: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 ### GET RECOMMENDED PRODUCT
 GET http://localhost:8080/api/v1/product/recommended
 Content-Type: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 ### DELETE PRODUCT
 DELETE http://localhost:8080/api/v1/product/03d5d220-7d54-11ed-b6e2-f45c89b11b13
@@ -123,7 +119,7 @@ Content-Type: application/json
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS92MS9sb2dpbiIsImV4cCI6MTY3MTgxMDcwN30.Wv7aaIPI0lHdNMty31bQrikqikAHXwoJs0o6pC4qnno
 
 ### PRODUCT BY CATEGORY
-GET http://localhost:8080/api/v1/product/category/8c2c184e-11d2-11ec-82a8-0242ac130003
+GET http://localhost:8080/api/v1/product/category/ea8e91dd-2f5f-4eb1-91ae-a5dda6d2a76d
 
 ### TOP PRODUCT
 POST http://localhost:8080/api/v1/product/top/a3c02e8c-11d2-11ec-82a8-0242ac130003
