@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
-import 'package:grocery/home/Home.dart';
-import 'package:grocery/products/ProductGroupGridItems.dart';
-import 'package:grocery/products/Products.dart';
-import 'package:grocery/profile/MyAccount.dart';
 
 class FloatingBottomNavigationBar extends StatefulWidget {
   FloatingBottomNavigationBar({Key? key, required this.items, required this.currentIndex, required this.onTap, this.selectedItemColor, this.unselectedItemColor}) : super(key: key);
@@ -21,10 +16,6 @@ class FloatingBottomNavigationBar extends StatefulWidget {
 }
 
 class _FloatingBottomNavigationBarState extends State<FloatingBottomNavigationBar> {
-  final homeRoutes = [Home.routeName];
-  final productRoutes = [Products.routeName, ProductGroupGridItems.routeName];
-  final profileRoutes = [MyAccount.routeName];
-  final cartRoutes = [Cart.routeName];
 
   @override
   Widget build(BuildContext context) {
