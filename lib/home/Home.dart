@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/home/LabelWIthActionButton.dart';
+import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/home/Profile.dart';
 import 'package:grocery/home/SearchBar.dart';
 import 'package:grocery/product/ProductCategories.dart';
