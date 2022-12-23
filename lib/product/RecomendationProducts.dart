@@ -30,29 +30,29 @@ class RecomendationProducts extends StatelessWidget {
           child: FutureBuilder<List<WideProductCard>>(
             future: futureProduct,
             builder: (context, snapshot) {
-              // if (snapshot.hasData) {
-              //   return Row(
-              //     children: snapshot.data!,
-              //     crossAxisAlignment: CrossAxisAlignment.end,
-              //   );
-              // } else if (snapshot.hasError) {
-              //   return Button(
-              //     width: 82, 
-              //     height: 40, 
-              //     onTap: (){
+              if (snapshot.hasData) {
+                return Row(
+                  children: snapshot.data!,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                );
+              } else if (snapshot.hasError) {
+                return Button(
+                  width: 82, 
+                  height: 40, 
+                  onTap: (){
 
-              //     }, 
-              //     padding: EdgeInsets.all(4),
-              //     borderRadius: BorderRadius.circular(50),
-              //     color: ApplicationColor.blackHint.withOpacity(0.2),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Text("retry", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: ApplicationColor.blackHint),),
-              //       Icon(Icons.replay_outlined, size: 18,color: ApplicationColor.blackHint,),
-              //     ],
-              //   ));
-              // }
+                  }, 
+                  padding: EdgeInsets.all(4),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ApplicationColor.blackHint.withOpacity(0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("retry", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: ApplicationColor.blackHint),),
+                    Icon(Icons.replay_outlined, size: 18,color: ApplicationColor.blackHint,),
+                  ],
+                ));
+              }
               return Shimmer.fromColors(
                 baseColor: ApplicationColor.shimmerBaseColor,
                 highlightColor: ApplicationColor.shimmerHighlightColor,
