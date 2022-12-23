@@ -14,7 +14,6 @@ class Home extends StatelessWidget {
   static final String routeName = '/';
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
