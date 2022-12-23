@@ -57,9 +57,10 @@ class RecomendationProducts extends StatelessWidget {
                 baseColor: ApplicationColor.shimmerBaseColor,
                 highlightColor: ApplicationColor.shimmerHighlightColor,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    FakeWidgeProductCard(),
-                    FakeWidgeProductCard()
+                    FakeProductCard(),
+                    FakeProductCard()
                   ],
                 ),
               );

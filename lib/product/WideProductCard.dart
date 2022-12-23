@@ -160,8 +160,8 @@ class WideProductCard extends StatelessWidget {
 }
 
 
-class FakeWidgeProductCard extends StatelessWidget {
-  const FakeWidgeProductCard({Key? key, }) : super(key: key);
+class FakeProductCard extends StatelessWidget {
+  const FakeProductCard({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -175,17 +175,15 @@ class FakeWidgeProductCard extends StatelessWidget {
           Skeleton(widht: size.width / 5, height: 80),
           Padding(
             padding: EdgeInsets.all(Application.defaultPadding / 2.5),
-            child: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Skeleton(widht: size.width / 5, height: 12),
-                  SizedBox(height: 10,),
-                  Skeleton(widht: size.width / 4, height: 12),
-                  SizedBox(height: 10,),
-                  Skeleton(widht: size.width / 5, height: 12)
-              ],),
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Skeleton(widht: size.width / 5, height: 12),
+                SizedBox(height: 10,),
+                Skeleton(widht: size.width / 4, height: 12),
+                SizedBox(height: 10,),
+                Skeleton(widht: size.width / 5, height: 12)
+            ],),
           ),
           Skeleton(widht: 30, height: 30)
         ],
