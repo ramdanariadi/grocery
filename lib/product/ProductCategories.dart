@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/custom_widget/Button.dart';
+import 'package:grocery/custom_widget/Skeleteon.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class ProductCategories extends StatelessWidget {
@@ -68,8 +70,20 @@ class ProductCategories extends StatelessWidget {
                 ));
             }
 
-            return Center(
-              child: CircularProgressIndicator(),
+            return Padding(
+              padding: EdgeInsets.only(left: Application.defaultPadding),
+              child: Shimmer.fromColors(
+                baseColor: ApplicationColor.shimmerBaseColor,
+                highlightColor: ApplicationColor.shimmerHighlightColor,
+                child: Row(children: [
+                  Skeleton(widht: 130, height: 38, borderRadius: BorderRadius.circular(40),),
+                  SizedBox(width: 10,),
+                  Skeleton(widht: 120, height: 38, borderRadius: BorderRadius.circular(40),),
+                  SizedBox(width: 10,),
+                  Skeleton(widht: 120, height: 38, borderRadius: BorderRadius.circular(40),),
+                  SizedBox(width: 10,),
+                  Skeleton(widht: 100, height: 38, borderRadius: BorderRadius.circular(40),)],),
+              ),
             );
           },
         ));
