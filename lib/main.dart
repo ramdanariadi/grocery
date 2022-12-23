@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     init();
     final GlobalKey<NavigatorState>_rootNavigatorKey = GlobalKey<NavigatorState>();
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       routerConfig: GoRouter(
         navigatorKey: _rootNavigatorKey,
