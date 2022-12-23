@@ -17,7 +17,7 @@ class Products extends StatelessWidget {
   late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + "/category.php");
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + "/category");
     if (response.statusCode == 200) {
       List<dynamic> categories = jsonDecode(response.body)['data'];
       List<ProductGroupItems> productGroupItems =

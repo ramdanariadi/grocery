@@ -18,7 +18,8 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category.php");
+    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category");
+    
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['data'];
       List<ProductCategory> productCategories = listCategory
@@ -52,6 +53,7 @@ class ProductCategories extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
+              debugPrint("error : "+snapshot.error.toString());
               return Button(
                   width: 82, 
                   height: 40, 
