@@ -6,6 +6,7 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/WideProductCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class RecomendationProducts extends StatelessWidget {
@@ -22,6 +23,7 @@ class RecomendationProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.init();
+    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
@@ -51,23 +53,16 @@ class RecomendationProducts extends StatelessWidget {
                     Icon(Icons.replay_outlined, size: 18,color: ApplicationColor.blackHint,),
                   ],
                 ));
-              //   Center(child: InkWell(
-              //     borderRadius: BorderRadius.circular(100),
-              //     child: Container(
-              //       decoration: BoxDecoration(color: ApplicationColor.iconOutlineColor.withOpacity(0.6), borderRadius: BorderRadius.circular(100)),
-              //       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-              //       child: Row(
-              //         children: [
-              //           Text("try again", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),),
-              //           Icon(Icons.replay_outlined, size: 20,),
-              //         ],
-              //       )), 
-              //     onTap: () {},
-              //     focusColor: ApplicationColor.shadowColor,
-              //   ),);
               }
-              return Center(
-                child: CircularProgressIndicator(),
+              return Shimmer.fromColors(
+                baseColor: ApplicationColor.shimmerBaseColor,
+                highlightColor: ApplicationColor.shimmerHighlightColor,
+                child: Row(
+                  children: [
+                    FakeWidgeProductCard(size: size),
+                    FakeWidgeProductCard(size: size)
+                  ],
+                ),
               );
             },
           )),
