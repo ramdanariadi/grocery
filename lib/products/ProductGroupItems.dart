@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/home/LabelWIthActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class ProductGroupItems extends StatelessWidget {
@@ -29,9 +32,8 @@ class ProductGroupItems extends StatelessWidget {
   Future<List<ProductCard>> fetchProduct() async {
     final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url : Application.httBaseUrl + "/product/category/${this.categoryId}");
     if (response.statusCode == 200) {
-      List<dynamic> responseList = jsonDecode(response.body)['response'];
-      List<ProductCard> productList =
-          responseList.map((e) => ProductCard.fromJson(e)).toList();
+      List<dynamic> responseList = jsonDecode(response.body)['data'];
+      List<ProductCard> productList = responseList.map((e) => ProductCard.fromJson(e)).toList();
       return productList;
     } else {
       throw Exception("failed laod product by category");
@@ -63,12 +65,13 @@ class ProductGroupItems extends StatelessWidget {
               }
 
               if (snapshot.hasError) {
-                return Text("failed load product by category");
+                return RetryButton(onTap: (){});
               }
 
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Shimmer.fromColors(
+                baseColor: ApplicationColor.shimmerBaseColor,
+                highlightColor: ApplicationColor.shimmerHighlightColor,
+                child: SingleChildScrollView(scrollDirection: Axis.horizontal,child: Row(children: [FakeProductCard(), FakeProductCard(), FakeProductCard()],)),);
             },
           ),
         )

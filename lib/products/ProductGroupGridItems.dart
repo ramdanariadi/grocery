@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/products/LabelWithActionButton.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class ProductGroupGridItems extends StatelessWidget {
@@ -38,7 +41,7 @@ class ProductGroupGridItems extends StatelessWidget {
   Future<List<ProductCard>> fetchProduct() async {
     final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: this.url);
     if (response.statusCode == 200) {
-      List<dynamic> responseList = jsonDecode(response.body)['response'];
+      List<dynamic> responseList = jsonDecode(response.body)['data'];
       List<ProductCard> productList = responseList
           .map((e) => ProductCard.fromJson(
                 e,
@@ -81,12 +84,13 @@ class ProductGroupGridItems extends StatelessWidget {
                 }
 
                 if (snapshot.hasError) {
-                  return Text("failed load product by category");
+                  return RetryButton(onTap: (){});
                 }
 
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Shimmer.fromColors(
+                  baseColor: ApplicationColor.shimmerBaseColor,
+                  highlightColor: ApplicationColor.shimmerHighlightColor,
+                  child: SingleChildScrollView(scrollDirection: Axis.horizontal,child: Row(children: [FakeProductCard(), FakeProductCard(), FakeProductCard()],)),);
               },
             ),
           ),
