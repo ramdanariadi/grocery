@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/custom_widget/Skeleteon.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -184,4 +185,40 @@ class ProductArguments {
       required this.weight,
       required this.price,
       required this.imageUrl});
+}
+
+class FakeProductCard extends StatelessWidget {
+  FakeProductCard({ Key? key}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.only(left: Application.defaultPadding / 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Skeleton(widht: size.width * 0.4, height: 100),
+          SizedBox(height: 10,),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Skeleton(widht: size.width * 0.22, height: 12),
+                  SizedBox(height: 10,),
+                  Skeleton(widht: size.width * 0.3, height: 12),
+                  SizedBox(height: 10,),
+                  Skeleton(widht: size.width * 0.2, height: 12)
+                  ],
+              ),
+              SizedBox(width: 10,),
+              Skeleton(widht: 30, height: 30)
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }
