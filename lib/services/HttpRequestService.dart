@@ -29,7 +29,7 @@ class HttpRequestService {
   // }
 
   static Future<http.Response> sendRequest({required HttpMethod method, required String url, bool isSecure = false, Object? body}) async {
-      http.Response response = new http.Response("NOT_FOUND", 404);
+    http.Response response = new http.Response("NOT_FOUND", 404);
     
     switch(method){
       case HttpMethod.GET:
@@ -37,10 +37,10 @@ class HttpRequestService {
       break;
       case HttpMethod.POST:
         response = await http.post(Uri.parse(url), body: body, headers: await getHeaders(isSecure: isSecure));
-        break;
+      break;
       case HttpMethod.PUT:
         // TODO: Handle this case.
-        break;
+      break;
       case HttpMethod.PATCH:
         // TODO: Handle this case.
         break;
@@ -49,11 +49,9 @@ class HttpRequestService {
         break;
       case HttpMethod.OPTIONS:
         // TODO: Handle this case.
-        break;
+      break;
     }
-
-    debugPrint("Response " + response.body.toString() + " code : " + response.statusCode.toString());
-
+    
     if (response.statusCode == 403) {
       await refreshToken();
     }
