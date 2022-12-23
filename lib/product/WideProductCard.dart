@@ -160,8 +160,8 @@ class WideProductCard extends StatelessWidget {
 }
 
 
-class FakeProductCard extends StatelessWidget {
-  const FakeProductCard({Key? key, }) : super(key: key);
+class FakeWideProductCard extends StatelessWidget {
+  const FakeWideProductCard({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
