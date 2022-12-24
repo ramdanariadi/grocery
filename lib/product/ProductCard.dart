@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
+import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -68,8 +70,8 @@ class ProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetail.routeName,
-            arguments: ProductArguments(
+        GoRouter.of(context).go(Products.routeName +"/"+ ProductDetail.routeName,
+            extra: ProductArguments(
                 id: this.id,
                 tag: this.id + 'top',
                 merk: this.merk,
