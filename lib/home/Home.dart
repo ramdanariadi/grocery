@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/home/Profile.dart';
@@ -7,6 +8,7 @@ import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/product/RecomendationProducts.dart';
 import 'package:grocery/product/TopProducts.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:grocery/products/Products.dart';
 
 enum BottomIcons { Home, Favorite, Search, Account }
 
@@ -32,11 +34,9 @@ class Home extends StatelessWidget {
                 title: "Top Products",
                 actionButtonTitle: "SHOW ALL",
                 press: () {
-                  Navigator.pushNamed(context, ProductGroupGridItems.routeName,
-                      arguments: ProductGroupGridItemsArgs(
-                          title: 'Top Products',
-                          categoryId: '',
-                          url: Application.httBaseUrl + '/product/top'));
+                  GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
+                    'title': 'Top Products',
+                    'url': Application.httBaseUrl + '/product/top'});
                 },
               ),
               TopProducts(),
@@ -44,11 +44,9 @@ class Home extends StatelessWidget {
                 title: "Recommendation",
                 actionButtonTitle: "SHOW ALL",
                 press: () {
-                  Navigator.pushNamed(context, ProductGroupGridItems.routeName,
-                      arguments: ProductGroupGridItemsArgs(
-                          title: 'Recommendation',
-                          categoryId: '',
-                          url: Application.httBaseUrl + '/product/recommendation'));
+                    GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
+                    'title': 'Recommendation',
+                    'url': Application.httBaseUrl + '/product/recommended'});
                 },
               ),
               RecomendationProducts(),
@@ -58,7 +56,6 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        // BottomNavBar(activeRoute: Home.routeName),
       ]),
     );
   }
