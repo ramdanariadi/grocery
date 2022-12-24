@@ -10,7 +10,7 @@ class LabelWithActionButton extends StatelessWidget {
     required this.title,
     required this.press,
   }) : super(key: key) {
-    this.padding = padding ?? EdgeInsets.only(left: Application.defaultPadding, top: Application.defaultPadding * 1.5);
+    this.padding = padding ?? EdgeInsets.only(left: 0, top: 0);
   }
 
   final String title;
@@ -34,13 +34,10 @@ class LabelWithActionButton extends StatelessWidget {
                 this.press(context);
               },
               child: Icon(Icons.arrow_back_ios_new, size: 32)),
-          Padding(
-            padding: EdgeInsets.only(right: Application.defaultPadding),
-            child: Text(
-              this.title,
-              style: TextStyle(
-                  fontSize: 22, color: ApplicationColor.blackHint, fontWeight: FontWeight.bold),
-            ),
+          Text(
+            this.title,
+            style: TextStyle(
+                fontSize: 22, color: ApplicationColor.blackHint, fontWeight: FontWeight.bold),
           ),
         ],
       ),
