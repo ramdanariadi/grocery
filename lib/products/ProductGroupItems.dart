@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -49,9 +51,10 @@ class ProductGroupItems extends StatelessWidget {
             title: this.title,
             actionButtonTitle: this.actionButtonTitle,
             press: () {
-              Navigator.pushNamed(context, ProductGroupGridItems.routeName,
-                  arguments: new ProductGroupGridItemsArgs(
-                      title: this.title, categoryId: this.categoryId));
+              GoRouter.of(context).go(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
+                'title': title, 
+                'url': Application.httBaseUrl + '/product/category/$categoryId'
+              });
             }),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
