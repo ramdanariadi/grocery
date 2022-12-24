@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
+import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -23,13 +25,12 @@ class ProductCategories extends StatelessWidget {
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['data'];
       List<ProductCategory> productCategories = listCategory
-          .map((e) => ProductCategory.fromJson(e,
-                  (String categoryId, String title, BuildContext context) {
-                Navigator.pushNamed(context, ProductGroupGridItems.routeName,
-                    arguments: ProductGroupGridItemsArgs(
-                        title: title, categoryId: categoryId));
-              }))
-          .toList();
+          .map((e) => ProductCategory.fromJson(e, (String categoryId, String title, BuildContext context) {
+            GoRouter.of(context).go(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
+              'title': title, 
+              'url': Application.httBaseUrl + '/product/category/$categoryId'
+            });
+          })).toList();
       return productCategories;
     } else {
       Fluttertoast.showToast(
