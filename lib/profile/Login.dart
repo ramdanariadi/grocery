@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:grocery/services/HttpRequestService.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
-import 'package:grocery/profile/MyAccount.dart';
+import 'package:grocery/home/Home.dart';
 import 'package:grocery/profile/Register.dart';
+import 'package:grocery/services/UserService.dart';
 
 class Login extends StatefulWidget {
   static final String routeName = '/login';
@@ -18,7 +19,7 @@ class _LoginState extends State<Login> {
 
   // textfield controller
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
         shadowColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              GoRouter.of(context).go(Home.routeName);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -103,7 +104,7 @@ class _LoginState extends State<Login> {
               Container(
                 margin: EdgeInsets.only(top: 30),
                 child: TextFormField(
-                  controller: passwordController,
+                  controller: passController,
                   obscureText: !showPassword,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
@@ -169,12 +170,11 @@ class _LoginState extends State<Login> {
                         onTap: () async {
                           Fluttertoast.showToast(
                               msg:
-                                  "${usernameController.text} - ${passwordController.text}");
-                          bool authenticated = await HttpRequestService.login(
-                              usernameController.text, passwordController.text);
+                                  "${usernameController.text} - ${passController.text}");
+                          bool authenticated = await UserService.login(
+                              usernameController.text, passController.text);
                           if (authenticated) {
-                            Navigator.popAndPushNamed(
-                                context, MyAccount.routeName);
+                            GoRouter.of(context).go(Home.routeName);
                           } else {
                             Fluttertoast.showToast(msg: "not authenticated");
                           }
