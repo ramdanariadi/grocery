@@ -11,6 +11,7 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/profile/Login.dart';
+import 'package:grocery/services/UserService.dart';
 
 // ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
@@ -154,7 +155,7 @@ class ProductCard extends StatelessWidget {
                       height: 30,
                       padding: EdgeInsets.all(0),
                       onTap: () async {
-                        if (await HttpRequestService.isAuthenticated()) {
+                        if (await UserService.isAuthenticated()) {
                           this.addToChart();
                         } else {
                           Navigator.pushNamed(context, Login.routeName);

@@ -6,7 +6,9 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/FloatingBottomNavigationBar.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
+import 'package:grocery/services/UserService.dart';
 
 class ScaffoldBottomActionBar extends StatefulWidget {
   const ScaffoldBottomActionBar({
@@ -35,7 +37,7 @@ class _ScaffoldBottomActionBarState extends State<ScaffoldBottomActionBar> {
       ],
       selectedItemColor: ApplicationColor.primaryColor,
       unselectedItemColor: ApplicationColor.iconOutlineColor,
-      onTap: (value){
+      onTap: (value) async {
         setState(() {
           _activeNavbar = value;
         });
@@ -48,9 +50,17 @@ class _ScaffoldBottomActionBarState extends State<ScaffoldBottomActionBar> {
               GoRouter.of(context).go(Products.routeName);
             break;
             case 2:
-              GoRouter.of(context).go(Cart.routeName);
-            break;
             case 3:
+              if(!await UserService.isAuthenticated()){
+                GoRouter.of(context).go(Login.routeName);
+                break;
+              }
+              
+              if(value == 2){
+                GoRouter.of(context).go(Cart.routeName);
+                break;
+              }
+
               GoRouter.of(context).go(MyAccount.routeName);
             break;
           }
