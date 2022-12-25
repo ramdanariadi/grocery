@@ -7,6 +7,7 @@ import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,9 +37,9 @@ class MyApp extends StatelessWidget {
         ShellRoute(
           builder: (context, state, child) => ScaffoldBottomActionBar(child: child,),
           routes: [
-            /* Home route **/
+            /* Home route */
             GoRoute(path: Home.routeName, builder: (context, state) => Home()),
-            /* Products route **/
+            /* Products route */
             GoRoute(path: Products.routeName, builder: (context, state) => Products(),
               routes: [
                 GoRoute(path: ProductGroupGridItems.routeName, builder: (context, state) {
@@ -51,12 +52,14 @@ class MyApp extends StatelessWidget {
                 },)
               ]
             ),
-            /* Cart route **/
+            /* Cart route */
             GoRoute(path: Cart.routeName, builder: (context, state) => Cart()),
-            /* Profile route **/
-            GoRoute(path: MyAccount.routeName, builder: (context, state) => MyAccount())
+            /* Profile route */
+            GoRoute(path: MyAccount.routeName, builder: (context, state) => MyAccount()),
           ]
-        )
+        ),
+        /* Login router */
+        GoRoute(path: Login.routeName, builder: (context, state) => Login()),
       ])
     );
   }
