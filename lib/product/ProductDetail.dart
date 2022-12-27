@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -46,9 +45,9 @@ class _ProductDetail extends State<ProductDetail> {
   int _count = 1;
   bool productLoved = false;
   bool widgetExist = true;
-  String? userId;
   CounterState _counterState = CounterState();
   BoolState _likedState = BoolState();
+  UserService userService = UserService.getInstance();
 
   _ProductDetail();
 
@@ -56,7 +55,7 @@ class _ProductDetail extends State<ProductDetail> {
     if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
     
     final response;
-    String url = Application.httBaseUrl + '/wishlist/$userId/${widget.id}';
+    String url = Application.httBaseUrl + '/wishlist/${userService.userId}/${widget.id}';
     debugPrint(url);
     if (productLoved) {
       debugPrint("remove from wislist");
@@ -78,7 +77,7 @@ class _ProductDetail extends State<ProductDetail> {
 
   Future<void> addToCart() async {
     if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + '/cart/$userId/${widget.id}/$_count', isSecure: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + '/cart/${userService.userId}/${widget.id}/$_count', isSecure: true);
     if (response.statusCode == 200 && widgetExist) {
       GoRouter.of(context).go(Home.routeName);
     } else {
@@ -89,7 +88,7 @@ class _ProductDetail extends State<ProductDetail> {
 
   Future<void> isLiked() async {
     if(!await UserService.isAuthenticated()) return;
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/wishlist/$userId/${widget.id}', isSecure: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/wishlist/${userService.userId}/${widget.id}', isSecure: true);
     if (widgetExist) {
       productLoved = response.statusCode == 200;
       _likedState.eventSink.add(response.statusCode == 200); 
@@ -97,13 +96,8 @@ class _ProductDetail extends State<ProductDetail> {
     }
   }
 
-  Future<void> initUserId() async {
-    userId = await UserService.getUserId(); 
-  }
-
   @override
   void initState() {
-    this.initUserId();
     super.initState();
     this.isLiked();
   }
