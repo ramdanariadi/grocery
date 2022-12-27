@@ -26,7 +26,7 @@ class HttpRequestService {
         // TODO: Handle this case.
         break;
       case HttpMethod.DELETE:
-        // TODO: Handle this case.
+        response = await http.delete(Uri.parse(url), body: body, headers: await getHeaders(isSecure: isSecure));
         break;
       case HttpMethod.OPTIONS:
         // TODO: Handle this case.
