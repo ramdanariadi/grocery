@@ -7,6 +7,17 @@ import 'package:http/http.dart' as http;
 
 class UserService{
 
+  bool? authenticated;
+  String? userId;
+  static UserService? _userService;
+
+  static getInstance(){
+    if(_userService == null){
+      _userService = UserService();
+    }
+    return _userService;
+  }
+
   static Future<bool> login(String username, String pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map<String, String> body = {"username": username, "password": pass};
@@ -21,6 +32,11 @@ class UserService{
       await sharedPreferences.setString("refreshToken", tokens['refresh_token']);
       await sharedPreferences.setString("userId", tokens['userId']);
       await sharedPreferences.setBool("authenticated", true);
+
+      UserService userService = UserService.getInstance();
+      userService.authenticated = true;
+      userService.userId = tokens['userId'];
+
       return true;
     }
     return false;
@@ -35,11 +51,17 @@ class UserService{
 
   static Future<bool> isAuthenticated() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    UserService userService = UserService.getInstance();
+    userService.authenticated = sharedPreferences.getBool("authenticated") ?? false;
+    userService.userId = sharedPreferences.getString("userId") ?? null;
     return sharedPreferences.getBool("authenticated") ?? false;
   }
 
   static Future<String?> getUserId() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString("userId") ?? null;
+    UserService userService = UserService.getInstance();
+    userService.authenticated = sharedPreferences.getBool("authenticated") ?? false;
+    userService.userId = sharedPreferences.getString("userId") ?? null;
+    return userService.userId;
   }
 }
