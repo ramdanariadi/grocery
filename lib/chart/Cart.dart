@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
-import 'package:http/http.dart' as http;
-import 'WideProductCard.dart';
+import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/DataProviderState.dart';
+
+import 'CartItemCard.dart';
 
 class Cart extends StatefulWidget {
   static final routeName = '/cart';
@@ -18,41 +22,39 @@ class Cart extends StatefulWidget {
 }
 
 class _Cart extends State<Cart> {
-  late Future<List<WideProductCard>> productFuture;
-  late List<WideProductCard> productList;
-  int totalPrice = 0;
+  late Future<List<CartItemCard>> productFuture;
+  late List<CartItemCard> productList;
+  DataProviderState<int> totalState = DataProviderState();
+  UserService userService = UserService.getInstance();
 
-  Future<List<WideProductCard>> fetchCart() async {
-    final response = await http.get(
-        Uri.parse(Application.httBaseUrl + '/cart/ac723ce6-11d2-11ec-82a8-0242ac130003'));
+  Future<List<CartItemCard>> fetchCart() async {
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/cart/${userService.userId}', isSecure: true);
 
     if (response.statusCode == 200) {
-      List<dynamic> cart = jsonDecode(response.body)['response'];
+      List<dynamic> cart = jsonDecode(response.body)['data'];
       int tmpTotalPrice = 0;
-      List<WideProductCard> cartList = productList = cart.map((dynamic item) {
+      debugPrint("body : " + response.body);
+      productList = cart.map((dynamic item) {
         Map<String, dynamic> mapItem = item;
-        tmpTotalPrice += int.parse(mapItem['price'].toString()) *
-            int.parse(mapItem['total'].toString());
-        return WideProductCard.fromJson(item, () {
+        tmpTotalPrice += int.parse(mapItem['price'].toString()) * int.parse(mapItem['total'].toString());
+        return CartItemCard.fromJson(item, () {
           this.countTotalPrice();
         });
       }).toList();
-      setState(() {
-        totalPrice = tmpTotalPrice;
-      });
-      return cartList;
+
+      totalState.eventSink.add(tmpTotalPrice);
+      return productList;
     } else {
       throw Exception("Failed load cart");
     }
   }
 
   void countTotalPrice() {
-    totalPrice = 0;
-    setState(() {
-      productList.forEach((element) {
-        totalPrice += element.price * element.total;
-      });
+    int totalPrice = 0;
+    productList.forEach((element) {
+      totalPrice += element.price * element.total;
     });
+    totalState.eventSink.add(totalPrice);
   }
 
   @override
@@ -61,44 +63,34 @@ class _Cart extends State<Cart> {
     productFuture = this.fetchCart();
   }
 
+  @override
+  void dispose(){
+    super.dispose();
+    totalState.dispose();
+  }
+
   Future<void> checkout() async {
     this.countTotalPrice();
     debugPrint("object");
     final resBody = jsonEncode(<String, dynamic>{
-      'userId': 'ac723ce6-11d2-11ec-82a8-0242ac130003',
+      'userId': userService.userId,
       'products': productList
-          .map((e) => <String, dynamic>{
-                "id": e.productId,
-                "name": e.merk,
-                "price": e.price,
-                "weight": e.weight,
-                "perUnit": 100,
-                "total": e.total,
-                "imageUrl": e.imageUrl
-              })
-          .toList()
+        .map((e) => <String, dynamic>{
+          "id": e.productId,
+          "total": e.total
+        })
+        .toList()
     });
     debugPrint(resBody);
-    final response = await http.post(Uri.parse(Application.httBaseUrl + "/transaction"),
-        headers: <String, String>{'Content-Type': 'application/json'},
-        body: resBody);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, 
+      url: Application.httBaseUrl + "/transaction", 
+      body: resBody, 
+      isSecure: true);
     if (response.statusCode == 200) {
-      final Map<String, dynamic> message =
-          jsonDecode(response.body)['metaData'];
-      debugPrint(message.toString());
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Alert(
-                    icon: Alerts.success,
-                    message: 'Successfully Order',
-                    callback: () {
-                      Navigator.pushNamed(context, Home.routeName);
-                    },
-                  )));
+      GoRouter.of(context).go(Alert.routeName, extra: Alert(icon: Alerts.success, message: "Order Successfully", 
+        routeToClose: Home.routeName,));
+      debugPrint("checkout success");
     }
-    debugPrint(response.statusCode.toString());
-    debugPrint(jsonDecode(response.body).toString());
   }
 
   @override
@@ -116,7 +108,7 @@ class _Cart extends State<Cart> {
             // left: Application.defaultPadding
           ),
           color: ApplicationColor.naturalWhite,
-          child: FutureBuilder<List<WideProductCard>>(
+          child: FutureBuilder<List<CartItemCard>>(
             future: productFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -126,7 +118,7 @@ class _Cart extends State<Cart> {
               }
 
               if (snapshot.hasError) {
-                return Text("Failed load cart");
+                return Text(snapshot.error.toString());
               }
 
               return Center(
@@ -140,14 +132,17 @@ class _Cart extends State<Cart> {
           child: Container(
             padding: EdgeInsets.all(Application.defaultPadding),
             width: size.width,
-            height: size.height * 0.29,
+            height: size.height * 0.25,
             decoration: BoxDecoration(
               color: Colors.white,
               // borderRadius: BorderRadius.only(
               //     topLeft: Radius.circular(20),
               //     topRight: Radius.circular(20))
             ),
-            child: Column(
+            child: StreamBuilder(
+              stream: totalState.stream,
+              initialData: 0,
+              builder: (context, snapshot) => Column(
               children: [
                 Container(
                   margin: EdgeInsets.only(
@@ -163,7 +158,7 @@ class _Cart extends State<Cart> {
                               color: Color.fromRGBO(108, 111, 115, 1)),
                         ),
                         Text(
-                          "$totalPrice",
+                          "${snapshot.data}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -213,7 +208,7 @@ class _Cart extends State<Cart> {
                               color: Color.fromRGBO(108, 111, 115, 1)),
                         ),
                         Text(
-                          "$totalPrice",
+                          "${snapshot.data}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -238,7 +233,7 @@ class _Cart extends State<Cart> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)))),
               ],
-            ),
+            ),)
           ),
         )
       ]),
