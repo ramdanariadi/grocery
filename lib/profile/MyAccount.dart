@@ -1,11 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
+import 'package:grocery/profile/TransactionCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/UserService.dart';
 
 class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
@@ -50,15 +51,30 @@ class Transactions extends StatelessWidget {
   }) : super(key: key);
 
   Future<List<TransactionCard>>? transactionFuture;
+  UserService userService = UserService.getInstance();
 
   Future<List<TransactionCard>> fetchTransaction() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, 
-      url: Application.httBaseUrl + "/transaction/customer/ac723ce6-11d2-11ec-82a8-0242ac130003", isSecure: true);
+    final response = await HttpRequestService.sendRequest(
+      method: HttpMethod.GET, 
+      url: Application.httBaseUrl + "/transaction/user/${userService.userId}", 
+      isSecure: true);
+
+    // debugPrint(response.body);
     if (response.statusCode == 200) {
-      List<dynamic> listResponse = jsonDecode(response.body)['response'];
-      List<TransactionCard> transactionList =
-          listResponse.map((e) => TransactionCard.fromJson(e)).toList();
-      return transactionList;
+      List<dynamic> listResponse = jsonDecode(response.body)['data'];
+      // debugPrint(listResponse.toString());
+      return listResponse.map((e){
+        List<dynamic> products = e['products'];
+        Map<String, dynamic> product = {
+          "total": products.length,
+          "totalPrice": e['total'],
+          "totalPerProduct": products[0]['total'],
+          "name": products[0]['name'],
+          "imageUrl": products[0]['imageUrl']
+        };
+        return TransactionCard.fromJson(product);
+      }
+      ).toList();
     } else {
       throw new Exception("failed to load transaction");
     }
@@ -68,120 +84,28 @@ class Transactions extends StatelessWidget {
   Widget build(BuildContext context) {
     transactionFuture = this.fetchTransaction();
     return Expanded(
-      child: FutureBuilder<List<Widget>>(
+      child: FutureBuilder<List<TransactionCard>>(
         future: transactionFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Widget> list = snapshot.data!.map((e) => e).toList();
-            list.add(SizedBox(
-              height: 100,
-            ));
+            debugPrint("has data executed");
+            List<TransactionCard> list = snapshot.data!;
+            // list.add(SizedBox(
+            //   height: 100,
+            // ));
             return ListView(children: list);
           }
+
           if (snapshot.hasError) {
-            Text("Failed load transaction");
+            debugPrint(snapshot.error.toString());
+            return Text("Failed load transaction");
           }
+
+          debugPrint("return circular");
           return Center(
             child: CircularProgressIndicator(),
           );
         },
-      ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class TransactionCard extends StatelessWidget {
-  TransactionCard(
-      {Key? key,
-      String? imageUrl,
-      required this.name,
-      required this.total,
-      required this.totalPrice,
-      required this.totalPerProduct})
-      : super(key: key) {
-    this.imageUrl = imageUrl;
-  }
-
-  String? imageUrl;
-  final String name;
-  final int total;
-  final int totalPrice;
-  final int totalPerProduct;
-
-  factory TransactionCard.fromJson(Map<String, dynamic> json) {
-    return TransactionCard(
-        name: json['detailTransaction'][0]['name'],
-        imageUrl: json['detailTransaction'][0]['imageUrl'],
-        totalPerProduct: json['detailTransaction'][0]['total'],
-        total: json['detailTransaction'].length,
-        totalPrice: json['transaction']['totalPrice']);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-          left: Application.defaultPadding,
-          right: Application.defaultPadding,
-          bottom: Application.defaultPadding / 4,
-          top: Application.defaultPadding / 4),
-      padding: EdgeInsets.all(Application.defaultPadding / 3),
-      width: double.infinity,
-      height: 100,
-      constraints: BoxConstraints(maxHeight: 150),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0, 8),
-                color: ApplicationColor.shadowColor.withOpacity(0.23),
-                spreadRadius: -10,
-                blurRadius: 20)
-          ],
-          borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        children: [
-          // Image.asset('images/notFound.png'),
-          this.imageUrl == null
-              ? Image.asset('images/notFound.png')
-              : Image.network(this.imageUrl!),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  this.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-                Text(
-                  "${this.totalPerProduct} piece${this.totalPerProduct > 1 ? 's' : ''}",
-                  style: TextStyle(fontSize: 12),
-                ),
-                Text(
-                  "+${this.total > 1 ? this.total - 1 : 0} product more",
-                  style: TextStyle(fontSize: 12),
-                ),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: "Total : ",
-                    style: TextStyle(fontSize: 12, color: Colors.black),
-                  ),
-                  TextSpan(
-                    text: "\$${this.totalPrice}",
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  )
-                ]))
-              ],
-            ),
-          )
-        ],
       ),
     );
   }
@@ -192,6 +116,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       height: 220,
       padding: EdgeInsets.only(
@@ -234,9 +159,9 @@ class UserProfile extends StatelessWidget {
           Button(
               text: "Edit Profile",
               width: double.infinity,
-              height: 29,
-              margin:
-                  EdgeInsets.only(left: 0, right: 0, top: Application.defaultPadding / 2),
+              color: ApplicationColor.primaryColor,
+              height: size.height * 0.04,
+              margin: EdgeInsets.only(left: 0, right: 0, top: Application.defaultPadding / 2),
               padding: EdgeInsets.all(2),
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
               onTap: () {})
