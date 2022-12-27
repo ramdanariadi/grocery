@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/custom_widget/ScaffoldBottomActionBar.dart';
 import 'package:grocery/home/Home.dart';
@@ -9,17 +10,16 @@ import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
+import 'package:grocery/services/UserService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-late SharedPreferences sharedPreferences;
-
 class MyApp extends StatelessWidget {
   static Future init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    UserService.isAuthenticated();
   }
 
   // This widget is the root of your application.
@@ -60,6 +60,8 @@ class MyApp extends StatelessWidget {
         ),
         /* Login router */
         GoRoute(path: Login.routeName, builder: (context, state) => Login()),
+        /* Alert router */
+        GoRoute(path: Alert.routeName, builder: (context, state) => state.extra as Alert),
       ])
     );
   }
