@@ -1,11 +1,8 @@
-# grocery
+# Grocery mobile (hybrid) app
 
-A new Flutter project.
+This is my personal project, this is part of my fullstack project. The backend was created by Java spring and Go, all sources open in **github.com/ramdanariadi**  
 
-## Getting Started
+The Previews goes here **(click the images to open youtube video)**:  
+[![Watch the video](https://firebasestorage.googleapis.com/v0/b/tunas-grocery.appspot.com/o/thumbnails%2F3C889265-B4C6-4AA6-8D96-691B00633D5D.png?alt=media&token=a233a6b8-f830-4f7c-84b7-c29b825f5116)](https://youtu.be/ZtJ0K6oI00Q)  
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-This project is just playground for me to getting started learning flutter
+**Note :** don't forget to click start button before clone, thanks :)
