@@ -55,7 +55,7 @@ class _ProductDetail extends State<ProductDetail> {
     if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
     
     final response;
-    String url = Application.httBaseUrl + '/wishlist/${userService.userId}/${widget.id}';
+    String url = Application.httBaseUrl + '/wishlist/${widget.id}';
     debugPrint(url);
     if (productLoved) {
       debugPrint("remove from wislist");
@@ -77,7 +77,7 @@ class _ProductDetail extends State<ProductDetail> {
 
   Future<void> addToCart() async {
     if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + '/cart/${userService.userId}/${widget.id}/$_count', isSecure: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + '/cart/${widget.id}/$_count', isSecure: true);
     if (response.statusCode == 200 && widgetExist) {
       GoRouter.of(context).go(Home.routeName);
     } else {
@@ -88,7 +88,7 @@ class _ProductDetail extends State<ProductDetail> {
 
   Future<void> isLiked() async {
     if(!await UserService.isAuthenticated()) return;
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/wishlist/${userService.userId}/${widget.id}', isSecure: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/wishlist/${widget.id}', isSecure: true);
     if (widgetExist) {
       productLoved = response.statusCode == 200;
       _likedState.eventSink.add(response.statusCode == 200); 

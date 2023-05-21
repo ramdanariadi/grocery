@@ -53,7 +53,7 @@ class TopProducts extends StatelessWidget {
   }
 
   Future<List<ProductCard>> fetchProduct() async {
-    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/product/top");
+    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/product?isTop=true&pageIndex=0&pageSize=10");
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['data'];

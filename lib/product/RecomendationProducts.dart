@@ -57,7 +57,7 @@ class RecomendationProducts extends StatelessWidget {
   }
 
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/product/recommended');
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/product?isRecommendation=true&pageIndex=0&pageSize=10');
 
     if (response.statusCode == 200) {
       List<dynamic> productList = jsonDecode(response.body)['data'];

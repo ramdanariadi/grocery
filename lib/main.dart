@@ -11,7 +11,6 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/UserService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());

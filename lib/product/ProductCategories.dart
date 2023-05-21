@@ -20,7 +20,7 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category");
+    final response = await HttpRequestService.sendRequest(method:HttpMethod.GET, url: Application.httBaseUrl + "/category?pageIndex=0&pageSize=10");
     
     if (response.statusCode == 200) {
       List<dynamic> listCategory = jsonDecode(response.body)['data'];

@@ -28,7 +28,7 @@ class _Cart extends State<Cart> {
   UserService userService = UserService.getInstance();
 
   Future<List<CartItemCard>> fetchCart() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/cart/${userService.userId}', isSecure: true);
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/cart', isSecure: true);
 
     if (response.statusCode == 200) {
       List<dynamic> cart = jsonDecode(response.body)['data'];
