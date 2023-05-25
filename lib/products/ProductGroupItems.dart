@@ -32,7 +32,8 @@ class ProductGroupItems extends StatelessWidget {
   }
 
   Future<List<ProductCard>> fetchProduct() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url : Application.httBaseUrl + "/product/category/${this.categoryId}");
+    debugPrint('categoryId : $categoryId');
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url : Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&categoryId=$categoryId');
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['data'];
       List<ProductCard> productList = responseList.map((e) => ProductCard.fromJson(e)).toList();
@@ -51,9 +52,10 @@ class ProductGroupItems extends StatelessWidget {
             title: this.title,
             actionButtonTitle: this.actionButtonTitle,
             press: () {
+              debugPrint('categoryId : $categoryId');
               GoRouter.of(context).go(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
                 'title': title, 
-                'url': Application.httBaseUrl + '/product/category/$categoryId'
+                'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&categoryId=$categoryId'
               });
             }),
         SingleChildScrollView(

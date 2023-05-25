@@ -4,13 +4,16 @@ import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/chart/Cart.dart';
 import 'package:grocery/custom_widget/ScaffoldBottomActionBar.dart';
 import 'package:grocery/home/Home.dart';
+import 'package:grocery/home/Profile.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:http/http.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,7 +57,12 @@ class MyApp extends StatelessWidget {
             /* Cart route */
             GoRoute(path: Cart.routeName, builder: (context, state) => Cart()),
             /* Profile route */
-            GoRoute(path: MyAccount.routeName, builder: (context, state) => MyAccount()),
+            GoRoute(path: MyAccount.routeName, builder: (context, state) => MyAccount(), 
+            routes: [
+              GoRoute(path: EditProfile.routeName, builder: (context, state){
+                return EditProfile();
+              })
+            ]),
           ]
         ),
         /* Login router */

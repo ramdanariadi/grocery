@@ -20,7 +20,7 @@ class HttpRequestService {
         response = await http.post(Uri.parse(url), body: jsonEncode(body), headers: await getHeaders(isSecure: isSecure));
       break;
       case HttpMethod.PUT:
-        // TODO: Handle this case.
+        response = await http.put(Uri.parse(url), body: jsonEncode(body), headers: await getHeaders(isSecure: isSecure));
       break;
       case HttpMethod.PATCH:
         // TODO: Handle this case.

@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      "Lombok, West Nusa Tenggara",
+                      "admin@tunas.id",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ],
