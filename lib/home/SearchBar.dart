@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/SearchPage/SearchPage.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/search_page/SearchPage.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {

@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
+import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/TransactionCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
@@ -164,7 +166,9 @@ class UserProfile extends StatelessWidget {
               margin: EdgeInsets.only(left: 0, right: 0, top: Application.defaultPadding / 2),
               padding: EdgeInsets.all(2),
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
-              onTap: () {})
+              onTap: () {
+                GoRouter.of(context).go(MyAccount.routeName +"/"+ EditProfile.routeName);
+              })
         ],
       ),
     );
