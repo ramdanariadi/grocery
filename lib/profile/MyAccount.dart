@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
+import 'package:grocery/home/Home.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/TransactionCard.dart';
@@ -57,15 +58,15 @@ class Transactions extends StatelessWidget {
 
   Future<List<TransactionCard>> fetchTransaction() async {
     final response = await HttpRequestService.sendRequest(
-      method: HttpMethod.GET, 
-      url: Application.httBaseUrl + "/transaction/user/${userService.userId}", 
-      isSecure: true);
+        method: HttpMethod.GET,
+        url: Application.httBaseUrl + "/transaction/user/${userService.userId}",
+        isSecure: true);
 
     // debugPrint(response.body);
     if (response.statusCode == 200) {
       List<dynamic> listResponse = jsonDecode(response.body)['data'];
       // debugPrint(listResponse.toString());
-      return listResponse.map((e){
+      return listResponse.map((e) {
         List<dynamic> products = e['products'];
         Map<String, dynamic> product = {
           "total": products.length,
@@ -75,8 +76,7 @@ class Transactions extends StatelessWidget {
           "imageUrl": products[0]['imageUrl']
         };
         return TransactionCard.fromJson(product);
-      }
-      ).toList();
+      }).toList();
     } else {
       throw new Exception("failed to load transaction");
     }
@@ -122,7 +122,9 @@ class UserProfile extends StatelessWidget {
     return Container(
       height: 220,
       padding: EdgeInsets.only(
-          top: 100, left: Application.defaultPadding, right: Application.defaultPadding),
+          top: 100,
+          left: Application.defaultPadding,
+          right: Application.defaultPadding),
       child: Column(
         children: [
           Row(children: [
@@ -136,23 +138,48 @@ class UserProfile extends StatelessWidget {
                   color: ApplicationColor.naturalWhite,
                   borderRadius: BorderRadius.circular(10)),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Ghazi",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Ghazi",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24),
+                        ),
+                        Text(
+                          "ghazi.work@hotmail.com",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        Text(
+                          "021 000 987",
+                          style: TextStyle(fontSize: 10),
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    "ghazi.work@hotmail.com",
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  Text(
-                    "021 000 987",
-                    style: TextStyle(fontSize: 10),
+                  InkWell(
+                    onTap: () {
+                      // UserService.logout();
+                      // GoRouter.of(context).go(Home.routeName);
+                    },
+                    splashColor: ApplicationColor.naturalWhite,
+                    child: Container(
+                      width: size.width * 0.1,
+                      height: size.width * 0.14,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Icon(
+                        Icons.logout_outlined,
+                        color: ApplicationColor.blackHint,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -163,11 +190,13 @@ class UserProfile extends StatelessWidget {
               width: double.infinity,
               color: ApplicationColor.primaryColor,
               height: size.height * 0.04,
-              margin: EdgeInsets.only(left: 0, right: 0, top: Application.defaultPadding / 2),
+              margin: EdgeInsets.only(
+                  left: 0, right: 0, top: Application.defaultPadding / 2),
               padding: EdgeInsets.all(2),
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
               onTap: () {
-                GoRouter.of(context).go(MyAccount.routeName +"/"+ EditProfile.routeName);
+                GoRouter.of(context)
+                    .go(MyAccount.routeName + "/" + EditProfile.routeName);
               })
         ],
       ),
