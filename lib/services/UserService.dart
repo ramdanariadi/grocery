@@ -5,14 +5,13 @@ import 'package:grocery/constants/Application.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserService{
-
+class UserService {
   bool? authenticated;
   String? userId;
   static UserService? _userService;
 
-  static getInstance(){
-    if(_userService == null){
+  static getInstance() {
+    if (_userService == null) {
       _userService = UserService();
     }
     return _userService;
@@ -21,7 +20,10 @@ class UserService{
   static Future<bool> login(String email, String pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map<String, String> body = {"email": email, "password": pass};
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + "/user/login", body: body);
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.POST,
+        url: Application.httBaseUrl + "/user/login",
+        body: body);
     debugPrint('Response : ' + response.body.toString());
     debugPrint('has code : ' + response.statusCode.toString());
     debugPrint(body.toString());
@@ -40,7 +42,7 @@ class UserService{
     return false;
   }
 
-  static logout(String username, String password) async {
+  static logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove("accessToken");
     await sharedPreferences.remove("refreshToken");
@@ -50,7 +52,8 @@ class UserService{
   static Future<bool> isAuthenticated() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserService userService = UserService.getInstance();
-    userService.authenticated = sharedPreferences.getBool("authenticated") ?? false;
+    userService.authenticated =
+        sharedPreferences.getBool("authenticated") ?? false;
     userService.userId = sharedPreferences.getString("userId") ?? null;
     return sharedPreferences.getBool("authenticated") ?? false;
   }
@@ -58,7 +61,8 @@ class UserService{
   static Future<String?> getUserId() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserService userService = UserService.getInstance();
-    userService.authenticated = sharedPreferences.getBool("authenticated") ?? false;
+    userService.authenticated =
+        sharedPreferences.getBool("authenticated") ?? false;
     userService.userId = sharedPreferences.getString("userId") ?? null;
     return userService.userId;
   }
