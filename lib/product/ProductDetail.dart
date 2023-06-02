@@ -8,8 +8,8 @@ import 'package:grocery/home/Home.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
-import 'package:grocery/state_manager/BoolState.dart';
 import 'package:grocery/state_manager/CounterState.dart';
+import 'package:grocery/state_manager/DataProviderState.dart';
 
 // ignore: must_be_immutable
 class ProductDetail extends StatefulWidget {
@@ -46,38 +46,48 @@ class _ProductDetail extends State<ProductDetail> {
   bool productLoved = false;
   bool widgetExist = true;
   CounterState _counterState = CounterState();
-  BoolState _likedState = BoolState();
+  DataProviderState<bool> _likedState = DataProviderState();
   UserService userService = UserService.getInstance();
 
   _ProductDetail();
 
   Future<void> like() async {
-    if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
-    
+    if (!await UserService.isAuthenticated())
+      GoRouter.of(context).go(Login.routeName);
+
     final response;
     String url = Application.httBaseUrl + '/wishlist/${widget.id}';
     debugPrint(url);
     if (productLoved) {
       debugPrint("remove from wislist");
-      response = await HttpRequestService.sendRequest(method: HttpMethod.DELETE, url: url, isSecure: true);
+      response = await HttpRequestService.sendRequest(
+          method: HttpMethod.DELETE, url: url, isSecure: true);
     } else {
       debugPrint("ADD to wislist");
-      response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: url, isSecure: true);
+      response = await HttpRequestService.sendRequest(
+          method: HttpMethod.POST, url: url, isSecure: true);
     }
     if (widgetExist) {
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         productLoved = !productLoved;
-        _likedState.eventSink.add(productLoved); 
-        Fluttertoast.showToast(msg: productLoved ? 'loved it' : 'unloved it',toastLength: Toast.LENGTH_LONG);
-      }else{
-        Fluttertoast.showToast(msg: '${response.statusCode}', toastLength: Toast.LENGTH_LONG);
+        _likedState.eventSink.add(productLoved);
+        Fluttertoast.showToast(
+            msg: productLoved ? 'loved it' : 'unloved it',
+            toastLength: Toast.LENGTH_LONG);
+      } else {
+        Fluttertoast.showToast(
+            msg: '${response.statusCode}', toastLength: Toast.LENGTH_LONG);
       }
     }
   }
 
   Future<void> addToCart() async {
-    if(!await UserService.isAuthenticated()) GoRouter.of(context).go(Login.routeName);
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + '/cart/${widget.id}/$_count', isSecure: true);
+    if (!await UserService.isAuthenticated())
+      GoRouter.of(context).go(Login.routeName);
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.POST,
+        url: Application.httBaseUrl + '/cart/${widget.id}/$_count',
+        isSecure: true);
     if (response.statusCode == 200 && widgetExist) {
       GoRouter.of(context).go(Home.routeName);
     } else {
@@ -87,12 +97,17 @@ class _ProductDetail extends State<ProductDetail> {
   }
 
   Future<void> isLiked() async {
-    if(!await UserService.isAuthenticated()) return;
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/wishlist/${widget.id}', isSecure: true);
+    if (!await UserService.isAuthenticated()) return;
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.GET,
+        url: Application.httBaseUrl + '/wishlist/${widget.id}',
+        isSecure: true);
     if (widgetExist) {
       productLoved = response.statusCode == 200;
-      _likedState.eventSink.add(response.statusCode == 200); 
-      Fluttertoast.showToast(msg: response.statusCode == 200 ? "loved" : "not loved yet", toastLength: Toast.LENGTH_LONG);
+      _likedState.eventSink.add(response.statusCode == 200);
+      Fluttertoast.showToast(
+          msg: response.statusCode == 200 ? "loved" : "not loved yet",
+          toastLength: Toast.LENGTH_LONG);
     }
   }
 
@@ -142,12 +157,16 @@ class _ProductDetail extends State<ProductDetail> {
                         },
                         child: GestureDetector(
                           child: Container(
-                              margin: EdgeInsets.only(right: 8), child: StreamBuilder(
+                              margin: EdgeInsets.only(right: 8),
+                              child: StreamBuilder(
                                 initialData: false,
-                                stream: _likedState.stateStream,
-                                builder: (context, snapshot) => snapshot.data as bool ? 
-                                Icon(Icons.favorite, size: 30, color: Colors.red) : 
-                                Icon(Icons.favorite_outline, size: 30),)),
+                                stream: _likedState.stream,
+                                builder: (context, snapshot) => snapshot.data
+                                        as bool
+                                    ? Icon(Icons.favorite,
+                                        size: 30, color: Colors.red)
+                                    : Icon(Icons.favorite_outline, size: 30),
+                              )),
                           onTap: () {
                             this.like();
                           },
@@ -197,7 +216,9 @@ class _ProductDetail extends State<ProductDetail> {
                         TextSpan(
                             text: " /kg",
                             style: TextStyle(
-                                height: 2, fontSize: 24, color: ApplicationColor.blackHint)),
+                                height: 2,
+                                fontSize: 24,
+                                color: ApplicationColor.blackHint)),
                       ]),
                     ),
                   ),
@@ -207,13 +228,15 @@ class _ProductDetail extends State<ProductDetail> {
                     children: [
                       InkWell(
                           onTap: () {
-                            _counterState.eventSink.add(CounterAction.decreament);
+                            _counterState.eventSink
+                                .add(CounterAction.decreament);
                           },
                           child: Container(
                               width: 36,
                               height: 36,
                               decoration: BoxDecoration(
-                                  color: ApplicationColor.shadowColor.withOpacity(0.1),
+                                  color: ApplicationColor.shadowColor
+                                      .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Icon(Icons.remove, size: 30))),
                       SizedBox(
@@ -223,27 +246,30 @@ class _ProductDetail extends State<ProductDetail> {
                         stream: _counterState.stateStream,
                         initialData: 0,
                         builder: (context, snapshot) {
-                        _count = snapshot.data as int;
-                        return Text(
-                          '${snapshot.data}',
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: ApplicationColor.blackHint,
-                              fontWeight: FontWeight.bold),
-                        ); 
-                      },),
+                          _count = snapshot.data as int;
+                          return Text(
+                            '${snapshot.data}',
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: ApplicationColor.blackHint,
+                                fontWeight: FontWeight.bold),
+                          );
+                        },
+                      ),
                       SizedBox(
                         width: 25,
                       ),
                       InkWell(
                           onTap: () {
-                            _counterState.eventSink.add(CounterAction.increament);
+                            _counterState.eventSink
+                                .add(CounterAction.increament);
                           },
                           child: Container(
                               width: 36,
                               height: 36,
                               decoration: BoxDecoration(
-                                  color: ApplicationColor.shadowColor.withOpacity(0.1),
+                                  color: ApplicationColor.shadowColor
+                                      .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Icon(
                                 Icons.add,
@@ -258,21 +284,20 @@ class _ProductDetail extends State<ProductDetail> {
               bottom: 0,
               child: Center(
                 child: Button(
-                  color: ApplicationColor.primaryColor,
-                  margin: EdgeInsets.all(0),
-                  child: Text(
-                    'Add to cart',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200),
-                  ),
-                  width: size.width - (Application.defaultPadding * 2),
-                  height: size.height / 11,
-                  onTap: () {
-                    this.addToCart();
-                  }
-                ),
+                    color: ApplicationColor.primaryColor,
+                    margin: EdgeInsets.all(0),
+                    child: Text(
+                      'Add to cart',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w200),
+                    ),
+                    width: size.width - (Application.defaultPadding * 2),
+                    height: size.height / 11,
+                    onTap: () {
+                      this.addToCart();
+                    }),
               ),
             )
           ]),
