@@ -11,6 +11,7 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
+import 'package:grocery/profile/Register.dart';
 import 'package:grocery/services/UserService.dart';
 
 void main() {
@@ -96,6 +97,9 @@ class MyApp extends StatelessWidget {
               /* Login router */
               GoRoute(
                   path: Login.routeName, builder: (context, state) => Login()),
+              GoRoute(
+                  path: Register.routeName,
+                  builder: ((context, state) => Register())),
               /* Alert router */
               GoRoute(
                   path: Alert.routeName,

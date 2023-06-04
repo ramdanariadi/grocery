@@ -18,8 +18,8 @@ class _LoginState extends State<Login> {
   bool showPassword = false;
 
   // textfield controller
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
@@ -50,7 +50,8 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
+          padding:
+              EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -68,7 +69,7 @@ class _LoginState extends State<Login> {
               Container(
                 margin: EdgeInsets.only(top: 60),
                 child: TextField(
-                  controller: usernameController,
+                  controller: emailController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -164,19 +165,20 @@ class _LoginState extends State<Login> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                          color: ApplicationColor.primaryColor, shape: BoxShape.circle),
+                          color: ApplicationColor.primaryColor,
+                          shape: BoxShape.circle),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(64),
                         onTap: () async {
                           Fluttertoast.showToast(
                               msg:
-                                  "${usernameController.text} - ${passController.text}");
+                                  "${emailController.text} - ${passController.text}");
                           bool authenticated = await UserService.login(
-                              usernameController.text, passController.text);
+                              emailController.text, passController.text);
                           if (authenticated) {
                             GoRouter.of(context).go(Home.routeName);
                           } else {
-                            Fluttertoast.showToast(msg: "not authenticated");
+                            Fluttertoast.showToast(msg: "UNAUTHORIZED");
                           }
                         },
                         child: Icon(
@@ -194,7 +196,7 @@ class _LoginState extends State<Login> {
                   Text("New member? ", style: TextStyle(color: hintColor)),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, Register.routeName);
+                      GoRouter.of(context).go(Register.routeName);
                     },
                     child: Text("Sign up",
                         style: TextStyle(
