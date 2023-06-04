@@ -9,7 +9,7 @@ import 'package:grocery/profile/Login.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CounterState.dart';
-import 'package:grocery/state_manager/DataProviderState.dart';
+import 'package:grocery/state_manager/GenericState.dart';
 
 // ignore: must_be_immutable
 class ProductDetail extends StatefulWidget {

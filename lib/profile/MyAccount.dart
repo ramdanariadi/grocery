@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
-import 'package:grocery/home/Home.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/TransactionCard.dart';
@@ -59,7 +58,7 @@ class Transactions extends StatelessWidget {
   Future<List<TransactionCard>> fetchTransaction() async {
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.GET,
-        url: Application.httBaseUrl + "/transaction/user/${userService.userId}",
+        url: Application.httBaseUrl + "/transaction",
         isSecure: true);
 
     // debugPrint(response.body);
@@ -166,7 +165,7 @@ class UserProfile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      // UserService.logout();
+                      UserService.logout();
                       // GoRouter.of(context).go(Home.routeName);
                     },
                     splashColor: ApplicationColor.naturalWhite,

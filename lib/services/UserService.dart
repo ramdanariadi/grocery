@@ -42,6 +42,32 @@ class UserService {
     return false;
   }
 
+  static Future<bool> register(String email, String pass, String username,
+      String moiblePhoneNumber) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map<String, String> body = {"email": email, "password": pass};
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.POST,
+        url: Application.httBaseUrl + "/user/register",
+        body: body);
+    debugPrint('Response : ' + response.body.toString());
+    debugPrint('has code : ' + response.statusCode.toString());
+    debugPrint(body.toString());
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
+      await sharedPreferences.setString("accessToken", tokens['accessToken']);
+      await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
+      await sharedPreferences.setBool("authenticated", true);
+
+      UserService userService = UserService.getInstance();
+      userService.authenticated = true;
+
+      return true;
+    }
+    return false;
+  }
+
   static logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove("accessToken");

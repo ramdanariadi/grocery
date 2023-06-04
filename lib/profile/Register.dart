@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/home/Home.dart';
+import 'package:grocery/services/UserService.dart';
 
 class Register extends StatefulWidget {
   static String routeName = '/register';
@@ -12,6 +15,12 @@ class Register extends StatefulWidget {
 
 class _LoginState extends State<Register> {
   bool showPassword = false;
+
+  // textfield controller
+  final usernameController = TextEditingController();
+  final mobilePhoneNumberController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -26,17 +35,13 @@ class _LoginState extends State<Register> {
     Color hintColor = Color.fromRGBO(193, 199, 208, 1);
     Color focusColor = Color.fromRGBO(143, 146, 151, 1);
 
-    // textfield controller
-    final usernameController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              GoRouter.of(context).pop();
             },
             icon: Icon(
               Icons.arrow_back,
@@ -46,7 +51,8 @@ class _LoginState extends State<Register> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
+          padding:
+              EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -63,7 +69,7 @@ class _LoginState extends State<Register> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 60),
-                child: TextField(
+                child: TextFormField(
                   controller: usernameController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
@@ -99,8 +105,8 @@ class _LoginState extends State<Register> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 30),
-                child: TextField(
-                  controller: passwordController,
+                child: TextFormField(
+                  controller: mobilePhoneNumberController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -135,7 +141,8 @@ class _LoginState extends State<Register> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 30),
-                child: TextField(
+                child: TextFormField(
+                  controller: emailController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -170,8 +177,9 @@ class _LoginState extends State<Register> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 30),
-                child: TextField(
+                child: TextFormField(
                   obscureText: !showPassword,
+                  controller: passwordController,
                   cursorColor: focusColor,
                   decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
@@ -228,12 +236,21 @@ class _LoginState extends State<Register> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                          color: ApplicationColor.primaryColor, shape: BoxShape.circle),
+                          color: ApplicationColor.primaryColor,
+                          shape: BoxShape.circle),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(64),
-                        onTap: () {
-                          Fluttertoast.showToast(
-                              msg: "${usernameController.text}");
+                        onTap: () async {
+                          bool authenticated = await UserService.register(
+                              emailController.text,
+                              passwordController.text,
+                              usernameController.text,
+                              mobilePhoneNumberController.text);
+                          if (authenticated) {
+                            GoRouter.of(context).go(Home.routeName);
+                          } else {
+                            Fluttertoast.showToast(msg: "UNAUTHENTICATED");
+                          }
                         },
                         child: Icon(
                           Icons.arrow_forward,
