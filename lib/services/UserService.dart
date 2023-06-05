@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
+import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,6 +84,10 @@ class UserService {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove("accessToken");
     await sharedPreferences.remove("refreshToken");
+    await sharedPreferences.remove("username");
+    await sharedPreferences.remove("name");
+    await sharedPreferences.remove("email");
+    await sharedPreferences.remove("mobilePhoneNumber");
     await sharedPreferences.setBool("authenticated", false);
   }
 
@@ -95,19 +100,29 @@ class UserService {
     return sharedPreferences.getBool("authenticated") ?? false;
   }
 
-  static Future<Map<String, dynamic>> getUserProfile() async {
+  static Future<UserProfileDTO> getUserProfile() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserService userService = UserService.getInstance();
     userService.authenticated =
         sharedPreferences.getBool("authenticated") ?? false;
-    final Map<String, dynamic> user = Map();
-    if (userService.authenticated ?? false) {
-      user["username"] = sharedPreferences.getString("username");
-      user["name"] = sharedPreferences.getString("name");
-      user["email"] = sharedPreferences.getString("email");
-      user["mobilePhoneNumber"] =
-          sharedPreferences.getString("mobilePhoneNumber");
-    }
+    UserProfileDTO user = UserProfileDTO(
+        username: sharedPreferences.getString("username"),
+        name: sharedPreferences.getString("name"),
+        email: sharedPreferences.getString("email"),
+        mobilePhoneNumber: sharedPreferences.getString("mobilePhoneNumber"));
     return user;
   }
+}
+
+class UserProfileDTO {
+  UserProfileDTO(
+      {String? this.username,
+      String? this.name,
+      String? this.email,
+      String? this.mobilePhoneNumber});
+
+  String? username;
+  String? name;
+  String? email;
+  String? mobilePhoneNumber;
 }

@@ -21,11 +21,54 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return FutureBuilder<Map<String, dynamic>>(
+    return FutureBuilder<UserProfileDTO>(
         future: UserService.getUserProfile(),
         builder: (context, snapShot) {
-          Map<String, dynamic> userProfile =
-              snapShot.hasData ? snapShot.data! : Map();
+          List<Widget> userInfo = [
+            Container(
+              // margin: EdgeInsets.only(bottom: 9),
+              child: Text(
+                this.getGreting(),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
+              ),
+            ),
+          ];
+          if (snapShot.hasData) {
+            UserProfileDTO userProfile = snapShot.data!;
+            if (userProfile.name != null) {
+              userInfo.add(Container(
+                // margin: EdgeInsets.only(bottom: 9),
+                child: Text(
+                  userProfile.name!,
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ));
+            }
+            if (userProfile.email != null) {
+              userInfo.add(Row(
+                children: [
+                  Icon(
+                    Icons.location_on_rounded,
+                    size: 22,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    userProfile.email ?? "-",
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                ],
+              ));
+            }
+          }
+
           return Container(
             padding: EdgeInsets.all(Application.defaultPadding),
             child: Row(
@@ -36,43 +79,7 @@ class Profile extends StatelessWidget {
                   width: size.width * 0.6,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        // margin: EdgeInsets.only(bottom: 9),
-                        child: Text(
-                          this.getGreting(),
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black),
-                        ),
-                      ),
-                      Container(
-                        // margin: EdgeInsets.only(bottom: 9),
-                        child: Text(
-                          userProfile["name"] ?? "-",
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_rounded,
-                            size: 22,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            userProfile["email"] ?? "-",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
-                        ],
-                      )
-                    ],
+                    children: userInfo,
                   ),
                 ),
                 InkWell(
