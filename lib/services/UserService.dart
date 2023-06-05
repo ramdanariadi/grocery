@@ -106,6 +106,7 @@ class UserService {
     userService.authenticated =
         sharedPreferences.getBool("authenticated") ?? false;
     UserProfileDTO user = UserProfileDTO(
+        isAuthenticated: userService.authenticated!,
         username: sharedPreferences.getString("username"),
         name: sharedPreferences.getString("name"),
         email: sharedPreferences.getString("email"),
@@ -116,11 +117,13 @@ class UserService {
 
 class UserProfileDTO {
   UserProfileDTO(
-      {String? this.username,
+      {bool this.isAuthenticated = false,
+      String? this.username,
       String? this.name,
       String? this.email,
       String? this.mobilePhoneNumber});
 
+  bool isAuthenticated;
   String? username;
   String? name;
   String? email;

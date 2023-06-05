@@ -24,6 +24,8 @@ class Profile extends StatelessWidget {
     return FutureBuilder<UserProfileDTO>(
         future: UserService.getUserProfile(),
         builder: (context, snapShot) {
+          UserProfileDTO userProfile =
+              snapShot.hasData ? snapShot.data! : UserProfileDTO();
           List<Widget> userInfo = [
             Container(
               // margin: EdgeInsets.only(bottom: 9),
@@ -36,8 +38,7 @@ class Profile extends StatelessWidget {
               ),
             ),
           ];
-          if (snapShot.hasData) {
-            UserProfileDTO userProfile = snapShot.data!;
+          if (userProfile.isAuthenticated) {
             if (userProfile.name != null) {
               userInfo.add(Container(
                 // margin: EdgeInsets.only(bottom: 9),
