@@ -30,8 +30,14 @@ class UserService {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
+      final Map<String, dynamic> user = tokens['user'];
       await sharedPreferences.setString("accessToken", tokens['accessToken']);
       await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
+      await sharedPreferences.setString("username", user['username']);
+      await sharedPreferences.setString("name", user['name']);
+      await sharedPreferences.setString("email", user['email']);
+      await sharedPreferences.setString(
+          "mobilePhoneNumber", user['mobilePhoneNumber']);
       await sharedPreferences.setBool("authenticated", true);
 
       UserService userService = UserService.getInstance();
@@ -56,9 +62,14 @@ class UserService {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
+      final Map<String, dynamic> user = tokens['user'];
       await sharedPreferences.setString("accessToken", tokens['accessToken']);
       await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
-      await sharedPreferences.setBool("authenticated", true);
+      await sharedPreferences.setString("username", user['username']);
+      await sharedPreferences.setString("name", user['name']);
+      await sharedPreferences.setString("email", user['email']);
+      await sharedPreferences.setString(
+          "mobilePhoneNumber", user['mobilePhoneNumber']);
 
       UserService userService = UserService.getInstance();
       userService.authenticated = true;
@@ -84,12 +95,19 @@ class UserService {
     return sharedPreferences.getBool("authenticated") ?? false;
   }
 
-  static Future<String?> getUserId() async {
+  static Future<Map<String, dynamic>> getUserProfile() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserService userService = UserService.getInstance();
     userService.authenticated =
         sharedPreferences.getBool("authenticated") ?? false;
-    userService.userId = sharedPreferences.getString("userId") ?? null;
-    return userService.userId;
+    final Map<String, dynamic> user = Map();
+    if (userService.authenticated ?? false) {
+      user["username"] = sharedPreferences.getString("username");
+      user["name"] = sharedPreferences.getString("name");
+      user["email"] = sharedPreferences.getString("email");
+      user["mobilePhoneNumber"] =
+          sharedPreferences.getString("mobilePhoneNumber");
+    }
+    return user;
   }
 }
