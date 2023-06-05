@@ -44,16 +44,16 @@ class EditProfile extends StatelessWidget {
         padding:
             EdgeInsets.symmetric(horizontal: Application.defaultPadding * 2),
         decoration: BoxDecoration(color: Colors.transparent),
-        child: FutureBuilder<Map<String, dynamic>>(
+        child: FutureBuilder<UserProfileDTO>(
             future: UserService.getUserProfile(),
             builder: (context, snapshoot) {
-              Map<String, dynamic> userProfile =
-                  snapshoot.hasData ? snapshoot.data! : Map();
-              usernameController.text = userProfile["username"] ?? "";
-              emailController.text = userProfile["email"] ?? "";
-              nameController.text = userProfile["name"] ?? "";
+              UserProfileDTO userProfile =
+                  snapshoot.hasData ? snapshoot.data! : UserProfileDTO();
+              usernameController.text = userProfile.username ?? "";
+              emailController.text = userProfile.email ?? "";
+              nameController.text = userProfile.name ?? "";
               mobilePhoneNumberController.text =
-                  userProfile["mobilePhoneNumber"] ?? "";
+                  userProfile.mobilePhoneNumber ?? "";
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

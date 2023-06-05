@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
@@ -37,7 +36,9 @@ class LabelWithActionButton extends StatelessWidget {
           Text(
             this.title,
             style: TextStyle(
-                fontSize: 22, color: ApplicationColor.blackHint, fontWeight: FontWeight.bold),
+                fontSize: 22,
+                color: ApplicationColor.blackHint,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),

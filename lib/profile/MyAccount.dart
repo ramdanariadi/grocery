@@ -118,11 +118,11 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return FutureBuilder<Map<String, dynamic>>(
+    return FutureBuilder<UserProfileDTO>(
         future: UserService.getUserProfile(),
         builder: (context, snapShoot) {
-          Map<String, dynamic> userProfile =
-              snapShoot.hasData ? snapShoot.data! : Map();
+          UserProfileDTO userProfile =
+              snapShoot.hasData ? snapShoot.data! : UserProfileDTO();
           return Container(
             height: 220,
             padding: EdgeInsets.only(
@@ -154,16 +154,16 @@ class UserProfile extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                userProfile["name"] ?? "-",
+                                userProfile.name ?? "-",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 24),
                               ),
                               Text(
-                                userProfile["email"] ?? "-",
+                                userProfile.email ?? "-",
                                 style: TextStyle(fontSize: 13),
                               ),
                               Text(
-                                userProfile["mobilePhoneNumber"] ?? "-",
+                                userProfile.mobilePhoneNumber ?? "-",
                                 style: TextStyle(fontSize: 10),
                               )
                             ],
