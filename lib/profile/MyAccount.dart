@@ -118,87 +118,94 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      height: 220,
-      padding: EdgeInsets.only(
-          top: 100,
-          left: Application.defaultPadding,
-          right: Application.defaultPadding),
-      child: Column(
-        children: [
-          Row(children: [
-            Container(
-              child: Hero(
-                child: Image.asset('images/default_user_image_profile.png'),
-                tag: "user-profile",
-              ),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: ApplicationColor.naturalWhite,
-                  borderRadius: BorderRadius.circular(10)),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+    return FutureBuilder<Map<String, dynamic>>(
+        future: UserService.getUserProfile(),
+        builder: (context, snapShoot) {
+          Map<String, dynamic> userProfile =
+              snapShoot.hasData ? snapShoot.data! : Map();
+          return Container(
+            height: 220,
+            padding: EdgeInsets.only(
+                top: 100,
+                left: Application.defaultPadding,
+                right: Application.defaultPadding),
+            child: Column(
+              children: [
+                Row(children: [
                   Container(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Hero(
+                      child:
+                          Image.asset('images/default_user_image_profile.png'),
+                      tag: "user-profile",
+                    ),
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: ApplicationColor.naturalWhite,
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  Expanded(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Ghazi",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                userProfile["name"] ?? "-",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 24),
+                              ),
+                              Text(
+                                userProfile["email"] ?? "-",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                              Text(
+                                userProfile["mobilePhoneNumber"] ?? "-",
+                                style: TextStyle(fontSize: 10),
+                              )
+                            ],
+                          ),
                         ),
-                        Text(
-                          "ghazi.work@hotmail.com",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        Text(
-                          "021 000 987",
-                          style: TextStyle(fontSize: 10),
+                        InkWell(
+                          onTap: () {
+                            UserService.logout();
+                            // GoRouter.of(context).go(Home.routeName);
+                          },
+                          splashColor: ApplicationColor.naturalWhite,
+                          child: Container(
+                            width: size.width * 0.1,
+                            height: size.width * 0.14,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Icon(
+                              Icons.logout_outlined,
+                              color: ApplicationColor.blackHint,
+                            ),
+                          ),
                         )
                       ],
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      UserService.logout();
-                      // GoRouter.of(context).go(Home.routeName);
-                    },
-                    splashColor: ApplicationColor.naturalWhite,
-                    child: Container(
-                      width: size.width * 0.1,
-                      height: size.width * 0.14,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
-                        Icons.logout_outlined,
-                        color: ApplicationColor.blackHint,
-                      ),
-                    ),
                   )
-                ],
-              ),
-            )
-          ]),
-          Button(
-              text: "Edit Profile",
-              width: double.infinity,
-              color: ApplicationColor.primaryColor,
-              height: size.height * 0.04,
-              margin: EdgeInsets.only(
-                  left: 0, right: 0, top: Application.defaultPadding / 2),
-              padding: EdgeInsets.all(2),
-              textStyle: TextStyle(fontSize: 12, color: Colors.white),
-              onTap: () {
-                GoRouter.of(context)
-                    .go(MyAccount.routeName + "/" + EditProfile.routeName);
-              })
-        ],
-      ),
-    );
+                ]),
+                Button(
+                    text: "Edit Profile",
+                    width: double.infinity,
+                    color: ApplicationColor.primaryColor,
+                    height: size.height * 0.04,
+                    margin: EdgeInsets.only(
+                        left: 0, right: 0, top: Application.defaultPadding / 2),
+                    padding: EdgeInsets.all(2),
+                    textStyle: TextStyle(fontSize: 12, color: Colors.white),
+                    onTap: () {
+                      GoRouter.of(context).go(
+                          MyAccount.routeName + "/" + EditProfile.routeName);
+                    })
+              ],
+            ),
+          );
+        });
   }
 }

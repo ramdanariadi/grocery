@@ -34,9 +34,15 @@ class Home extends StatelessWidget {
                 title: "Top Products",
                 actionButtonTitle: "SHOW ALL",
                 press: () {
-                  GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
-                    'title': 'Top Products',
-                    'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&isTop=true'});
+                  GoRouter.of(context).push(
+                      Products.routeName +
+                          "/" +
+                          ProductGroupGridItems.routeName,
+                      extra: {
+                        'title': 'Top Products',
+                        'url': Application.httBaseUrl +
+                            '/product?pageIndex=0&pageSize=10&isTop=true'
+                      });
                 },
               ),
               TopProducts(),
@@ -44,9 +50,15 @@ class Home extends StatelessWidget {
                 title: "Recommendation",
                 actionButtonTitle: "SHOW ALL",
                 press: () {
-                    GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
-                    'title': 'Recommendation',
-                    'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&isRecommendation=true'});
+                  GoRouter.of(context).push(
+                      Products.routeName +
+                          "/" +
+                          ProductGroupGridItems.routeName,
+                      extra: {
+                        'title': 'Recommendation',
+                        'url': Application.httBaseUrl +
+                            '/product?pageIndex=0&pageSize=10&isRecommendation=true'
+                      });
                 },
               ),
               RecomendationProducts(),
