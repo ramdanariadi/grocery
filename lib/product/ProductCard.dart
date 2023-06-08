@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
@@ -12,6 +13,7 @@ import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 // ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
@@ -50,9 +52,9 @@ class ProductCard extends StatelessWidget {
   }
 
   Future<void> addToChart() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST,
-        url:
-            Application.httBaseUrl + '/cart/${this.id}/1',
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.POST,
+        url: Application.httBaseUrl + '/cart/${this.id}/1',
         isSecure: true);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -68,10 +70,13 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    RotuerState rotuerState = BlocProvider.of<RotuerState>(context);
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).go(Products.routeName +"/"+ ProductDetail.routeName,
+        rotuerState.go(
+            context: context,
+            baseRoute: Products.routeName,
+            path: ProductDetail.routeName,
             extra: ProductArguments(
                 id: this.id,
                 tag: this.id + 'top',
@@ -124,7 +129,8 @@ class ProductCard extends StatelessWidget {
                             fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: "weight ",
-                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
+                        style: TextStyle(
+                            height: 1.5, color: ApplicationColor.blackHint)),
                     TextSpan(
                         text: "${this.weight}g\n",
                         style: TextStyle(
@@ -139,7 +145,8 @@ class ProductCard extends StatelessWidget {
                             fontWeight: FontWeight.bold)),
                     TextSpan(
                         text: "/kg",
-                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
+                        style: TextStyle(
+                            height: 1.5, color: ApplicationColor.blackHint)),
                   ])),
                   Button(
                       text: "plus",
@@ -191,8 +198,8 @@ class ProductArguments {
 }
 
 class FakeProductCard extends StatelessWidget {
-  FakeProductCard({ Key? key}) : super(key: key);
-  
+  FakeProductCard({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -202,7 +209,9 @@ class FakeProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton(widht: size.width * 0.4, height: 100),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -210,13 +219,19 @@ class FakeProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Skeleton(widht: size.width * 0.22, height: 12),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Skeleton(widht: size.width * 0.3, height: 12),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Skeleton(widht: size.width * 0.2, height: 12)
-                  ],
+                ],
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Skeleton(widht: 30, height: 30)
             ],
           )
