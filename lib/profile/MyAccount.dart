@@ -1,14 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
+import 'package:grocery/home/Home.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/TransactionCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
@@ -118,6 +122,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    RotuerState rotuerState = BlocProvider.of<RotuerState>(context);
     return FutureBuilder<UserProfileDTO>(
         future: UserService.getUserProfile(),
         builder: (context, snapShoot) {
@@ -172,7 +177,8 @@ class UserProfile extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             UserService.logout();
-                            // GoRouter.of(context).go(Home.routeName);
+                            rotuerState.go(
+                                context: context, baseRoute: Home.routeName);
                           },
                           splashColor: ApplicationColor.naturalWhite,
                           child: Container(

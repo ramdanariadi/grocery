@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 class Profile extends StatelessWidget {
   String getGreting() {
@@ -69,7 +72,7 @@ class Profile extends StatelessWidget {
               ));
             }
           }
-
+          RotuerState activeNavbarState = BlocProvider.of<RotuerState>(context);
           return Container(
             padding: EdgeInsets.all(Application.defaultPadding),
             child: Row(
@@ -85,7 +88,8 @@ class Profile extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, MyAccount.routeName);
+                    activeNavbarState.go(
+                        context: context, baseRoute: MyAccount.routeName);
                   },
                   child: Container(
                       width: 72,
