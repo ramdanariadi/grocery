@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/custom_widget/ScaffoldBottomActionBar.dart';
 
-class RotuerState extends Bloc<int, int> {
-  RotuerState(int initialState) : super(initialState) {
+class RouterState extends Bloc<int, int> {
+  RouterState(int initialState) : super(initialState) {
     on<int>((event, emit) {
       emit(event);
     });
