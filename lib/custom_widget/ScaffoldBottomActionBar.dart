@@ -28,8 +28,8 @@ class ScaffoldBottomActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RotuerState activeNavbarState = BlocProvider.of<RotuerState>(context);
-    return BlocBuilder<RotuerState, int>(
+    RouterState activeNavbarState = BlocProvider.of<RouterState>(context);
+    return BlocBuilder<RouterState, int>(
       builder: (context, _activeNavbar) => Scaffold(
           body: child,
           bottomNavigationBar: FloatingBottomNavigationBar(

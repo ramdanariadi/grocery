@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         GlobalKey<NavigatorState>();
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RotuerState>(create: (context) => RotuerState(0))
+        BlocProvider<RouterState>(create: (context) => RouterState(0))
       ],
       child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

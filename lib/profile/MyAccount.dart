@@ -122,7 +122,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    RotuerState rotuerState = BlocProvider.of<RotuerState>(context);
+    RouterState rotuerState = BlocProvider.of<RouterState>(context);
     return FutureBuilder<UserProfileDTO>(
         future: UserService.getUserProfile(),
         builder: (context, snapShoot) {

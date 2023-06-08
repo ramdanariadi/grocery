@@ -72,7 +72,7 @@ class Profile extends StatelessWidget {
               ));
             }
           }
-          RotuerState activeNavbarState = BlocProvider.of<RotuerState>(context);
+          RouterState activeNavbarState = BlocProvider.of<RouterState>(context);
           return Container(
             padding: EdgeInsets.all(Application.defaultPadding),
             child: Row(

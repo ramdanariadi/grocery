@@ -70,7 +70,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    RotuerState rotuerState = BlocProvider.of<RotuerState>(context);
+    RouterState rotuerState = BlocProvider.of<RouterState>(context);
     return GestureDetector(
       onTap: () {
         rotuerState.go(
