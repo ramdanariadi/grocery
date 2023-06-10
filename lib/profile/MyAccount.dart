@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -70,10 +69,10 @@ class Transactions extends StatelessWidget {
       List<dynamic> listResponse = jsonDecode(response.body)['data'];
       // debugPrint(listResponse.toString());
       return listResponse.map((e) {
-        List<dynamic> products = e['products'];
+        List<dynamic> products = e['items'];
         Map<String, dynamic> product = {
           "total": products.length,
-          "totalPrice": e['total'],
+          "totalPrice": e['priceTotal'],
           "totalPerProduct": products[0]['total'],
           "name": products[0]['name'],
           "imageUrl": products[0]['imageUrl']
