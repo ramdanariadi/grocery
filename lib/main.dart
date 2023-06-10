@@ -13,6 +13,7 @@ import 'package:grocery/profile/EditProfile.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/profile/Register.dart';
+import 'package:grocery/search_page/SearchPage.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
                       GoRoute(
                           path: Home.routeName,
                           builder: (context, state) => Home()),
+                      GoRoute(
+                          path: SearchPage.routeName,
+                          builder: (context, state) => SearchPage()),
                       /* Products route */
                       GoRoute(
                           path: Products.routeName,
