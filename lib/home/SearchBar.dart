@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/search_page/SearchPage.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    RouterState routerState = BlocProvider.of<RouterState>(context);
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, SearchPage.routeName);
+        routerState.go(context: context, baseRoute: SearchPage.routeName);
       },
       child: Container(
         padding: EdgeInsets.all(Application.defaultPadding),
@@ -20,10 +23,12 @@ class SearchBar extends StatelessWidget {
             Container(
                 height: 45,
                 width: size.width - Application.defaultPadding * 2,
-                padding: EdgeInsets.symmetric(horizontal: Application.defaultPadding),
+                padding: EdgeInsets.symmetric(
+                    horizontal: Application.defaultPadding),
                 decoration: BoxDecoration(
                     color: ApplicationColor.naturalWhite,
-                    borderRadius: BorderRadius.circular(Application.defaultPadding - 8)),
+                    borderRadius:
+                        BorderRadius.circular(Application.defaultPadding - 8)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
