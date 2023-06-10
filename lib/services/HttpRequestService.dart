@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:http/http.dart' as http;
@@ -22,13 +21,11 @@ class HttpRequestService {
         break;
       case HttpMethod.POST:
         response = await http.post(Uri.parse(url),
-            body: jsonEncode(body),
-            headers: await getHeaders(isSecure: isSecure));
+            body: body, headers: await getHeaders(isSecure: isSecure));
         break;
       case HttpMethod.PUT:
         response = await http.put(Uri.parse(url),
-            body: jsonEncode(body),
-            headers: await getHeaders(isSecure: isSecure));
+            body: body, headers: await getHeaders(isSecure: isSecure));
         break;
       case HttpMethod.PATCH:
         // TODO: Handle this case.

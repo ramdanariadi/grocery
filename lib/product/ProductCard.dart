@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
@@ -57,10 +54,7 @@ class ProductCard extends StatelessWidget {
         url: Application.httBaseUrl + '/cart/${this.id}/1',
         isSecure: true);
     if (response.statusCode == 200) {
-      Map<String, dynamic> responseBody = jsonDecode(response.body);
-      if (responseBody['metaData']['code'] == 201) {
-        Fluttertoast.showToast(msg: "yeay product added");
-      }
+      Fluttertoast.showToast(msg: "yeay product added");
     } else {
       Fluttertoast.showToast(msg: "opps something wrong");
       debugPrint(response.body.toString());
@@ -165,7 +159,8 @@ class ProductCard extends StatelessWidget {
                         if (await UserService.isAuthenticated()) {
                           this.addToChart();
                         } else {
-                          Navigator.pushNamed(context, Login.routeName);
+                          rotuerState.go(
+                              context: context, baseRoute: Login.routeName);
                         }
                       })
                 ],

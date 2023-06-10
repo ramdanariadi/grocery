@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -9,6 +9,7 @@ import 'package:grocery/home/Home.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/DataState.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 import 'CartItemCard.dart';
 
@@ -24,7 +25,6 @@ class Cart extends StatefulWidget {
 class _Cart extends State<Cart> {
   late Future<List<CartItemCard>> productFuture;
   late List<CartItemCard> productList;
-  // DataProviderState<int> totalState = DataProviderState();
   DataState<double> totalState = DataState(0);
   UserService userService = UserService.getInstance();
 
@@ -36,7 +36,7 @@ class _Cart extends State<Cart> {
 
     if (response.statusCode == 200) {
       List<dynamic> cart = jsonDecode(response.body)['data'];
-      int tmpTotalPrice = 0;
+      double tmpTotalPrice = 0;
       debugPrint("body : " + response.body);
       productList = cart.map((dynamic item) {
         Map<String, dynamic> mapItem = item;
@@ -47,7 +47,7 @@ class _Cart extends State<Cart> {
         });
       }).toList();
 
-      // totalState.eventSink.add(tmpTotalPrice);
+      totalState.add(tmpTotalPrice);
       return productList;
     } else {
       throw Exception("Failed load cart");
@@ -78,19 +78,22 @@ class _Cart extends State<Cart> {
     this.countTotalPrice();
     debugPrint("object");
     final resBody = jsonEncode(<String, dynamic>{
-      'userId': userService.userId,
-      'products': productList
-          .map((e) => <String, dynamic>{"id": e.productId, "total": e.total})
+      'data': productList
+          .map((e) =>
+              <String, dynamic>{"productId": e.productId, "total": e.total})
           .toList()
     });
-    debugPrint(resBody);
+    debugPrint(jsonEncode(resBody));
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
         url: Application.httBaseUrl + "/transaction",
         body: resBody,
         isSecure: true);
     if (response.statusCode == 200) {
-      GoRouter.of(context).go(Alert.routeName,
+      final RouterState routerState = BlocProvider.of<RouterState>(context);
+      routerState.go(
+          context: context,
+          baseRoute: Alert.routeName,
           extra: Alert(
             icon: Alerts.success,
             message: "Order Successfully",
@@ -174,29 +177,29 @@ class _Cart extends State<Cart> {
                             )
                           ]),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: Application.defaultPadding,
-                          bottom: Application.defaultPadding / 4),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Coupon",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            ),
-                            Text(
-                              "None",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            )
-                          ]),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(
+                    //       right: Application.defaultPadding,
+                    //       bottom: Application.defaultPadding / 4),
+                    //   child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Text(
+                    //           "Coupon",
+                    //           style: TextStyle(
+                    //               fontWeight: FontWeight.normal,
+                    //               fontSize: 18,
+                    //               color: Color.fromRGBO(108, 111, 115, 1)),
+                    //         ),
+                    //         Text(
+                    //           "None",
+                    //           style: TextStyle(
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 18,
+                    //               color: Color.fromRGBO(108, 111, 115, 1)),
+                    //         )
+                    //       ]),
+                    // ),
                     Container(
                       height: 1,
                       color: Color.fromRGBO(176, 176, 176, 0.8),
@@ -229,6 +232,7 @@ class _Cart extends State<Cart> {
                     ),
                     TextButton(
                         onPressed: () {
+                          Fluttertoast.showToast(msg: "test;");
                           this.checkout();
                         },
                         child: Text(

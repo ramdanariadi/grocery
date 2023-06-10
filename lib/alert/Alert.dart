@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 enum Alerts { success }
 
 class Alert extends StatelessWidget {
-
   static final routeName = "/alert";
 
   final String message;
   final Alerts icon;
   final String routeToClose;
   late Image iconImage;
-  Alert({required this.icon, required this.message, required this.routeToClose}){
-    switch(icon){
+  Alert(
+      {required this.icon, required this.message, required this.routeToClose}) {
+    switch (icon) {
       case Alerts.success:
         iconImage = Image.asset("images/icons/success.png");
-      break;
+        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final RouterState routerState = BlocProvider.of<RouterState>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -64,8 +67,8 @@ class Alert extends StatelessWidget {
                   ),
                   width: size.width - (Application.defaultPadding * 2),
                   height: size.height / 11,
-                  onTap: (){
-                    GoRouter.of(context).go(routeToClose);
+                  onTap: () {
+                    routerState.go(context: context, baseRoute: routeToClose);
                   }),
             ),
           )
