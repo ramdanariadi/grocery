@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -43,11 +44,12 @@ class SearchBar extends StatelessWidget {
         )));
     Fluttertoast.showToast(msg: "do search", toastLength: Toast.LENGTH_SHORT);
     List<ProductCard> products = await fetchProduct(searchController.text);
-    productsState.add(SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Row(
-        children: products,
-      ),
+    productsState.add(StaggeredGridView.countBuilder(
+      crossAxisCount: 2,
+      itemCount: products.length,
+      itemBuilder: (BuildContext context, int index) => products[index],
+      staggeredTileBuilder: (int index) => new StaggeredTile.fit(1),
+      mainAxisSpacing: Application.defaultPadding / 2,
     ));
   }
 
@@ -59,7 +61,9 @@ class SearchBar extends StatelessWidget {
     });
 
     return Container(
-      padding: EdgeInsets.all(Application.defaultPadding),
+      padding: EdgeInsets.symmetric(
+        vertical: Application.defaultPadding,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -98,17 +102,20 @@ class SearchBar extends StatelessWidget {
                       child: Icon(Icons.search))
                 ],
               )),
-          Container(
-            padding: EdgeInsets.only(top: Application.defaultPadding),
-            child: StreamBuilder<Widget>(
-                stream: productsState.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return snapshot.data!;
-                  }
+          Expanded(
+            child: Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: Application.defaultPadding),
+              child: StreamBuilder<Widget>(
+                  stream: productsState.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return snapshot.data!;
+                    }
 
-                  return Container();
-                }),
+                    return Container();
+                  }),
+            ),
           )
         ],
       ),
@@ -118,9 +125,10 @@ class SearchBar extends StatelessWidget {
 
 class Debounce {
   Timer? _timer;
-  final int scondsWait = 1;
+  int secondsWait;
   VoidCallback callback;
-  Debounce({required VoidCallback this.callback});
+
+  Debounce({required VoidCallback this.callback, int this.secondsWait = 1});
 
   void search(String text) {
     if (_timer != null) {
@@ -133,6 +141,6 @@ class Debounce {
     }
 
     debugPrint("debounce-search init timer $text");
-    _timer = Timer(Duration(seconds: 1), callback);
+    _timer = Timer(Duration(seconds: secondsWait), callback);
   }
 }
