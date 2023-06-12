@@ -52,9 +52,6 @@ class MyApp extends StatelessWidget {
                       GoRoute(
                           path: Home.routeName,
                           builder: (context, state) => Home()),
-                      GoRoute(
-                          path: SearchPage.routeName,
-                          builder: (context, state) => SearchPage()),
                       /* Products route */
                       GoRoute(
                           path: Products.routeName,
@@ -86,7 +83,10 @@ class MyApp extends StatelessWidget {
                                   imageUrl: arguments.imageUrl,
                                 );
                               },
-                            )
+                            ),
+                            GoRoute(
+                                path: SearchPage.routeName,
+                                builder: (context, state) => SearchPage()),
                           ]),
                       /* Cart route */
                       GoRoute(

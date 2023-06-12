@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,12 +11,14 @@ import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
-  SearchBar({Key? key}) : super(key: key);
+  SearchBar({Key? key}) : super(key: key) {}
 
   final TextEditingController searchController = TextEditingController();
   final DataState<Widget> productsState = DataState(Container());
+  late final Debounce debounce = Debounce(callback: _doSearch);
 
-  Future<List<ProductCard>> doSearch(String search) async {
+  Future<List<ProductCard>> fetchProduct(String search) async {
+    debugPrint("debounce-search fetchProduct $search");
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.GET,
         url: Application.httBaseUrl +
@@ -28,9 +31,33 @@ class SearchBar extends StatelessWidget {
     return List.empty();
   }
 
+  void _doSearch() async {
+    productsState.add(Shimmer.fromColors(
+        baseColor: ApplicationColor.shimmerBaseColor,
+        highlightColor: ApplicationColor.shimmerHighlightColor,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Row(
+            children: [FakeProductCard(), FakeProductCard()],
+          ),
+        )));
+    Fluttertoast.showToast(msg: "do search", toastLength: Toast.LENGTH_SHORT);
+    List<ProductCard> products = await fetchProduct(searchController.text);
+    productsState.add(SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Row(
+        children: products,
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    searchController.addListener(() {
+      debounce.search(searchController.text);
+    });
+
     return Container(
       padding: EdgeInsets.all(Application.defaultPadding),
       child: Column(
@@ -65,30 +92,8 @@ class SearchBar extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () async {
-                        productsState.add(Shimmer.fromColors(
-                            baseColor: ApplicationColor.shimmerBaseColor,
-                            highlightColor:
-                                ApplicationColor.shimmerHighlightColor,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Row(
-                                children: [
-                                  FakeProductCard(),
-                                  FakeProductCard()
-                                ],
-                              ),
-                            )));
                         FocusScope.of(context).unfocus();
-                        Fluttertoast.showToast(
-                            msg: "do search", toastLength: Toast.LENGTH_SHORT);
-                        List<ProductCard> products =
-                            await doSearch(searchController.text);
-                        productsState.add(SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Row(
-                            children: products,
-                          ),
-                        ));
+                        this._doSearch();
                       },
                       child: Icon(Icons.search))
                 ],
@@ -108,5 +113,26 @@ class SearchBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class Debounce {
+  Timer? _timer;
+  final int scondsWait = 1;
+  VoidCallback callback;
+  Debounce({required VoidCallback this.callback});
+
+  void search(String text) {
+    if (_timer != null) {
+      debugPrint("debounce-search cancel timer $text");
+      _timer!.cancel();
+    }
+
+    if (text.isEmpty) {
+      return;
+    }
+
+    debugPrint("debounce-search init timer $text");
+    _timer = Timer(Duration(seconds: 1), callback);
   }
 }

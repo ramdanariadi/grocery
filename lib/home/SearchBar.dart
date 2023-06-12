@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/products/Products.dart';
 import 'package:grocery/search_page/SearchPage.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
@@ -13,7 +14,10 @@ class SearchBar extends StatelessWidget {
     RouterState routerState = BlocProvider.of<RouterState>(context);
     return GestureDetector(
       onTap: () {
-        routerState.go(context: context, baseRoute: SearchPage.routeName);
+        routerState.go(
+            context: context,
+            baseRoute: Products.routeName,
+            path: SearchPage.routeName);
       },
       child: Container(
         padding: EdgeInsets.all(Application.defaultPadding),
