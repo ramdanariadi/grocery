@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
