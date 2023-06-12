@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
-import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class FloatingBottomNavigationBar extends StatefulWidget {
