@@ -199,7 +199,7 @@ class UserProfile extends StatelessWidget {
                     text: "Edit Profile",
                     width: double.infinity,
                     color: ApplicationColor.primaryColor,
-                    height: size.height * 0.04,
+                    height: size.height * 0.05,
                     margin: EdgeInsets.only(
                         left: 0, right: 0, top: Application.defaultPadding / 2),
                     padding: EdgeInsets.all(2),

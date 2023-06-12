@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' as DartUi;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,6 +9,7 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/CartState.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
@@ -26,6 +28,7 @@ class _Cart extends State<Cart> {
   late Future<List<CartItemCard>> productFuture;
   late List<CartItemCard> productList;
   DataState<double> totalState = DataState(0);
+  late CartState cartState;
   UserService userService = UserService.getInstance();
 
   Future<List<CartItemCard>> fetchCart() async {
@@ -38,6 +41,7 @@ class _Cart extends State<Cart> {
       List<dynamic> cart = jsonDecode(response.body)['data'];
       double tmpTotalPrice = 0;
       debugPrint("body : " + response.body);
+      cartState.add(cart.length);
       productList = cart.map((dynamic item) {
         Map<String, dynamic> mapItem = item;
         tmpTotalPrice += int.parse(mapItem['price'].toString()) *
@@ -105,7 +109,8 @@ class _Cart extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final DartUi.Size size = MediaQuery.of(context).size;
+    cartState = BlocProvider.of<CartState>(context);
     return Scaffold(
       body: Stack(children: [
         Container(
@@ -152,104 +157,106 @@ class _Cart extends State<Cart> {
               child: StreamBuilder(
                 stream: totalState.stream,
                 initialData: 0,
-                builder: (context, snapshot) => Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: Application.defaultPadding,
-                          bottom: Application.defaultPadding / 4),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Sub total price",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            ),
-                            Text(
-                              "${snapshot.data}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            )
-                          ]),
-                    ),
-                    // Container(
-                    //   margin: EdgeInsets.only(
-                    //       right: Application.defaultPadding,
-                    //       bottom: Application.defaultPadding / 4),
-                    //   child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         Text(
-                    //           "Coupon",
-                    //           style: TextStyle(
-                    //               fontWeight: FontWeight.normal,
-                    //               fontSize: 18,
-                    //               color: Color.fromRGBO(108, 111, 115, 1)),
-                    //         ),
-                    //         Text(
-                    //           "None",
-                    //           style: TextStyle(
-                    //               fontWeight: FontWeight.bold,
-                    //               fontSize: 18,
-                    //               color: Color.fromRGBO(108, 111, 115, 1)),
-                    //         )
-                    //       ]),
-                    // ),
-                    Container(
-                      height: 1,
-                      color: Color.fromRGBO(176, 176, 176, 0.8),
-                      width: size.width - Application.defaultPadding * 2,
-                      margin: EdgeInsets.only(
-                          bottom: Application.defaultPadding / 4),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: Application.defaultPadding,
-                          bottom: Application.defaultPadding),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            ),
-                            Text(
-                              "${snapshot.data}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(108, 111, 115, 1)),
-                            )
-                          ]),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Fluttertoast.showToast(msg: "test;");
-                          this.checkout();
-                        },
-                        child: Text(
-                          "Checkout",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w200),
-                        ),
-                        style: TextButton.styleFrom(
-                            backgroundColor: ApplicationColor.primaryColor,
-                            minimumSize:
-                                Size(double.infinity, size.height / 12),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)))),
-                  ],
-                ),
+                builder: (context, snapshot) {
+                  return Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            right: Application.defaultPadding,
+                            bottom: Application.defaultPadding / 4),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Sub total price",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              ),
+                              Text(
+                                "${snapshot.data}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              )
+                            ]),
+                      ),
+                      // Container(
+                      //   margin: EdgeInsets.only(
+                      //       right: Application.defaultPadding,
+                      //       bottom: Application.defaultPadding / 4),
+                      //   child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         Text(
+                      //           "Coupon",
+                      //           style: TextStyle(
+                      //               fontWeight: FontWeight.normal,
+                      //               fontSize: 18,
+                      //               color: Color.fromRGBO(108, 111, 115, 1)),
+                      //         ),
+                      //         Text(
+                      //           "None",
+                      //           style: TextStyle(
+                      //               fontWeight: FontWeight.bold,
+                      //               fontSize: 18,
+                      //               color: Color.fromRGBO(108, 111, 115, 1)),
+                      //         )
+                      //       ]),
+                      // ),
+                      Container(
+                        height: 1,
+                        color: Color.fromRGBO(176, 176, 176, 0.8),
+                        width: size.width - Application.defaultPadding * 2,
+                        margin: EdgeInsets.only(
+                            bottom: Application.defaultPadding / 4),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            right: Application.defaultPadding,
+                            bottom: Application.defaultPadding),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              ),
+                              Text(
+                                "${snapshot.data}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              )
+                            ]),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Fluttertoast.showToast(msg: "test;");
+                            this.checkout();
+                          },
+                          child: Text(
+                            "Checkout",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w200),
+                          ),
+                          style: TextButton.styleFrom(
+                              backgroundColor: ApplicationColor.primaryColor,
+                              minimumSize: DartUi.Size(
+                                  double.infinity, size.height / 12),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)))),
+                    ],
+                  );
+                },
               )),
         )
       ]),

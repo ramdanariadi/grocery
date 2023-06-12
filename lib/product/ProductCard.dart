@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +12,7 @@ import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/CartState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
 // ignore: must_be_immutable
@@ -48,16 +51,19 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Future<void> addToChart() async {
+  Future<int> addToChart() async {
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
         url: Application.httBaseUrl + '/cart/${this.id}/1',
         isSecure: true);
     if (response.statusCode == 200) {
       Fluttertoast.showToast(msg: "yeay product added");
+      Map<String, dynamic> data = jsonDecode(response.body)['data'];
+      return data['totalItem'];
     } else {
       Fluttertoast.showToast(msg: "opps something wrong");
       debugPrint(response.body.toString());
+      return 0;
     }
   }
 
@@ -65,6 +71,8 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     RouterState rotuerState = BlocProvider.of<RouterState>(context);
+    CartState cartState = BlocProvider.of<CartState>(context);
+
     return GestureDetector(
       onTap: () {
         rotuerState.go(
@@ -157,7 +165,8 @@ class ProductCard extends StatelessWidget {
                       padding: EdgeInsets.all(0),
                       onTap: () async {
                         if (await UserService.isAuthenticated()) {
-                          this.addToChart();
+                          int totalCartItem = await this.addToChart();
+                          cartState.add(totalCartItem);
                         } else {
                           rotuerState.go(
                               context: context, baseRoute: Login.routeName);
