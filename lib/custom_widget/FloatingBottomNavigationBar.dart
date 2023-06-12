@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
+import 'package:grocery/constants/ApplicationColor.dart';
 
 // ignore: must_be_immutable
 class FloatingBottomNavigationBar extends StatefulWidget {
@@ -43,27 +44,45 @@ class _FloatingBottomNavigationBarState
         ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: widget.items
-                .asMap()
-                .entries
-                .map((e) => InkWell(
-                      onTap: () => {
-                        if (e.key != widget.currentIndex) {widget.onTap(e.key)}
-                      },
-                      child: Icon(
-                        e.value.iconData,
-                        size: 32,
-                        color: e.key == widget.currentIndex
-                            ? widget.selectedItemColor
-                            : widget.unselectedItemColor,
-                      ),
-                    ))
-                .toList()));
+            children: widget.items.asMap().entries.map((e) {
+              List<Widget> children = List.empty(growable: true);
+              children.add(Icon(
+                e.value.iconData,
+                size: 32,
+                color: e.key == widget.currentIndex
+                    ? widget.selectedItemColor
+                    : widget.unselectedItemColor,
+              ));
+
+              if (e.value.badges != null) {
+                children.add(Positioned(
+                  right: 0,
+                  child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: e.key == widget.currentIndex
+                              ? ApplicationColor.blackHint
+                              : ApplicationColor.primaryColor),
+                      child: e.value.badges),
+                ));
+              }
+
+              return InkWell(
+                onTap: () => {
+                  if (e.key != widget.currentIndex) {widget.onTap(e.key)}
+                },
+                child: Stack(
+                  children: children,
+                ),
+              );
+            }).toList()));
   }
 }
 
 class FloatingBottomNavigationBarItem {
   final IconData iconData;
+  Widget? badges;
 
-  FloatingBottomNavigationBarItem({required this.iconData});
+  FloatingBottomNavigationBarItem({required this.iconData, this.badges});
 }
