@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/home/Profile.dart';
-import 'package:grocery/home/SearchBar.dart';
 import 'package:grocery/product/ProductCategories.dart';
 import 'package:grocery/product/RecomendationProducts.dart';
 import 'package:grocery/product/TopProducts.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
+import 'package:grocery/home/SearchBar.dart' as MySearchBar;
 
 enum BottomIcons { Home, Favorite, Search, Account }
 
@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               Profile(),
-              SearchBar(),
+              MySearchBar.SearchBar(),
               ProductCategories(),
               LabelWithActionButton(
                 title: "Top Products",
