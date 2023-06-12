@@ -4,7 +4,7 @@ import 'package:grocery/search_page/SearchBar.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends StatelessWidget {
-  static String routeName = '/searchpage';
+  static String routeName = 'searchpage';
 
   @override
   Widget build(BuildContext context) {
