@@ -37,6 +37,8 @@ dependencies:
   go_router: ^6.0.0
   shimmer: ^2.0.0
   flutter_bloc: ^8.1.1
+  qr_flutter: ^4.1.0
+  modal_bottom_sheet: ^3.0.0-pre
 
 dev_dependencies:
   flutter_test:
