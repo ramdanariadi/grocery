@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -12,6 +13,8 @@ import 'package:grocery/profile/TransactionCard.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/RouterState.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class MyAccount extends StatelessWidget {
   static final String routeName = '/profile';
@@ -136,16 +139,39 @@ class UserProfile extends StatelessWidget {
             child: Column(
               children: [
                 Row(children: [
-                  Container(
-                    child: Hero(
-                      child:
-                          Image.asset('images/default_user_image_profile.png'),
-                      tag: "user-profile",
+                  InkWell(
+                    onTap: () {
+                      showMaterialModalBottomSheet(
+                          context: context,
+                          elevation: 10,
+                          builder: (context) => Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: Application.defaultPadding * 2),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    QrImageView(
+                                        size: size.width * 0.6,
+                                        data: userProfile.email ?? "-")
+                                  ],
+                                ),
+                              ));
+                    },
+                    child: Container(
+                      child: Hero(
+                        child: Image.asset(
+                            'images/default_user_image_profile.png'),
+                        tag: "user-profile",
+                      ),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: ApplicationColor.naturalWhite,
+                          borderRadius: BorderRadius.circular(10)),
                     ),
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: ApplicationColor.naturalWhite,
-                        borderRadius: BorderRadius.circular(10)),
                   ),
                   Expanded(
                     child: Row(
