@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
@@ -8,6 +7,7 @@ import 'package:grocery/state_manager/RouterState.dart';
 
 enum Alerts { success }
 
+// ignore: must_be_immutable
 class Alert extends StatelessWidget {
   static final routeName = "/alert";
 
