@@ -33,10 +33,14 @@ class ProductGroupItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct() async {
     debugPrint('categoryId : $categoryId');
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url : Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&categoryId=$categoryId');
+    final response = await HttpRequestService.sendRequest(
+        method: HttpMethod.GET,
+        url: Application.httBaseUrl +
+            '/product?pageIndex=0&pageSize=10&categoryId=$categoryId');
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['data'];
-      List<ProductCard> productList = responseList.map((e) => ProductCard.fromJson(e)).toList();
+      List<ProductCard> productList =
+          responseList.map((e) => ProductCard.fromJson(e)).toList();
       return productList;
     } else {
       throw Exception("failed laod product by category");
@@ -53,10 +57,13 @@ class ProductGroupItems extends StatelessWidget {
             actionButtonTitle: this.actionButtonTitle,
             press: () {
               debugPrint('categoryId : $categoryId');
-              GoRouter.of(context).go(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
-                'title': title, 
-                'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&categoryId=$categoryId'
-              });
+              GoRouter.of(context).go(
+                  Products.routeName + "/" + ProductGroupGridItems.routeName,
+                  extra: {
+                    'title': title,
+                    'url': Application.httBaseUrl +
+                        '/product?categoryId=$categoryId'
+                  });
             }),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -70,13 +77,22 @@ class ProductGroupItems extends StatelessWidget {
               }
 
               if (snapshot.hasError) {
-                return RetryButton(onTap: (){});
+                return RetryButton(onTap: () {});
               }
 
               return Shimmer.fromColors(
                 baseColor: ApplicationColor.shimmerBaseColor,
                 highlightColor: ApplicationColor.shimmerHighlightColor,
-                child: SingleChildScrollView(scrollDirection: Axis.horizontal,child: Row(children: [FakeProductCard(), FakeProductCard(), FakeProductCard()],)),);
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        FakeProductCard(),
+                        FakeProductCard(),
+                        FakeProductCard()
+                      ],
+                    )),
+              );
             },
           ),
         )
