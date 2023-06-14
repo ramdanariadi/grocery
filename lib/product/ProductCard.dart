@@ -120,36 +120,38 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: "${this.merk}\n",
-                        style: TextStyle(
-                            height: 1.5,
-                            color: ApplicationColor.blackHint,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    TextSpan(
-                        text: "weight ",
-                        style: TextStyle(
-                            height: 1.5, color: ApplicationColor.blackHint)),
-                    TextSpan(
-                        text: "${this.weight}g\n",
-                        style: TextStyle(
-                            height: 1.5,
-                            color: ApplicationColor.blackHint,
-                            fontWeight: FontWeight.w500)),
-                    TextSpan(
-                        text: "\$${this.price}",
-                        style: TextStyle(
-                            height: 1.5,
-                            color: ApplicationColor.blackHint,
-                            fontWeight: FontWeight.bold)),
-                    TextSpan(
-                        text: "/kg",
-                        style: TextStyle(
-                            height: 1.5, color: ApplicationColor.blackHint)),
-                  ])),
+                  Expanded(
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "${this.merk}\n",
+                          style: TextStyle(
+                              height: 1.5,
+                              color: ApplicationColor.blackHint,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: "weight ",
+                          style: TextStyle(
+                              height: 1.5, color: ApplicationColor.blackHint)),
+                      TextSpan(
+                          text: "${this.weight}g\n",
+                          style: TextStyle(
+                              height: 1.5,
+                              color: ApplicationColor.blackHint,
+                              fontWeight: FontWeight.w500)),
+                      TextSpan(
+                          text: "\$${this.price}",
+                          style: TextStyle(
+                              height: 1.5,
+                              color: ApplicationColor.blackHint,
+                              fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: "/kg",
+                          style: TextStyle(
+                              height: 1.5, color: ApplicationColor.blackHint)),
+                    ])),
+                  ),
                   Button(
                       text: "plus",
                       color: ApplicationColor.primaryColor,
