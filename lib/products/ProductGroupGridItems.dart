@@ -33,7 +33,7 @@ class ProductGroupGridItems extends StatelessWidget {
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal, child: FakeProductCard()),
         ));
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(milliseconds: 1000));
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.GET,
         url: this.url +
