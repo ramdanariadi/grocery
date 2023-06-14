@@ -25,10 +25,19 @@ class ProductGroupGridItems extends StatelessWidget {
   Future<void> fetchProduct() async {
     debugPrint("scroll controller fetch product pageIndex = " +
         paginationState.pageIndex.toString());
+    paginationState.setIsLoading(
+        true,
+        Shimmer.fromColors(
+          baseColor: ApplicationColor.shimmerBaseColor,
+          highlightColor: ApplicationColor.shimmerHighlightColor,
+          child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal, child: FakeProductCard()),
+        ));
+    await Future.delayed(Duration(seconds: 2));
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.GET,
         url: this.url +
-            "&pageIndex=${paginationState.pageIndex}&pageSize=${paginationState.pageSize}");
+            "&pageIndex=${paginationState.pageIndex++}&pageSize=${paginationState.pageSize}");
     debugPrint(
         "scroll controller status code " + response.statusCode.toString());
     if (response.statusCode == 200) {
@@ -39,7 +48,12 @@ class ProductGroupGridItems extends StatelessWidget {
                 margin: Application.defaultPadding / 4,
               ))
           .toList();
-      paginationState.add(productList);
+      if (productList.isEmpty) {
+        this.paginationState.pageIndex = this.paginationState.pageIndex - 1;
+      }
+      paginationState.refresh(data: productList);
+    } else {
+      this.paginationState.pageIndex = this.paginationState.pageIndex - 1;
     }
   }
 
@@ -55,8 +69,11 @@ class ProductGroupGridItems extends StatelessWidget {
             scrollController.position.maxScrollExtent.toString());
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
-          this.paginationState.pageIndex = this.paginationState.pageIndex + 1;
-          this.fetchProduct();
+          debugPrint(
+              "scroll controller : " + paginationState.isLoading().toString());
+          if (!paginationState.isLoading()) {
+            this.fetchProduct();
+          }
         }
 
         // Fluttertoast.showToast(msg: "msg");
@@ -138,19 +155,19 @@ class ProductGroupGridItems extends StatelessWidget {
                   //       return RetryButton(onTap: () {});
                   //     }
 
-                  //     return Shimmer.fromColors(
-                  //       baseColor: ApplicationColor.shimmerBaseColor,
-                  //       highlightColor: ApplicationColor.shimmerHighlightColor,
-                  //       child: SingleChildScrollView(
-                  //           scrollDirection: Axis.horizontal,
-                  //           child: Row(
-                  //             children: [
-                  //               FakeProductCard(),
-                  //               FakeProductCard(),
-                  //               FakeProductCard()
-                  //             ],
-                  //           )),
-                  //     );
+                  // return Shimmer.fromColors(
+                  //   baseColor: ApplicationColor.shimmerBaseColor,
+                  //   highlightColor: ApplicationColor.shimmerHighlightColor,
+                  //   child: SingleChildScrollView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       child: Row(
+                  //         children: [
+                  //           FakeProductCard(),
+                  //           FakeProductCard(),
+                  //           FakeProductCard()
+                  //         ],
+                  //       )),
+                  // );
                   //   },
                   // ),
                   ),

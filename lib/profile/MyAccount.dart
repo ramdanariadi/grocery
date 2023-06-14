@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -41,8 +40,7 @@ class MyAccount extends StatelessWidget {
               press: () {},
               padding: EdgeInsets.only(
                   left: Application.defaultPadding,
-                  right: Application.defaultPadding,
-                  bottom: Application.defaultPadding / 2),
+                  right: Application.defaultPadding),
             ),
             Transactions()
           ]),
@@ -144,6 +142,9 @@ class UserProfile extends StatelessWidget {
                       showMaterialModalBottomSheet(
                           context: context,
                           elevation: 10,
+                          // shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.vertical(
+                          //         top: Radius.circular(25.0))),
                           builder: (context) => Container(
                                 padding: EdgeInsets.symmetric(
                                     vertical: Application.defaultPadding * 2),
