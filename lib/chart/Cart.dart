@@ -81,17 +81,16 @@ class _Cart extends State<Cart> {
   Future<void> checkout() async {
     this.countTotalPrice();
     debugPrint("object");
-    final resBody = jsonEncode(<String, dynamic>{
+    final Map<String, dynamic> body = {
       'data': productList
           .map((e) =>
               <String, dynamic>{"productId": e.productId, "total": e.total})
           .toList()
-    });
-    debugPrint(jsonEncode(resBody));
+    };
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
         url: Application.httBaseUrl + "/transaction",
-        body: resBody,
+        body: body,
         isSecure: true);
     if (response.statusCode == 200) {
       final RouterState routerState = BlocProvider.of<RouterState>(context);
