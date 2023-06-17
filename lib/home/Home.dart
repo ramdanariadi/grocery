@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
                 press: () {
                   GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
                     'title': 'Top Products',
-                    'url': Application.httBaseUrl + '/product/top'});
+                    'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&isTop=true'});
                 },
               ),
               TopProducts(),
@@ -46,7 +46,7 @@ class Home extends StatelessWidget {
                 press: () {
                     GoRouter.of(context).push(Products.routeName + "/" + ProductGroupGridItems.routeName, extra: {
                     'title': 'Recommendation',
-                    'url': Application.httBaseUrl + '/product/recommended'});
+                    'url': Application.httBaseUrl + '/product?pageIndex=0&pageSize=10&isRecommendation=true'});
                 },
               ),
               RecomendationProducts(),

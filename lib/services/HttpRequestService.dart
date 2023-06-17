@@ -17,7 +17,7 @@ class HttpRequestService {
         response = await http.get(Uri.parse(url), headers: await getHeaders(isSecure: isSecure));
       break;
       case HttpMethod.POST:
-        response = await http.post(Uri.parse(url), body: body, headers: await getHeaders(isSecure: isSecure));
+        response = await http.post(Uri.parse(url), body: jsonEncode(body), headers: await getHeaders(isSecure: isSecure));
       break;
       case HttpMethod.PUT:
         // TODO: Handle this case.
@@ -60,8 +60,8 @@ class HttpRequestService {
     
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
-      await sharedPreferences.setString("accessToken", tokens['access_token']);
-      await sharedPreferences.setString("refreshToken", tokens['refresh_token']);
+      await sharedPreferences.setString("accessToken", tokens['accessToken']);
+      await sharedPreferences.setString("refreshToken", tokens['refreshoken']);
       await sharedPreferences.setBool("authenticated", true);
       debugPrint("refresh token : " + tokens.toString());
       return true;

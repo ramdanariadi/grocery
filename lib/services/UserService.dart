@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
+import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class UserService{
 
@@ -18,24 +18,22 @@ class UserService{
     return _userService;
   }
 
-  static Future<bool> login(String username, String pass) async {
+  static Future<bool> login(String email, String pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map<String, String> body = {"username": username, "password": pass};
-    final response = await http.post(Uri.parse(Application.httBaseUrl + "/login"), body: body);
+    Map<String, String> body = {"email": email, "password": pass};
+    final response = await HttpRequestService.sendRequest(method: HttpMethod.POST, url: Application.httBaseUrl + "/user/login", body: body);
     debugPrint('Response : ' + response.body.toString());
     debugPrint('has code : ' + response.statusCode.toString());
     debugPrint(body.toString());
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
-      await sharedPreferences.setString("accessToken", tokens['access_token']);
-      await sharedPreferences.setString("refreshToken", tokens['refresh_token']);
-      await sharedPreferences.setString("userId", tokens['userId']);
+      await sharedPreferences.setString("accessToken", tokens['accessToken']);
+      await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
       await sharedPreferences.setBool("authenticated", true);
 
       UserService userService = UserService.getInstance();
       userService.authenticated = true;
-      userService.userId = tokens['userId'];
 
       return true;
     }
