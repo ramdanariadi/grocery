@@ -51,7 +51,12 @@ class UserService {
   static Future<bool> register(String email, String pass, String username,
       String moiblePhoneNumber) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map<String, String> body = {"email": email, "password": pass};
+    Map<String, String> body = {
+      "email": email,
+      "password": pass,
+      "username": username,
+      "mobilePhoneNumber": moiblePhoneNumber
+    };
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
         url: Application.httBaseUrl + "/user/register",
@@ -70,6 +75,7 @@ class UserService {
       await sharedPreferences.setString("email", user['email']);
       await sharedPreferences.setString(
           "mobilePhoneNumber", user['mobilePhoneNumber']);
+      await sharedPreferences.setBool("authenticated", true);
 
       UserService userService = UserService.getInstance();
       userService.authenticated = true;
