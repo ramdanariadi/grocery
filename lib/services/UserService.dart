@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserService {
   bool? authenticated;
   String? userId;
+  String? address;
   static UserService? _userService;
 
   static getInstance() {
@@ -94,6 +95,9 @@ class UserService {
     await sharedPreferences.remove("email");
     await sharedPreferences.remove("mobilePhoneNumber");
     await sharedPreferences.setBool("authenticated", false);
+    UserService userService = UserService.getInstance();
+    userService.authenticated = false;
+    userService.userId = "";
   }
 
   static Future<bool> isAuthenticated() async {
@@ -115,7 +119,8 @@ class UserService {
         username: sharedPreferences.getString("username"),
         name: sharedPreferences.getString("name"),
         email: sharedPreferences.getString("email"),
-        mobilePhoneNumber: sharedPreferences.getString("mobilePhoneNumber"));
+        mobilePhoneNumber: sharedPreferences.getString("mobilePhoneNumber"),
+        address: userService.address);
     return user;
   }
 }
@@ -126,11 +131,13 @@ class UserProfileDTO {
       String? this.username,
       String? this.name,
       String? this.email,
-      String? this.mobilePhoneNumber});
+      String? this.mobilePhoneNumber,
+      String? this.address});
 
   bool isAuthenticated;
   String? username;
   String? name;
   String? email;
   String? mobilePhoneNumber;
+  String? address;
 }

@@ -190,7 +190,7 @@ class UserProfile extends StatelessWidget {
                                     fontWeight: FontWeight.bold, fontSize: 24),
                               ),
                               Text(
-                                userProfile.email ?? "-",
+                                userProfile.address ?? "-",
                                 style: TextStyle(fontSize: 13),
                               ),
                               Text(

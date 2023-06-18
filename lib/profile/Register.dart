@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 class Register extends StatefulWidget {
   static String routeName = '/register';
@@ -34,6 +36,7 @@ class _LoginState extends State<Register> {
     Color prefixIconColor = Color.fromRGBO(0, 24, 51, 0.6);
     Color hintColor = Color.fromRGBO(193, 199, 208, 1);
     Color focusColor = Color.fromRGBO(143, 146, 151, 1);
+    RouterState routerState = BlocProvider.of<RouterState>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -247,7 +250,8 @@ class _LoginState extends State<Register> {
                               usernameController.text,
                               mobilePhoneNumberController.text);
                           if (authenticated) {
-                            GoRouter.of(context).go(Home.routeName);
+                            routerState.go(
+                                context: context, baseRoute: Home.routeName);
                           } else {
                             Fluttertoast.showToast(msg: "UNAUTHENTICATED");
                           }
