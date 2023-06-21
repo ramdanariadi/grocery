@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:grocery/constants/Application.dart';
@@ -8,7 +7,6 @@ import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatelessWidget {
@@ -116,8 +114,6 @@ class Profile extends StatelessWidget {
           _handleLocationPermission().then((value) async {
             Position currentLocation = await Geolocator.getCurrentPosition(
                 desiredAccuracy: LocationAccuracy.high);
-            SharedPreferences sharedPreferences =
-                await SharedPreferences.getInstance();
             placemarkFromCoordinates(
                     currentLocation.latitude, currentLocation.longitude)
                 .then((value) {

@@ -44,7 +44,7 @@ class _LoginState extends State<Register> {
         shadowColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              GoRouter.of(context).pop();
+              routerState.go(context: context, baseRoute: Home.routeName);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -271,7 +271,7 @@ class _LoginState extends State<Register> {
                   Text("Already member? ", style: TextStyle(color: hintColor)),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      GoRouter.of(context).pop();
                     },
                     child: Text("Sign in",
                         style: TextStyle(

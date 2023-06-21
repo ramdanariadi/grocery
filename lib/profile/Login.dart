@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
         shadowColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              GoRouter.of(context).go(Home.routeName);
+              routerState.go(context: context, baseRoute: Home.routeName);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -199,7 +199,7 @@ class _LoginState extends State<Login> {
                   Text("New member? ", style: TextStyle(color: hintColor)),
                   GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).go(Register.routeName);
+                      GoRouter.of(context).push(Register.routeName);
                     },
                     child: Text("Sign up",
                         style: TextStyle(
