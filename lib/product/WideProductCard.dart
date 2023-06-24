@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
@@ -81,6 +80,8 @@ class WideProductCard extends StatelessWidget {
       },
       child: Container(
         width: size.width * 0.65,
+        padding:
+            EdgeInsets.symmetric(horizontal: Application.defaultPadding / 2),
         margin: EdgeInsets.only(
             left: Application.defaultPadding / 2,
             right: Application.defaultPadding / 2),
@@ -106,7 +107,8 @@ class WideProductCard extends StatelessWidget {
                     )
                   : Image.network(
                       this.imageUrl!,
-                      width: size.width / 5,
+                      // width: size.width / 5,
+                      height: size.width / 3.8,
                     ),
             ),
             Padding(
