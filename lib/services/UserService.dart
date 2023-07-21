@@ -35,6 +35,7 @@ class UserService {
       await sharedPreferences.setString("accessToken", tokens['accessToken']);
       await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
       await sharedPreferences.setString("username", user['username']);
+      await sharedPreferences.setString("userId", user['userId']);
       await sharedPreferences.setString("name", user['name']);
       await sharedPreferences.setString("email", user['email']);
       await sharedPreferences.setString(
@@ -72,6 +73,7 @@ class UserService {
       await sharedPreferences.setString("accessToken", tokens['accessToken']);
       await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
       await sharedPreferences.setString("username", user['username']);
+      await sharedPreferences.setString("userId", user['userId']);
       await sharedPreferences.setString("name", user['name']);
       await sharedPreferences.setString("email", user['email']);
       await sharedPreferences.setString(
@@ -91,6 +93,7 @@ class UserService {
     await sharedPreferences.remove("accessToken");
     await sharedPreferences.remove("refreshToken");
     await sharedPreferences.remove("username");
+    await sharedPreferences.remove("userId");
     await sharedPreferences.remove("name");
     await sharedPreferences.remove("email");
     await sharedPreferences.remove("mobilePhoneNumber");
@@ -116,6 +119,7 @@ class UserService {
         sharedPreferences.getBool("authenticated") ?? false;
     UserProfileDTO user = UserProfileDTO(
         isAuthenticated: userService.authenticated!,
+        userId: sharedPreferences.getString("userId"),
         username: sharedPreferences.getString("username"),
         name: sharedPreferences.getString("name"),
         email: sharedPreferences.getString("email"),
@@ -127,14 +131,16 @@ class UserService {
 
 class UserProfileDTO {
   UserProfileDTO(
-      {bool this.isAuthenticated = false,
-      String? this.username,
-      String? this.name,
-      String? this.email,
-      String? this.mobilePhoneNumber,
-      String? this.address});
+      {this.isAuthenticated = false,
+      this.userId,
+      this.username,
+      this.name,
+      this.email,
+      this.mobilePhoneNumber,
+      this.address});
 
   bool isAuthenticated;
+  String? userId;
   String? username;
   String? name;
   String? email;
