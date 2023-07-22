@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grocery/chat/ChatRoom.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
@@ -21,6 +22,8 @@ class ProductDetail extends StatefulWidget {
   final String category;
   final int weight;
   final int price;
+  final String shopId;
+  final String shopName;
   String? imageUrl;
 
   ProductDetail(
@@ -31,6 +34,8 @@ class ProductDetail extends StatefulWidget {
       required this.category,
       required this.weight,
       required this.price,
+      required this.shopId,
+      required this.shopName,
       String? imageUrl}) {
     this.imageUrl = imageUrl;
   }
@@ -282,22 +287,57 @@ class _ProductDetail extends State<ProductDetail> {
             ),
             Positioned(
               bottom: 0,
-              child: Center(
-                child: Button(
-                    color: ApplicationColor.primaryColor,
-                    margin: EdgeInsets.all(0),
-                    child: Text(
-                      'Add to cart',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w200),
-                    ),
-                    width: size.width - (Application.defaultPadding * 2),
-                    height: size.height / 11,
-                    onTap: () {
-                      this.addToCart();
-                    }),
+              child: Container(
+                width: size.width - Application.defaultPadding * 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FutureBuilder<UserProfileDTO>(
+                        future: UserService.getUserProfile(),
+                        builder: (context, snapShot) {
+                          if (!snapShot.hasData) return Spacer();
+                          return InkWell(
+                              onTap: () async {
+                                if (!await UserService.isAuthenticated()) {
+                                  GoRouter.of(context).go(Login.routeName);
+                                } else {
+                                  GoRouter.of(context).go(ChatRoom.routeName,
+                                      extra: ChatRoomArg(
+                                          userId: snapShot.data!.userId!,
+                                          shopName: widget.shopName,
+                                          shopId: widget.shopId));
+                                }
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.all(
+                                      Application.defaultPadding / 2),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: ApplicationColor.primaryColor,
+                                          width: 1.0),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Icon(
+                                    Icons.wechat,
+                                    color: ApplicationColor.primaryColor,
+                                  )));
+                        }),
+                    Button(
+                        color: ApplicationColor.primaryColor,
+                        margin: EdgeInsets.all(0),
+                        child: Text(
+                          'Add to cart',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w200),
+                        ),
+                        width: size.width - Application.defaultPadding * 4.4,
+                        height: size.height / 11,
+                        onTap: () {
+                          this.addToCart();
+                        }),
+                  ],
+                ),
               ),
             )
           ]),
