@@ -10,6 +10,15 @@ import 'package:grocery/state_manager/DataState.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../constants/Application.dart';
 
+enum ChatStatus { NEW, HISTORY, VOID }
+
+class ChatData<T> {
+  final ChatStatus status;
+  final T data;
+
+  ChatData({required this.status, required this.data});
+}
+
 class ChatRoom extends StatefulWidget {
   static final routeName = '/chatRoom';
 
@@ -22,15 +31,6 @@ class ChatRoom extends StatefulWidget {
 
   @override
   State<ChatRoom> createState() => _ChatRoomState();
-}
-
-enum ChatStatus { NEW, HISTORY, VOID }
-
-class ChatData<T> {
-  final ChatStatus status;
-  final T data;
-
-  ChatData({required this.status, required this.data});
 }
 
 class _ChatRoomState extends State<ChatRoom> {
@@ -54,6 +54,7 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     super.initState();
+    _getChatHistory();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.jumpTo(
         scrollController.position.maxScrollExtent,
@@ -143,7 +144,6 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    _getChatHistory();
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
@@ -227,6 +227,7 @@ class _ChatRoomState extends State<ChatRoom> {
       body: SafeArea(
         child: Container(
           height: size.height,
+          width: size.width,
           child: Stack(
             children: [
               SingleChildScrollView(
@@ -246,9 +247,8 @@ class _ChatRoomState extends State<ChatRoom> {
                             chatItems.add(snapShot.data!.data);
                             break;
                           case ChatStatus.HISTORY:
-                            List<ChatItem> temp = chatItems;
-                            chatItems = (snapShot.data!.data as List<ChatItem>);
-                            chatItems.addAll(temp);
+                            chatItems.insertAll(
+                                0, snapShot.data!.data as List<ChatItem>);
                             break;
                           case ChatStatus.VOID:
                         }
