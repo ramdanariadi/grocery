@@ -7,7 +7,6 @@ import 'package:grocery/chat/ChatItem.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/state_manager/DataState.dart';
-import 'package:grocery/state_manager/PaginationState.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../constants/Application.dart';
 
@@ -42,6 +41,8 @@ class _ChatRoomState extends State<ChatRoom> {
   late WebSocketChannel _channel;
   int pageSize = 15;
   int pageIndex = 0;
+  bool isAllPage = false;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -58,16 +59,18 @@ class _ChatRoomState extends State<ChatRoom> {
     });
 
     scrollController.addListener(() {
-      debugPrint("scroll controller : " +
-          scrollController.position.pixels.toString() +
-          " of " +
-          scrollController.position.maxScrollExtent.toString() +
-          " max and " +
-          scrollController.position.minScrollExtent.toString() +
-          " min");
+      // debugPrint("scroll controller : " +
+      //     scrollController.position.pixels.toString() +
+      //     " of " +
+      //     scrollController.position.maxScrollExtent.toString() +
+      //     " max and " +
+      //     scrollController.position.minScrollExtent.toString() +
+      //     " min");
 
       if (scrollController.position.pixels ==
-          scrollController.position.minScrollExtent) {
+              scrollController.position.minScrollExtent &&
+          !isLoading &&
+          !isAllPage) {
         _getChatHistory();
       }
     });
@@ -84,12 +87,12 @@ class _ChatRoomState extends State<ChatRoom> {
             other: true,
           )));
       scrollController.animateTo(scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          duration: Duration(milliseconds: 1000), curve: Curves.easeInOut);
     });
   }
 
   Future<void> _getChatHistory() async {
-    debugPrint("_getChatHistory");
+    isLoading = true;
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
         url: Application.chatServiceBaseUrl + "/message/history",
@@ -101,7 +104,10 @@ class _ChatRoomState extends State<ChatRoom> {
           "pageSize": pageSize
         });
     if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body)['data'];
+      dynamic responseBody = jsonDecode(response.body);
+      isAllPage = responseBody['recordsFiltered'] == 0;
+      List<dynamic> body = responseBody['data'];
+      debugPrint('index 0 : ' + body[body.length - 1]['message']);
       chatDataState.add(ChatData<List<ChatItem>>(
           status: ChatStatus.HISTORY,
           data: body
@@ -109,16 +115,16 @@ class _ChatRoomState extends State<ChatRoom> {
                     message: e['message'],
                     other: e['from'] != widget.userId,
                   ))
+              .toList()
+              .reversed
               .toList()));
-      Future.delayed(Duration(milliseconds: 500)).then((value) => {
-            scrollController.animateTo(
-                pageIndex == 0
-                    ? scrollController.position.maxScrollExtent
-                    : 367,
-                duration: Duration(milliseconds: 100),
-                curve: Curves.easeInOut)
-          });
       pageIndex++;
+      await Future.delayed(Duration(milliseconds: 1));
+      isLoading = false;
+      scrollController.animateTo(
+          pageIndex == 1 ? scrollController.position.maxScrollExtent : 680,
+          duration: Duration(milliseconds: 1),
+          curve: Curves.linear);
     }
     // chatDataState.add(ChatData<List<ChatItem>>(
     //     status: ChatStatus.HISTORY,
