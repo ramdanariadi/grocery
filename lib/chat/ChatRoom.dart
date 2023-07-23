@@ -35,8 +35,9 @@ class ChatData<T> {
 
 class _ChatRoomState extends State<ChatRoom> {
   List<ChatItem> chatItems = List.empty(growable: true);
-  ScrollController scrollController = ScrollController();
-  DataState<ChatData> chatDataState =
+  final ScrollController scrollController = ScrollController();
+  final TextEditingController textEditingController = TextEditingController();
+  final DataState<ChatData> chatDataState =
       DataState(ChatData<String>(status: ChatStatus.VOID, data: ""));
   late WebSocketChannel _channel;
   int pageSize = 15;
@@ -54,8 +55,10 @@ class _ChatRoomState extends State<ChatRoom> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+      scrollController.jumpTo(
+        scrollController.position.maxScrollExtent,
+        // duration: Duration(milliseconds: 500), curve: Curves.easeInOut
+      );
     });
 
     scrollController.addListener(() {
@@ -86,8 +89,10 @@ class _ChatRoomState extends State<ChatRoom> {
             message: message['message'],
             other: true,
           )));
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 1000), curve: Curves.easeInOut);
+      scrollController.jumpTo(
+        scrollController.position.maxScrollExtent,
+        // duration: Duration(milliseconds: 1000), curve: Curves.easeInOut
+      );
     });
   }
 
@@ -107,7 +112,6 @@ class _ChatRoomState extends State<ChatRoom> {
       dynamic responseBody = jsonDecode(response.body);
       isAllPage = responseBody['recordsFiltered'] == 0;
       List<dynamic> body = responseBody['data'];
-      debugPrint('index 0 : ' + body[body.length - 1]['message']);
       chatDataState.add(ChatData<List<ChatItem>>(
           status: ChatStatus.HISTORY,
           data: body
@@ -119,12 +123,13 @@ class _ChatRoomState extends State<ChatRoom> {
               .reversed
               .toList()));
       pageIndex++;
-      await Future.delayed(Duration(milliseconds: 1));
+      await Future.delayed(Duration(milliseconds: 100));
       isLoading = false;
-      scrollController.animateTo(
-          pageIndex == 1 ? scrollController.position.maxScrollExtent : 680,
-          duration: Duration(milliseconds: 1),
-          curve: Curves.linear);
+      scrollController.jumpTo(
+        pageIndex == 1 ? scrollController.position.maxScrollExtent : 680,
+        // duration: Duration(milliseconds: 1),
+        // curve: Curves.linear
+      );
     }
     // chatDataState.add(ChatData<List<ChatItem>>(
     //     status: ChatStatus.HISTORY,
@@ -271,6 +276,7 @@ class _ChatRoomState extends State<ChatRoom> {
                         borderRadius: BorderRadius.circular(28),
                         color: Color.fromARGB(255, 238, 238, 238)),
                     child: TextField(
+                      controller: textEditingController,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -278,21 +284,28 @@ class _ChatRoomState extends State<ChatRoom> {
                           color: Color.fromRGBO(151, 148, 148, 0.939)),
                       decoration: InputDecoration(
                           suffixIcon: GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 String message = jsonEncode({
                                   "sender": widget.userId,
                                   "recipient": widget.shopId,
-                                  "message": "hiii"
+                                  "message": textEditingController.value.text
                                 });
                                 debugPrint("message : " + message);
                                 _channel.sink.add(message);
-
-                                // chatDataState.add(ChatData<List<ChatItem>>(
-                                //     status: ChatStatus.HISTORY,
-                                //     data: List<ChatItem>.of(<ChatItem>[
-                                //       ChatItem(message: "message history"),
-                                //       ChatItem(message: "message history")
-                                //     ])));
+                                chatDataState.add(ChatData<ChatItem>(
+                                    status: ChatStatus.NEW,
+                                    data: ChatItem(
+                                      message: textEditingController.value.text,
+                                      other: false,
+                                    )));
+                                await Future.delayed(
+                                    Duration(milliseconds: 100));
+                                scrollController.jumpTo(
+                                  scrollController.position.maxScrollExtent,
+                                  // duration: Duration(milliseconds: 1),
+                                  // curve: Curves.linear
+                                );
+                                textEditingController.clear();
                               },
                               child: Icon(
                                 Icons.send_rounded,
