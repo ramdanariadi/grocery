@@ -31,7 +31,11 @@ class PaginationState extends Bloc<List<dynamic>, List<dynamic>> {
     return this._isLoading;
   }
 
-  void refresh({required List<dynamic> data, int? pageSize, int? pageIndex}) {
+  void refresh(
+      {required List<dynamic> data,
+      int? pageSize,
+      int? pageIndex,
+      bool addNewDataAtLast = true}) {
     if (null != pageIndex) {
       this.pageIndex = pageIndex;
     }
@@ -45,7 +49,8 @@ class PaginationState extends Bloc<List<dynamic>, List<dynamic>> {
       this._isLoading = false;
     }
 
-    this.data.addAll(data);
+    // this.data.addAll(data);
+    this.data.insertAll(addNewDataAtLast ? this.data.length : 0, data);
     this.add(this.data);
   }
 }

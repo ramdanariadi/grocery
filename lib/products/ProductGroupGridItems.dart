@@ -10,15 +10,13 @@ import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/state_manager/PaginationState.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class ProductGroupGridItems extends StatelessWidget {
   static final routeName = 'allProductByCategory';
 
   final String title;
   final String url;
 
-  Future<List<ProductCard>>? productFuture;
-  PaginationState paginationState = PaginationState(
+  final PaginationState paginationState = PaginationState(
       data: List.empty(growable: true), pageIndex: 0, pageSize: 10);
   ProductGroupGridItems({required this.url, required this.title});
 
@@ -133,44 +131,7 @@ class ProductGroupGridItems extends StatelessWidget {
                                 ],
                               )),
                         );
-                      })
-                  // FutureBuilder<List<ProductCard>>(
-                  //   future: productFuture,
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.hasData) {
-                  //       return StaggeredGridView.countBuilder(
-                  //         controller: scrollController,
-                  //         crossAxisCount: 2,
-                  //         itemCount: snapshot.data!.length,
-                  //         itemBuilder: (BuildContext context, int index) =>
-                  //             snapshot.data![index],
-                  //         staggeredTileBuilder: (int index) =>
-                  //             new StaggeredTile.fit(1),
-                  //         mainAxisSpacing: Application.defaultPadding / 2,
-                  //         // crossAxisSpacing: Application.defaultPadding,
-                  //       );
-                  //     }
-
-                  //     if (snapshot.hasError) {
-                  //       return RetryButton(onTap: () {});
-                  //     }
-
-                  // return Shimmer.fromColors(
-                  //   baseColor: ApplicationColor.shimmerBaseColor,
-                  //   highlightColor: ApplicationColor.shimmerHighlightColor,
-                  //   child: SingleChildScrollView(
-                  //       scrollDirection: Axis.horizontal,
-                  //       child: Row(
-                  //         children: [
-                  //           FakeProductCard(),
-                  //           FakeProductCard(),
-                  //           FakeProductCard()
-                  //         ],
-                  //       )),
-                  // );
-                  //   },
-                  // ),
-                  ),
+                      })),
             ),
           ],
         ),
