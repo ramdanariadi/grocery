@@ -158,6 +158,7 @@ class _ChatRoomState extends State<ChatRoom> {
     return Scaffold(
       backgroundColor: ApplicationColor.naturalWhite,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 65,
         backgroundColor: ApplicationColor.naturalWhite,
         elevation: 0,
