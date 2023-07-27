@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grocery/chat/Chat.dart';
 import 'package:grocery/chat/ChatRoom.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -301,11 +302,17 @@ class _ProductDetail extends State<ProductDetail> {
                                 if (!await UserService.isAuthenticated()) {
                                   GoRouter.of(context).go(Login.routeName);
                                 } else {
-                                  GoRouter.of(context).go(ChatRoom.routeName,
-                                      extra: ChatRoomArg(
-                                          userId: snapShot.data!.userId!,
-                                          shopName: widget.shopName,
-                                          shopId: widget.shopId));
+                                  GoRouter.of(context).go(
+                                      Chat.routeName + "/" + ChatRoom.routeName,
+                                      extra: ChatRoom(
+                                        senderId: snapShot.data!.userId!,
+                                        senderName: snapShot.data!.username!,
+                                        senderImageUrl:
+                                            "https://crewdible-pub.s3.ap-southeast-1.amazonaws.com/blog/buyer%20adalah.jpeg",
+                                        recipientName: widget.shopName,
+                                        recipientId: widget.shopId,
+                                        recipientImageUrl: "",
+                                      ));
                                 }
                               },
                               child: Container(

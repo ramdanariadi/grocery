@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/chart/Cart.dart';
+import 'package:grocery/chat/Chat.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/FloatingBottomNavigationBar.dart';
 import 'package:grocery/home/Home.dart';
@@ -33,8 +34,19 @@ class ScaffoldBottomActionBar extends StatelessWidget {
             );
           },
         )),
-    MyAccount.routeName:
-        FloatingBottomNavigationBarItem(iconData: Icons.account_circle_outlined)
+    Chat.routeName: FloatingBottomNavigationBarItem(
+        iconData: Icons.email,
+        badges: BlocBuilder<CartState, int>(
+          builder: (context, data) {
+            return Text(
+              "${data}",
+              style:
+                  TextStyle(fontSize: 10, color: ApplicationColor.naturalWhite),
+            );
+          },
+        )),
+    MyAccount.routeName: FloatingBottomNavigationBarItem(
+        iconData: Icons.account_circle_outlined),
   };
 
   @override
@@ -61,6 +73,7 @@ class ScaffoldBottomActionBar extends StatelessWidget {
                       break;
                     case 2:
                     case 3:
+                    case 4:
                       if (!await UserService.isAuthenticated()) {
                         GoRouter.of(context).go(Login.routeName);
                         break;
@@ -68,6 +81,11 @@ class ScaffoldBottomActionBar extends StatelessWidget {
 
                       if (value == 2) {
                         GoRouter.of(context).go(Cart.routeName);
+                        break;
+                      }
+
+                      if (value == 3) {
+                        GoRouter.of(context).go(Chat.routeName);
                         break;
                       }
 

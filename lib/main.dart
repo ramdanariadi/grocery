@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/chart/Cart.dart';
+import 'package:grocery/chat/Chat.dart';
 import 'package:grocery/chat/ChatRoom.dart';
 import 'package:grocery/custom_widget/ScaffoldBottomActionBar.dart';
 import 'package:grocery/home/Home.dart';
@@ -124,15 +125,13 @@ class MyApp extends StatelessWidget {
                     builder: (context, state) => state.extra as Alert),
                 /* Chat Room Route */
                 GoRoute(
-                    path: ChatRoom.routeName,
-                    builder: (context, state) {
-                      ChatRoomArg args = state.extra as ChatRoomArg;
-                      return ChatRoom(
-                        shopName: args.shopName,
-                        shopId: args.shopId,
-                        userId: args.userId,
-                      );
-                    })
+                    path: Chat.routeName,
+                    builder: (context, state) => Chat(),
+                    routes: [
+                      GoRoute(
+                          path: ChatRoom.routeName,
+                          builder: (context, state) => state.extra as ChatRoom)
+                    ]),
               ])),
     );
   }

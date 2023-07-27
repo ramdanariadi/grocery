@@ -20,14 +20,22 @@ class ChatData<T> {
 }
 
 class ChatRoom extends StatefulWidget {
-  static final routeName = '/chatRoom';
+  static final routeName = 'chatRoom';
 
-  final String shopName;
-  final String shopId;
-  final String userId;
+  final String recipientName;
+  final String recipientId;
+  final String recipientImageUrl;
+  final String senderId;
+  final String senderName;
+  final String senderImageUrl;
 
   ChatRoom(
-      {required this.shopName, required this.userId, required this.shopId});
+      {required this.recipientName,
+      required this.senderId,
+      required this.recipientId,
+      required this.recipientImageUrl,
+      required this.senderName,
+      required this.senderImageUrl});
 
   @override
   State<ChatRoom> createState() => _ChatRoomState();
@@ -80,7 +88,7 @@ class _ChatRoomState extends State<ChatRoom> {
     });
 
     _channel = WebSocketChannel.connect(
-        Uri.parse(Application.wsBaseUrl + "/ws/" + widget.userId));
+        Uri.parse(Application.wsBaseUrl + "/ws/" + widget.senderId));
     _channel.stream.listen((event) {
       debugPrint(event);
       dynamic message = jsonDecode(event);
@@ -104,8 +112,8 @@ class _ChatRoomState extends State<ChatRoom> {
         url: Application.chatServiceBaseUrl + "/message/history",
         isSecure: false,
         body: {
-          "userIdFrom": widget.userId,
-          "userIdTo": widget.shopId,
+          "userIdFrom": widget.senderId,
+          "userIdTo": widget.recipientId,
           "pageIndex": pageIndex,
           "pageSize": pageSize
         });
@@ -118,7 +126,7 @@ class _ChatRoomState extends State<ChatRoom> {
           data: body
               .map((e) => ChatItem(
                     message: e['message'],
-                    other: e['from'] != widget.userId,
+                    other: e['from'] != widget.senderId,
                   ))
               .toList()
               .reversed
@@ -189,7 +197,7 @@ class _ChatRoomState extends State<ChatRoom> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          widget.shopName,
+                          widget.recipientName,
                           style: TextStyle(
                               fontSize: 18,
                               fontStyle: FontStyle.normal,
@@ -286,8 +294,12 @@ class _ChatRoomState extends State<ChatRoom> {
                           suffixIcon: GestureDetector(
                               onTap: () async {
                                 String message = jsonEncode({
-                                  "sender": widget.userId,
-                                  "recipient": widget.shopId,
+                                  "sender": widget.senderId,
+                                  "senderName": widget.senderName,
+                                  "senderImageUrl": widget.senderImageUrl,
+                                  "recipient": widget.recipientId,
+                                  "recipientName": widget.recipientName,
+                                  "recipientImageUrl": widget.recipientImageUrl,
                                   "message": textEditingController.value.text
                                 });
                                 debugPrint("message : " + message);
@@ -329,13 +341,4 @@ class _ChatRoomState extends State<ChatRoom> {
       ),
     );
   }
-}
-
-class ChatRoomArg {
-  final String shopName;
-  final String shopId;
-  final String userId;
-
-  ChatRoomArg(
-      {required this.shopName, required this.userId, required this.shopId});
 }
