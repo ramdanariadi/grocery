@@ -111,6 +111,11 @@ class MyApp extends StatelessWidget {
                                   return EditProfile();
                                 })
                           ]),
+                      /* Chat Route */
+                      GoRoute(
+                        path: Chat.routeName,
+                        builder: (context, state) => Chat(),
+                      ),
                     ]),
                 /* Login router */
                 GoRoute(
@@ -125,13 +130,8 @@ class MyApp extends StatelessWidget {
                     builder: (context, state) => state.extra as Alert),
                 /* Chat Room Route */
                 GoRoute(
-                    path: Chat.routeName,
-                    builder: (context, state) => Chat(),
-                    routes: [
-                      GoRoute(
-                          path: ChatRoom.routeName,
-                          builder: (context, state) => state.extra as ChatRoom)
-                    ]),
+                    path: ChatRoom.routeName,
+                    builder: (context, state) => state.extra as ChatRoom)
               ])),
     );
   }

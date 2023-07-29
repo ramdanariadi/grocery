@@ -302,8 +302,7 @@ class _ProductDetail extends State<ProductDetail> {
                                 if (!await UserService.isAuthenticated()) {
                                   GoRouter.of(context).go(Login.routeName);
                                 } else {
-                                  GoRouter.of(context).go(
-                                      Chat.routeName + "/" + ChatRoom.routeName,
+                                  GoRouter.of(context).go(ChatRoom.routeName,
                                       extra: ChatRoom(
                                         senderId: snapShot.data!.userId!,
                                         senderName: snapShot.data!.username!,

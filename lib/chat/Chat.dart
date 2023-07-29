@@ -111,7 +111,7 @@ class UserItemDTO extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        GoRouter.of(context).go(Chat.routeName + "/" + ChatRoom.routeName,
+        GoRouter.of(context).go(ChatRoom.routeName,
             extra: ChatRoom(
                 recipientName: this.userData.recipientName,
                 senderId: this.userData.senderId,

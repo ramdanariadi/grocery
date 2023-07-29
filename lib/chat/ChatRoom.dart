@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grocery/chat/Chat.dart';
 import 'package:grocery/chat/ChatItem.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/services/HttpRequestService.dart';
@@ -20,7 +21,7 @@ class ChatData<T> {
 }
 
 class ChatRoom extends StatefulWidget {
-  static final routeName = 'chatRoom';
+  static final routeName = '/chatRoom';
 
   final String recipientName;
   final String recipientId;
@@ -161,31 +162,35 @@ class _ChatRoomState extends State<ChatRoom> {
         automaticallyImplyLeading: false,
         toolbarHeight: 65,
         backgroundColor: ApplicationColor.naturalWhite,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      width: 1,
-                      color: ApplicationColor.shadowColor.withOpacity(0.2)))),
+        elevation: 1,
+        leading: ElevatedButton(
+            style: ButtonStyle(
+                shadowColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.transparent),
+                backgroundColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.transparent)),
+            onPressed: () {
+              GoRouter.of(context).go(Chat.routeName);
+            },
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              size: 32,
+              color: ApplicationColor.blackHint,
+            )),
+        title: Container(
           child: Container(
-            height: double.infinity,
-            padding: EdgeInsets.only(
-                top: Application.defaultPadding * 1.2,
-                right: Application.defaultPadding,
-                left: Application.defaultPadding),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).pop();
-                    },
-                    child: Icon(Icons.arrow_back_ios_new, size: 32)),
                 Container(
                   width: 50,
                   height: 50,
-                  margin: EdgeInsets.only(left: 12.5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(
+                      widget.recipientImageUrl,
+                    ),
+                  ),
                   decoration: BoxDecoration(
                       color: ApplicationColor.primaryColor,
                       borderRadius: BorderRadius.circular(50)),
@@ -200,6 +205,7 @@ class _ChatRoomState extends State<ChatRoom> {
                         Text(
                           widget.recipientName,
                           style: TextStyle(
+                              color: ApplicationColor.blackHint,
                               fontSize: 18,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
@@ -211,6 +217,7 @@ class _ChatRoomState extends State<ChatRoom> {
                             Text(
                               "Active Now",
                               style: TextStyle(
+                                  fontSize: 10,
                                   color: Color.fromRGBO(197, 196, 196, 1)),
                             ),
                             Container(
