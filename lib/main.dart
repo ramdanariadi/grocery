@@ -18,6 +18,7 @@ import 'package:grocery/profile/Register.dart';
 import 'package:grocery/search_page/SearchPage.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CartState.dart';
+import 'package:grocery/state_manager/ChatState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
 void main() {
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<RouterState>(create: (context) => RouterState(0)),
         BlocProvider<CartState>(
           create: (context) => CartState(0),
+        ),
+        BlocProvider<ChatState>(
+          create: (context) => ChatState(0),
         )
       ],
       child: MaterialApp.router(

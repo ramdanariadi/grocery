@@ -6,6 +6,7 @@ import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
+import 'package:grocery/state_manager/ChatState.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,7 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   final DataState<List<UserDTO>> userListStae = DataState(List.empty());
+  late ChatState chatState;
 
   Future<void> _getUserHistory() async {
     final UserProfileDTO profileDTO = await UserService.getUserProfile();
@@ -50,6 +52,7 @@ class _ChatState extends State<Chat> {
         isSecure: false);
     if (200 == response.statusCode) {
       final List<dynamic> data = jsonDecode(response.body)['data'];
+      chatState.add(data.length);
       userListStae.add(data
           .map((e) => UserDTO(
               senderName: profileDTO.username!,
@@ -79,6 +82,7 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    chatState = BlocProvider.of<ChatState>(context);
     return Scaffold(
       body: SafeArea(
         child: Container(

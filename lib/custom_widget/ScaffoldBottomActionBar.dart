@@ -11,6 +11,7 @@ import 'package:grocery/profile/Login.dart';
 import 'package:grocery/profile/MyAccount.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CartState.dart';
+import 'package:grocery/state_manager/ChatState.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
@@ -36,7 +37,7 @@ class ScaffoldBottomActionBar extends StatelessWidget {
         )),
     Chat.routeName: FloatingBottomNavigationBarItem(
         iconData: Icons.email,
-        badges: BlocBuilder<CartState, int>(
+        badges: BlocBuilder<ChatState, int>(
           builder: (context, data) {
             return Text(
               "${data}",
