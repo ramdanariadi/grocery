@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/chat/Chat.dart';
 import 'package:grocery/chat/ChatItem.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/state_manager/DataState.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../constants/Application.dart';
 
@@ -155,7 +156,7 @@ class _ChatRoomState extends State<ChatRoom> {
     Size size = MediaQuery.of(context).size;
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
+    RouterState activeNavbarState = BlocProvider.of<RouterState>(context);
     return Scaffold(
       backgroundColor: ApplicationColor.naturalWhite,
       appBar: AppBar(
@@ -170,7 +171,7 @@ class _ChatRoomState extends State<ChatRoom> {
                 backgroundColor: MaterialStateColor.resolveWith(
                     (states) => Colors.transparent)),
             onPressed: () {
-              GoRouter.of(context).go(Chat.routeName);
+              activeNavbarState.go(context: context, baseRoute: Chat.routeName);
             },
             child: Icon(
               Icons.arrow_back_ios_new,

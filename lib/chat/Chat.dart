@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/chat/ChatRoom.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/DataState.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 import 'package:intl/intl.dart';
 
 class UserDTO {
@@ -81,6 +82,7 @@ class _ChatState extends State<Chat> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+            decoration: BoxDecoration(color: ApplicationColor.naturalWhite),
             width: size.width,
             height: size.height,
             padding: EdgeInsets.all(Application.defaultPadding),
@@ -109,9 +111,12 @@ class UserItemDTO extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    RouterState activeNavbarState = BlocProvider.of<RouterState>(context);
     return InkWell(
       onTap: () {
-        GoRouter.of(context).go(ChatRoom.routeName,
+        activeNavbarState.go(
+            context: context,
+            baseRoute: ChatRoom.routeName,
             extra: ChatRoom(
                 recipientName: this.userData.recipientName,
                 senderId: this.userData.senderId,
