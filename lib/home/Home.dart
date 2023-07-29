@@ -18,59 +18,56 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RouterState routerState = BlocProvider.of<RouterState>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: Application.defaultPadding / 100,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Stack(children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              Profile(),
-              MySearchBar.SearchBar(),
-              ProductCategories(),
-              LabelWithActionButton(
-                title: "Top Products",
-                actionButtonTitle: "SHOW ALL",
-                press: () {
-                  routerState.go(
-                      context: context,
-                      baseRoute: Products.routeName,
-                      path: ProductGroupGridItems.routeName,
-                      extra: {
-                        'title': 'Top Products',
-                        'url': Application.httBaseUrl +
-                            '/product?pageIndex=0&pageSize=10&isTop=true'
-                      });
-                },
-              ),
-              TopProducts(),
-              LabelWithActionButton(
-                title: "Recommendation",
-                actionButtonTitle: "SHOW ALL",
-                press: () {
-                  routerState.go(
-                      context: context,
-                      baseRoute: Products.routeName,
-                      path: ProductGroupGridItems.routeName,
-                      extra: {
-                        'title': 'Recommendation',
-                        'url': Application.httBaseUrl +
-                            '/product?pageIndex=0&pageSize=10&isRecommendation=true'
-                      });
-                },
-              ),
-              RecomendationProducts(),
-              // SizedBox(
-              //   height: size.height / 9,
-              // )
-            ],
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                Profile(),
+                MySearchBar.SearchBar(),
+                ProductCategories(),
+                LabelWithActionButton(
+                  title: "Top Products",
+                  actionButtonTitle: "SHOW ALL",
+                  press: () {
+                    routerState.go(
+                        context: context,
+                        baseRoute: Products.routeName,
+                        path: ProductGroupGridItems.routeName,
+                        extra: {
+                          'title': 'Top Products',
+                          'url': Application.httBaseUrl +
+                              '/product?pageIndex=0&pageSize=10&isTop=true'
+                        });
+                  },
+                ),
+                TopProducts(),
+                LabelWithActionButton(
+                  title: "Recommendation",
+                  actionButtonTitle: "SHOW ALL",
+                  press: () {
+                    routerState.go(
+                        context: context,
+                        baseRoute: Products.routeName,
+                        path: ProductGroupGridItems.routeName,
+                        extra: {
+                          'title': 'Recommendation',
+                          'url': Application.httBaseUrl +
+                              '/product?pageIndex=0&pageSize=10&isRecommendation=true'
+                        });
+                  },
+                ),
+                RecomendationProducts(),
+                // SizedBox(
+                //   height: size.height / 9,
+                // )
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

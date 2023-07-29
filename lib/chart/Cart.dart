@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui' as DartUi;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
@@ -53,9 +52,8 @@ class _Cart extends State<Cart> {
 
       totalState.add(tmpTotalPrice);
       return productList;
-    } else {
-      throw Exception("Failed load cart");
     }
+    return List.empty();
   }
 
   void countTotalPrice() {
@@ -118,7 +116,7 @@ class _Cart extends State<Cart> {
           padding: EdgeInsets.only(
             top: Application.defaultPadding * 1.2,
             // right: Application.defaultPadding,
-            bottom: size.height * 0.29,
+            bottom: size.height * 0.25,
             // left: Application.defaultPadding
           ),
           color: ApplicationColor.naturalWhite,
@@ -144,15 +142,13 @@ class _Cart extends State<Cart> {
         Positioned(
           bottom: 0,
           child: Container(
-              padding: EdgeInsets.all(Application.defaultPadding),
+              padding: EdgeInsets.only(
+                  left: Application.defaultPadding,
+                  top: Application.defaultPadding,
+                  right: Application.defaultPadding),
               width: size.width,
               height: size.height * 0.25,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // borderRadius: BorderRadius.only(
-                //     topLeft: Radius.circular(20),
-                //     topRight: Radius.circular(20))
-              ),
+              decoration: BoxDecoration(color: Colors.white),
               child: StreamBuilder(
                 stream: totalState.stream,
                 initialData: 0,
@@ -182,29 +178,29 @@ class _Cart extends State<Cart> {
                               )
                             ]),
                       ),
-                      // Container(
-                      //   margin: EdgeInsets.only(
-                      //       right: Application.defaultPadding,
-                      //       bottom: Application.defaultPadding / 4),
-                      //   child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         Text(
-                      //           "Coupon",
-                      //           style: TextStyle(
-                      //               fontWeight: FontWeight.normal,
-                      //               fontSize: 18,
-                      //               color: Color.fromRGBO(108, 111, 115, 1)),
-                      //         ),
-                      //         Text(
-                      //           "None",
-                      //           style: TextStyle(
-                      //               fontWeight: FontWeight.bold,
-                      //               fontSize: 18,
-                      //               color: Color.fromRGBO(108, 111, 115, 1)),
-                      //         )
-                      //       ]),
-                      // ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            right: Application.defaultPadding,
+                            bottom: Application.defaultPadding / 4),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Coupon",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              ),
+                              Text(
+                                "None",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(108, 111, 115, 1)),
+                              )
+                            ]),
+                      ),
                       Container(
                         height: 1,
                         color: Color.fromRGBO(176, 176, 176, 0.8),
@@ -237,7 +233,6 @@ class _Cart extends State<Cart> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Fluttertoast.showToast(msg: "test;");
                             this.checkout();
                           },
                           child: Text(

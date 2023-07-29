@@ -110,9 +110,6 @@ class _ProductDetail extends State<ProductDetail> {
     if (widgetExist) {
       productLoved = response.statusCode == 200;
       _likedState.eventSink.add(response.statusCode == 200);
-      Fluttertoast.showToast(
-          msg: response.statusCode == 200 ? "loved" : "not loved yet",
-          toastLength: Toast.LENGTH_LONG);
     }
   }
 
@@ -137,7 +134,7 @@ class _ProductDetail extends State<ProductDetail> {
         body: Container(
           height: size.height,
           padding: EdgeInsets.only(
-              top: Application.defaultPadding * 1.4,
+              top: Application.defaultPadding,
               right: Application.defaultPadding,
               bottom: Application.defaultPadding,
               left: Application.defaultPadding),

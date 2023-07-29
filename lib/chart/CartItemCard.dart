@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/product/ProductCard.dart';
 import 'package:grocery/product/ProductDetail.dart';
+import 'package:grocery/products/Products.dart';
+import 'package:grocery/state_manager/RouterState.dart';
 
 // ignore: must_be_immutable
 class CartItemCard extends StatefulWidget {
@@ -83,10 +86,14 @@ class _WideProductCard extends State<CartItemCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double cardHeight = size.height / 6.5;
+    RouterState routerState = BlocProvider.of<RouterState>(context);
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetail.routeName,
-            arguments: ProductArguments(
+        routerState.go(
+            context: context,
+            baseRoute: Products.routeName,
+            path: ProductDetail.routeName,
+            extra: ProductArguments(
                 tag: widget.id + 'cart',
                 id: widget.id,
                 shopId: widget.shopId,
@@ -104,7 +111,7 @@ class _WideProductCard extends State<CartItemCard> {
             bottom: Application.defaultPadding / 6,
             left: Application.defaultPadding,
             right: Application.defaultPadding),
-        padding: EdgeInsets.only(top: Application.defaultPadding / 2),
+        padding: EdgeInsets.symmetric(vertical: Application.defaultPadding / 2),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
