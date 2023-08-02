@@ -132,7 +132,7 @@ class Profile extends StatelessWidget {
               debugPrint(e.toString());
             });
           }).catchError((e) {
-            debugPrint(e);
+            debugPrint(e.toString());
           });
           RouterState activeNavbarState = BlocProvider.of<RouterState>(context);
           return Container(

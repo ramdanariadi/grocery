@@ -115,7 +115,7 @@ class WideProductCard extends StatelessWidget {
                     )
                   : Image.network(
                       this.imageUrl!,
-                      // width: size.width / 5,
+                      width: size.width / 5.5,
                       height: size.width / 3.8,
                     ),
             ),

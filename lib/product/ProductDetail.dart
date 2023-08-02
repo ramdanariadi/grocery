@@ -306,7 +306,8 @@ class _ProductDetail extends State<ProductDetail> {
                                             "https://crewdible-pub.s3.ap-southeast-1.amazonaws.com/blog/buyer%20adalah.jpeg",
                                         recipientName: widget.shopName,
                                         recipientId: widget.shopId,
-                                        recipientImageUrl: "",
+                                        recipientImageUrl:
+                                            "https://tunas-grocery.s3.ap-southeast-1.amazonaws.com/images/app-icon.png",
                                       ));
                                 }
                               },

@@ -193,7 +193,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     ),
                   ),
                   decoration: BoxDecoration(
-                      color: ApplicationColor.primaryColor,
+                      // color: ApplicationColor.primaryColor,
                       borderRadius: BorderRadius.circular(50)),
                 ),
                 Container(

@@ -146,7 +146,7 @@ class UserItemDTO extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                  color: ApplicationColor.primaryColor,
+                  // color: ApplicationColor.primaryColor,
                   borderRadius: BorderRadius.circular(50)),
             ),
             Column(
