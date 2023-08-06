@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,8 @@ class UserService {
   }
 
   static Future<bool> login(String email, String pass) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final storage = const FlutterSecureStorage();
     Map<String, String> body = {"email": email, "password": pass};
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.POST,
@@ -32,14 +34,14 @@ class UserService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
       final Map<String, dynamic> user = tokens['user'];
-      await sharedPreferences.setString("accessToken", tokens['accessToken']);
-      await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
-      await sharedPreferences.setString("username", user['username']);
-      await sharedPreferences.setString("userId", user['userId']);
-      await sharedPreferences.setString("name", user['name']);
-      await sharedPreferences.setString("email", user['email']);
-      await sharedPreferences.setString(
-          "mobilePhoneNumber", user['mobilePhoneNumber']);
+      await storage.write(key: "accessToken", value: tokens['accessToken']);
+      await storage.write(key: "refreshToken", value: tokens['refreshToken']);
+      await storage.write(key: "username", value: user['username']);
+      await storage.write(key: "userId", value: user['userId']);
+      await storage.write(key: "name", value: user['name']);
+      await storage.write(key: "email", value: user['email']);
+      await storage.write(
+          key: "mobilePhoneNumber", value: user['mobilePhoneNumber']);
       await sharedPreferences.setBool("authenticated", true);
 
       UserService userService = UserService.getInstance();
@@ -52,7 +54,8 @@ class UserService {
 
   static Future<bool> register(String email, String pass, String username,
       String moiblePhoneNumber) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final storage = const FlutterSecureStorage();
     Map<String, String> body = {
       "email": email,
       "password": pass,
@@ -70,14 +73,14 @@ class UserService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
       final Map<String, dynamic> user = tokens['user'];
-      await sharedPreferences.setString("accessToken", tokens['accessToken']);
-      await sharedPreferences.setString("refreshToken", tokens['refreshToken']);
-      await sharedPreferences.setString("username", user['username']);
-      await sharedPreferences.setString("userId", user['userId']);
-      await sharedPreferences.setString("name", user['name']);
-      await sharedPreferences.setString("email", user['email']);
-      await sharedPreferences.setString(
-          "mobilePhoneNumber", user['mobilePhoneNumber']);
+      await storage.write(key: "accessToken", value: tokens['accessToken']);
+      await storage.write(key: "refreshToken", value: tokens['refreshToken']);
+      await storage.write(key: "username", value: user['username']);
+      await storage.write(key: "userId", value: user['userId']);
+      await storage.write(key: "name", value: user['name']);
+      await storage.write(key: "email", value: user['email']);
+      await storage.write(
+          key: "mobilePhoneNumber", value: user['mobilePhoneNumber']);
       await sharedPreferences.setBool("authenticated", true);
 
       UserService userService = UserService.getInstance();
@@ -89,14 +92,9 @@ class UserService {
   }
 
   static logout() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.remove("accessToken");
-    await sharedPreferences.remove("refreshToken");
-    await sharedPreferences.remove("username");
-    await sharedPreferences.remove("userId");
-    await sharedPreferences.remove("name");
-    await sharedPreferences.remove("email");
-    await sharedPreferences.remove("mobilePhoneNumber");
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final storage = const FlutterSecureStorage();
+    await storage.deleteAll();
     await sharedPreferences.setBool("authenticated", false);
     UserService userService = UserService.getInstance();
     userService.authenticated = false;
@@ -113,17 +111,18 @@ class UserService {
   }
 
   static Future<UserProfileDTO> getUserProfile() async {
+    FlutterSecureStorage storage = const FlutterSecureStorage();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserService userService = UserService.getInstance();
     userService.authenticated =
         sharedPreferences.getBool("authenticated") ?? false;
     UserProfileDTO user = UserProfileDTO(
         isAuthenticated: userService.authenticated!,
-        userId: sharedPreferences.getString("userId"),
-        username: sharedPreferences.getString("username"),
-        name: sharedPreferences.getString("name"),
-        email: sharedPreferences.getString("email"),
-        mobilePhoneNumber: sharedPreferences.getString("mobilePhoneNumber"),
+        userId: await storage.read(key: "userId"),
+        username: await storage.read(key: "username"),
+        name: await storage.read(key: "name"),
+        email: await storage.read(key: "email"),
+        mobilePhoneNumber: await storage.read(key: "mobilePhoneNumber"),
         address: userService.address);
     return user;
   }
