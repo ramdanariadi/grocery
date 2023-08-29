@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 
-// ignore: must_be_immutable
 class Skeleton extends StatelessWidget {
   Skeleton(
       {Key? key,
       required this.widht,
       required this.height,
       BorderRadius? borderRadius})
-      : super(key: key) {
-    this.borderRadius = borderRadius ?? BorderRadius.circular(8);
-  }
+      : this.borderRadius = borderRadius ?? BorderRadius.circular(8),
+        super(key: key);
 
   final double widht;
   final double height;
-  late BorderRadius borderRadius;
+  final BorderRadius borderRadius;
 
   @override
   Widget build(BuildContext context) {

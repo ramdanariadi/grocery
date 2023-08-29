@@ -8,7 +8,6 @@ import 'package:grocery/product/ProductDetail.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
-// ignore: must_be_immutable
 class CartItemCard extends StatefulWidget {
   CartItemCard({
     Key? key,
@@ -22,10 +21,8 @@ class CartItemCard extends StatefulWidget {
     required this.weight,
     required this.price,
     required this.total,
-    String? imageUrl,
-  }) : super(key: key) {
-    this.imageUrl = imageUrl;
-  }
+    this.imageUrl,
+  }) : super(key: key);
 
   final String id;
   final String shopId;
@@ -35,8 +32,8 @@ class CartItemCard extends StatefulWidget {
   final int weight;
   final int price;
   final String category;
-  String? imageUrl;
-  int total;
+  final String? imageUrl;
+  final int total;
   final VoidCallback callback;
 
   factory CartItemCard.fromJson(
@@ -58,7 +55,7 @@ class CartItemCard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _WideProductCard();
+    return _WideProductCard(this.total);
   }
 
   @override
@@ -68,6 +65,9 @@ class CartItemCard extends StatefulWidget {
 }
 
 class _WideProductCard extends State<CartItemCard> {
+  int total;
+  _WideProductCard(int total) : this.total = total;
+
   @override
   void initState() {
     super.initState();
@@ -75,9 +75,8 @@ class _WideProductCard extends State<CartItemCard> {
 
   void handleCountChange(context) {
     setState(() {
-      if (context == 'plus') widget.total++;
-      if (context == 'minus')
-        widget.total < 1 ? widget.total = 0 : widget.total--;
+      if (context == 'plus') total++;
+      if (context == 'minus') total < 1 ? total = 0 : total--;
     });
     widget.callback();
   }
@@ -217,7 +216,7 @@ class _WideProductCard extends State<CartItemCard> {
                               width: 13,
                             ),
                             Text(
-                              "${widget.total}",
+                              "${total}",
                               style: TextStyle(
                                   fontSize: 18,
                                   color: ApplicationColor.blackHint,

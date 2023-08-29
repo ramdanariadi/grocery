@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 
-// ignore: must_be_immutable
 class LabelWithActionButton extends StatelessWidget {
   LabelWithActionButton({
     Key? key,
     EdgeInsets? padding,
     required this.title,
     required this.press,
-  }) : super(key: key) {
-    this.padding = padding ?? EdgeInsets.only(left: 0, top: 0);
-  }
+  })  : this.padding = padding ?? EdgeInsets.only(left: 0, top: 0),
+        super(key: key);
 
   final String title;
   final Function press;
-  late EdgeInsets padding;
+  final EdgeInsets padding;
 
   factory LabelWithActionButton.fromJson(
       Map<String, dynamic> json, Function callback) {

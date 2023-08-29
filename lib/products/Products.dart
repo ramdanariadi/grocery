@@ -10,11 +10,8 @@ import 'package:grocery/products/ProductGroupItems.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class Products extends StatelessWidget {
   static final routeName = '/products';
-
-  late Future<List<ProductGroupItems>> groupsFuture;
 
   Future<List<ProductGroupItems>> fetchCategory() async {
     final response = await HttpRequestService.sendRequest(
@@ -31,7 +28,6 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    groupsFuture = this.fetchCategory();
     return Scaffold(
       body: Stack(
         children: [
@@ -39,7 +35,7 @@ class Products extends StatelessWidget {
             margin: EdgeInsets.only(top: Application.defaultPadding * 2.5),
             child: SingleChildScrollView(
               child: FutureBuilder<List<ProductGroupItems>>(
-                future: groupsFuture,
+                future: this.fetchCategory(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(

@@ -10,13 +10,11 @@ import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
   SearchBar({Key? key}) : super(key: key) {}
 
   final TextEditingController searchController = TextEditingController();
   final DataState<Widget> productsState = DataState(Container());
-  late final Debounce debounce = Debounce(callback: _doSearch);
 
   Future<List<ProductCard>> fetchProduct(String search) async {
     debugPrint("debounce-search fetchProduct $search");
@@ -56,6 +54,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final Debounce debounce = Debounce(callback: _doSearch);
     searchController.addListener(() {
       debounce.search(searchController.text);
     });

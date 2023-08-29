@@ -7,22 +7,15 @@ import 'package:grocery/state_manager/RouterState.dart';
 
 enum Alerts { success }
 
-// ignore: must_be_immutable
 class Alert extends StatelessWidget {
   static final routeName = "/alert";
 
   final String message;
   final Alerts icon;
   final String routeToClose;
-  late Image iconImage;
+  final Image iconImage = Image.asset("images/icons/success.png");
   Alert(
-      {required this.icon, required this.message, required this.routeToClose}) {
-    switch (icon) {
-      case Alerts.success:
-        iconImage = Image.asset("images/icons/success.png");
-        break;
-    }
-  }
+      {required this.icon, required this.message, required this.routeToClose});
 
   @override
   Widget build(BuildContext context) {

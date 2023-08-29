@@ -6,7 +6,6 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/search_page/SearchPage.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
-// ignore: must_be_immutable
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

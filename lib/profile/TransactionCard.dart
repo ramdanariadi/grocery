@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 
-// ignore: must_be_immutable
 class TransactionCard extends StatelessWidget {
   TransactionCard(
       {Key? key,
-      String? imageUrl,
+      this.imageUrl,
       required this.name,
       required this.total,
       required this.totalPrice,
       required this.totalPerProduct})
-      : super(key: key) {
-    this.imageUrl = imageUrl;
-  }
+      : super(key: key);
 
-  String? imageUrl;
+  final String? imageUrl;
   final String name;
   final int total;
   final int totalPrice;

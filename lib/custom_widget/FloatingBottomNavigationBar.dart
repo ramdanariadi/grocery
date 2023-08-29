@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 
-// ignore: must_be_immutable
 class FloatingBottomNavigationBar extends StatefulWidget {
   FloatingBottomNavigationBar(
       {Key? key,
       required this.items,
       required this.currentIndex,
       required this.onTap,
-      this.selectedItemColor,
-      this.unselectedItemColor})
+      this.selectedItemColor = const Color.fromARGB(255, 98, 98, 98),
+      this.unselectedItemColor = const Color.fromARGB(255, 179, 179, 179)})
       : super(key: key);
 
   final int currentIndex;
   final ValueChanged<int> onTap;
   final List<FloatingBottomNavigationBarItem> items;
-  Color? selectedItemColor = Color.fromARGB(255, 98, 98, 98);
-  Color? unselectedItemColor = Color.fromARGB(255, 179, 179, 179);
+  final Color selectedItemColor;
+  final Color unselectedItemColor;
 
   @override
   State<FloatingBottomNavigationBar> createState() =>

@@ -8,10 +8,9 @@ import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/DataState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
-// ignore: must_be_immutable
 class Profile extends StatelessWidget {
-  DataState<String> dataLocationSate = DataState("-");
-  Geolocator location = Geolocator();
+  final DataState<String> dataLocationSate = DataState("-");
+  final Geolocator location = Geolocator();
   String getGreting() {
     DateTime time = DateTime.now();
     int hour = time.hour;

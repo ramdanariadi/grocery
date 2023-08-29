@@ -11,13 +11,10 @@ import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class ProductGroupItems extends StatelessWidget {
   final String title;
   final String actionButtonTitle;
   final String categoryId;
-
-  late Future<List<ProductCard>> productFuture;
 
   ProductGroupItems(
       {required this.title,
@@ -49,7 +46,6 @@ class ProductGroupItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    productFuture = this.fetchProduct();
     return Column(
       children: [
         LabelWithActionButton(
@@ -68,7 +64,7 @@ class ProductGroupItems extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: FutureBuilder<List<ProductCard>>(
-            future: productFuture,
+            future: this.fetchProduct(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Row(
