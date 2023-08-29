@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/product/dto/GetCategory.dart';
+import 'package:grocery/product/dto/GetProduct.dart';
 import 'package:retrofit/retrofit.dart';
 part 'RestClient.g.dart';
 
@@ -10,4 +11,7 @@ abstract class RestClient {
 
   @GET("/category")
   Future<GetCategoryResponse> fetchCategory(@Queries() GetCategory query);
+
+  @GET("/product")
+  Future<GetProductResponse> fetchProduct(@Queries() GetProduct query);
 }

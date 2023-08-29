@@ -1,11 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/product/WideProductCard.dart';
+import 'package:grocery/product/dto/GetProduct.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
@@ -14,21 +14,18 @@ class RecomendationProducts extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  late Future<List<WideProductCard>> futureProduct;
-
-  void init() {
-    futureProduct = this.fetchRecomendedProduct();
-  }
-
   @override
   Widget build(BuildContext context) {
-    this.init();
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-          padding: EdgeInsets.only(top: Application.defaultPadding / 2, left: Application.defaultPadding / 2, right: Application.defaultPadding / 2, bottom: Application.defaultPadding),
+          padding: EdgeInsets.only(
+              top: Application.defaultPadding / 2,
+              left: Application.defaultPadding / 2,
+              right: Application.defaultPadding / 2,
+              bottom: Application.defaultPadding),
           child: FutureBuilder<List<WideProductCard>>(
-            future: futureProduct,
+            future: fetchRecomendedProduct(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Row(
@@ -36,19 +33,16 @@ class RecomendationProducts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                 );
               } else if (snapshot.hasError) {
-                return RetryButton(onTap: () {
-                  
-                },);
+                return RetryButton(
+                  onTap: () {},
+                );
               }
               return Shimmer.fromColors(
                 baseColor: ApplicationColor.shimmerBaseColor,
                 highlightColor: ApplicationColor.shimmerHighlightColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    FakeWideProductCard(),
-                    FakeWideProductCard()
-                  ],
+                  children: [FakeWideProductCard(), FakeWideProductCard()],
                 ),
               );
             },
@@ -57,16 +51,20 @@ class RecomendationProducts extends StatelessWidget {
   }
 
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
-    final response = await HttpRequestService.sendRequest(method: HttpMethod.GET, url: Application.httBaseUrl + '/product?isRecommendation=true&pageIndex=0&pageSize=10');
-
-    if (response.statusCode == 200) {
-      List<dynamic> productList = jsonDecode(response.body)['data'];
-      List<WideProductCard> productCardList = productList
-          .map((dynamic item) => WideProductCard.fromJson(item))
-          .toList();
-      return productCardList;
-    } else {
-      throw Exception("failed load recomended products");
-    }
+    RestClient restClient = RestClient(await HttpRequestService.getDio());
+    GetProductResponse response = await restClient.fetchProduct(
+        GetProduct(pageIndex: 0, pageSize: 10, isRecomendation: true));
+    return response.data
+        .map((e) => WideProductCard(
+              id: e.id,
+              shopId: e.shopId,
+              shopName: e.shopName,
+              merk: e.name,
+              category: e.category,
+              weight: e.weight,
+              price: e.price,
+              imageUrl: e.imageUrl,
+            ))
+        .toList();
   }
 }
