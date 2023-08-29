@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +5,9 @@ import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/product/ProductCard.dart';
+import 'package:grocery/product/dto/GetProduct.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 
 class ProductGroupGridItems extends StatelessWidget {
   static final routeName = 'allProductByCategory';
@@ -18,20 +19,21 @@ class ProductGroupGridItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct(pageIndex) async {
     await Future.delayed(Duration(milliseconds: 1000));
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.GET,
-        url: this.url + "&pageIndex=${pageIndex}&pageSize=${10}");
-    List<ProductCard> productList = List.empty(growable: true);
-    if (response.statusCode == 200) {
-      List<dynamic> responseList = jsonDecode(response.body)['data'];
-      productList = responseList
-          .map((e) => ProductCard.fromJson(
-                e,
-                margin: Application.defaultPadding / 4,
-              ))
-          .toList();
-    }
-    return productList;
+    RestClient restClient = RestClient(await HttpRequestService.getDio());
+    GetProductResponse response =
+        await restClient.fetchProduct(GetProduct(pageIndex: 0, pageSize: 10));
+    return response.data
+        .map((e) => ProductCard(
+              id: e.id,
+              shopId: e.shopId,
+              shopName: e.shopName,
+              merk: e.name,
+              category: e.category,
+              weight: e.weight,
+              price: e.price,
+              imageUrl: e.imageUrl,
+            ))
+        .toList();
   }
 
   @override

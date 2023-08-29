@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
@@ -6,9 +5,11 @@ import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/home/LabelWithActionButton.dart';
 import 'package:grocery/product/ProductCard.dart';
+import 'package:grocery/product/dto/GetProduct.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
 import 'package:grocery/products/Products.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductGroupItems extends StatelessWidget {
@@ -30,18 +31,21 @@ class ProductGroupItems extends StatelessWidget {
 
   Future<List<ProductCard>> fetchProduct() async {
     debugPrint('categoryId : $categoryId');
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.GET,
-        url: Application.httBaseUrl +
-            '/product?pageIndex=0&pageSize=10&categoryId=$categoryId');
-    if (response.statusCode == 200) {
-      List<dynamic> responseList = jsonDecode(response.body)['data'];
-      List<ProductCard> productList =
-          responseList.map((e) => ProductCard.fromJson(e)).toList();
-      return productList;
-    } else {
-      throw Exception("failed laod product by category");
-    }
+    RestClient restClient = RestClient(await HttpRequestService.getDio());
+    GetProductResponse response = await restClient.fetchProduct(
+        GetProduct(pageIndex: 0, pageSize: 10, categoryId: categoryId));
+    return response.data
+        .map((e) => ProductCard(
+              id: e.id,
+              shopId: e.shopId,
+              shopName: e.shopName,
+              merk: e.name,
+              category: e.category,
+              weight: e.weight,
+              price: e.price,
+              imageUrl: e.imageUrl,
+            ))
+        .toList();
   }
 
   @override

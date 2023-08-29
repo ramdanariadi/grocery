@@ -10,7 +10,8 @@ GetProduct _$GetProductFromJson(Map<String, dynamic> json) => GetProduct(
       pageIndex: json['pageIndex'] as int,
       pageSize: json['pageSize'] as int,
       isTop: json['isTop'] as bool?,
-      isRecomendation: json['isRecomendation'] as bool?,
+      isRecommendation: json['isRecommendation'] as bool?,
+      categoryId: json['categoryId'] as String?,
     );
 
 Map<String, dynamic> _$GetProductToJson(GetProduct instance) =>
@@ -18,7 +19,8 @@ Map<String, dynamic> _$GetProductToJson(GetProduct instance) =>
       'pageIndex': instance.pageIndex,
       'pageSize': instance.pageSize,
       'isTop': instance.isTop,
-      'isRecomendation': instance.isRecomendation,
+      'isRecommendation': instance.isRecommendation,
+      'categoryId': instance.categoryId,
     };
 
 GetProductResponse _$GetProductResponseFromJson(Map<String, dynamic> json) =>

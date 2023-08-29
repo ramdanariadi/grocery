@@ -10,8 +10,10 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
 
   @GET("/category")
-  Future<GetCategoryResponse> fetchCategory(@Queries() GetCategory query);
+  Future<GetCategoryResponse> fetchCategory(
+      @Queries(encoded: true) GetCategory query);
 
   @GET("/product")
-  Future<GetProductResponse> fetchProduct(@Queries() GetProduct query);
+  Future<GetProductResponse> fetchProduct(
+      @Queries(encoded: true) GetProduct query);
 }

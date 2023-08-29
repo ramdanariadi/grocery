@@ -52,7 +52,7 @@ class RecomendationProducts extends StatelessWidget {
   Future<List<WideProductCard>> fetchRecomendedProduct() async {
     RestClient restClient = RestClient(await HttpRequestService.getDio());
     GetProductResponse response = await restClient.fetchProduct(
-        GetProduct(pageIndex: 0, pageSize: 10, isRecomendation: true));
+        GetProduct(pageIndex: 0, pageSize: 10, isRecommendation: true));
     return response.data
         .map((e) => WideProductCard(
               id: e.id,

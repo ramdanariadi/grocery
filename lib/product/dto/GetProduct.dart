@@ -7,13 +7,16 @@ class GetProduct {
   int pageIndex;
   int pageSize;
   bool? isTop;
-  bool? isRecomendation;
+  bool? isRecommendation;
+  String? categoryId;
 
-  GetProduct(
-      {required this.pageIndex,
-      required this.pageSize,
-      this.isTop,
-      this.isRecomendation});
+  GetProduct({
+    required this.pageIndex,
+    required this.pageSize,
+    this.isTop,
+    this.isRecommendation,
+    this.categoryId,
+  });
 
   factory GetProduct.fromJson(Map<String, dynamic> json) =>
       _$GetProductFromJson(json);

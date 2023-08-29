@@ -1,29 +1,30 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
 import 'package:grocery/product/ProductCard.dart';
+import 'package:grocery/product/dto/GetCategory.dart';
 import 'package:grocery/products/ProductGroupItems.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Products extends StatelessWidget {
   static final routeName = '/products';
 
   Future<List<ProductGroupItems>> fetchCategory() async {
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.GET, url: Application.httBaseUrl + "/category");
-    if (response.statusCode == 200) {
-      List<dynamic> categories = jsonDecode(response.body)['data'];
-      List<ProductGroupItems> productGroupItems =
-          categories.map((e) => ProductGroupItems.fromJson(e)).toList();
-      return productGroupItems;
-    } else {
-      throw Exception("failed load categories");
-    }
+    final client = RestClient(await HttpRequestService.getDio());
+    final GetCategoryResponse response =
+        await client.fetchCategory(GetCategory(pageIndex: 0, pageSize: 10));
+
+    return response.data
+        .map((e) => ProductGroupItems(
+              title: e.category,
+              categoryId: e.id,
+              actionButtonTitle: "SHOW ALL",
+            ))
+        .toList();
   }
 
   @override
