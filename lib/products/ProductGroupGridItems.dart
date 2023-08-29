@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_pagewise/flutter_pagewise.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
+import 'package:grocery/custom_widget/RetryButton.dart';
 import 'package:grocery/product/ProductCard.dart';
-import 'package:grocery/products/LabelWithActionButton.dart';
 import 'package:grocery/services/HttpRequestService.dart';
-import 'package:grocery/state_manager/PaginationState.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductGroupGridItems extends StatelessWidget {
   static final routeName = 'allProductByCategory';
@@ -16,125 +14,74 @@ class ProductGroupGridItems extends StatelessWidget {
   final String title;
   final String url;
 
-  final PaginationState paginationState = PaginationState(
-      data: List.empty(growable: true), pageIndex: 0, pageSize: 10);
   ProductGroupGridItems({required this.url, required this.title});
 
-  Future<void> fetchProduct() async {
-    debugPrint("scroll controller fetch product pageIndex = " +
-        paginationState.pageIndex.toString());
-    paginationState.setIsLoading(
-        true,
-        Shimmer.fromColors(
-          baseColor: ApplicationColor.shimmerBaseColor,
-          highlightColor: ApplicationColor.shimmerHighlightColor,
-          child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal, child: FakeProductCard()),
-        ));
+  Future<List<ProductCard>> fetchProduct(pageIndex) async {
     await Future.delayed(Duration(milliseconds: 1000));
     final response = await HttpRequestService.sendRequest(
         method: HttpMethod.GET,
-        url: this.url +
-            "&pageIndex=${paginationState.pageIndex++}&pageSize=${paginationState.pageSize}");
-    debugPrint(
-        "scroll controller status code " + response.statusCode.toString());
+        url: this.url + "&pageIndex=${pageIndex}&pageSize=${10}");
+    List<ProductCard> productList = List.empty(growable: true);
     if (response.statusCode == 200) {
       List<dynamic> responseList = jsonDecode(response.body)['data'];
-      List<ProductCard> productList = responseList
+      productList = responseList
           .map((e) => ProductCard.fromJson(
                 e,
                 margin: Application.defaultPadding / 4,
               ))
           .toList();
-      if (productList.isEmpty) {
-        this.paginationState.pageIndex = this.paginationState.pageIndex - 1;
-      }
-      paginationState.refresh(data: productList);
-    } else {
-      this.paginationState.pageIndex = this.paginationState.pageIndex - 1;
     }
+    return productList;
   }
 
   @override
   Widget build(BuildContext context) {
-    this.fetchProduct();
-    ScrollController scrollController = ScrollController();
-    scrollController.addListener(
-      () {
-        debugPrint("scroll controller : " +
-            scrollController.position.pixels.toString() +
-            " of " +
-            scrollController.position.maxScrollExtent.toString());
-        if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
-          debugPrint(
-              "scroll controller : " + paginationState.isLoading().toString());
-          if (!paginationState.isLoading()) {
-            this.fetchProduct();
-          }
-        }
-
-        // Fluttertoast.showToast(msg: "msg");
-      },
-    );
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            LabelWithActionButton(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Application.defaultPadding * 0.8),
-                title: this.title,
-                press: (context) {
-                  GoRouter.of(context).pop();
-                }),
-            Expanded(
-              child: Container(
-                  margin: EdgeInsets.only(
-                      top: Application.defaultPadding,
-                      left: Application.defaultPadding * 0.8,
-                      right: Application.defaultPadding * 0.8),
-                  child: StreamBuilder<List<dynamic>>(
-                      stream: paginationState.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          debugPrint(
-                              "scroll controller stream received data : " +
-                                  snapshot.data!.length.toString());
-
-                          return StaggeredGridView.countBuilder(
-                            controller: scrollController,
-                            crossAxisCount: 2,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                snapshot.data![index],
-                            staggeredTileBuilder: (int index) =>
-                                new StaggeredTile.fit(1),
-                            mainAxisSpacing: Application.defaultPadding / 2,
-                            // crossAxisSpacing: Application.defaultPadding,
-                          );
-                        }
-
-                        debugPrint("scroll controller stream received");
-
-                        return Shimmer.fromColors(
-                          baseColor: ApplicationColor.shimmerBaseColor,
-                          highlightColor:
-                              ApplicationColor.shimmerHighlightColor,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  FakeProductCard(),
-                                  FakeProductCard(),
-                                  FakeProductCard()
-                                ],
-                              )),
-                        );
-                      })),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white.withOpacity(0),
+          leading: InkWell(
+            onTap: () {
+              GoRouter.of(context).pop();
+            },
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              size: 32,
+              color: Colors.black,
             ),
-          ],
+          ),
+          title: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              this.title,
+              style: TextStyle(
+                  fontSize: 22,
+                  color: ApplicationColor.blackHint,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
+        body: Container(
+            margin: EdgeInsets.only(
+                left: Application.defaultPadding * 0.8,
+                right: Application.defaultPadding * 0.8),
+            child: PagewiseGridView<ProductCard>.count(
+              pageSize: 10,
+              shrinkWrap: false,
+              addAutomaticKeepAlives: true,
+              childAspectRatio: 0.9,
+              mainAxisSpacing: Application.defaultPadding / 2,
+              crossAxisCount: 2,
+              loadingBuilder: (context) => FakeProductCard(),
+              retryBuilder: (context, retryCallback) {
+                return RetryButton(onTap: retryCallback);
+              },
+              itemBuilder: (context, entry, index) {
+                return entry;
+              },
+              pageFuture: (pageIndex) => fetchProduct(pageIndex),
+            )),
       ),
     );
   }

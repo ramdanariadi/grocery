@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,8 +54,8 @@ class HttpRequestService {
 
   static Future<bool> refreshToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final String refreshToken =
-        sharedPreferences.getString("refresh_token") ?? '';
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+    final String refreshToken = await storage.read(key: "refresh_token") ?? '';
 
     if (refreshToken.trim() == '') return false;
 
@@ -68,17 +69,13 @@ class HttpRequestService {
         headers: headers);
 
     await sharedPreferences.setBool("authenticated", false);
-    debugPrint("response get token : " +
-        response.body.toString() +
-        " code : " +
-        response.statusCode.toString());
+    debugPrint("response get token : " + response.body.toString());
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = jsonDecode(response.body)['data'];
-      await sharedPreferences.setString("accessToken", tokens['accessToken']);
-      await sharedPreferences.setString("refreshToken", tokens['refreshoken']);
+      await storage.write(key: "accessToken", value: tokens['accessToken']);
+      await storage.write(key: "refreshToken", value: tokens['refreshoken']);
       await sharedPreferences.setBool("authenticated", true);
-      debugPrint("refresh token : " + tokens.toString());
       return true;
     }
 
@@ -86,17 +83,13 @@ class HttpRequestService {
   }
 
   static Future<dynamic> getHeaders({bool isSecure = false}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
     Map<String, String> headers = {"Content-Type": "application/json"};
 
     if (isSecure) {
-      final String accessToken =
-          sharedPreferences.getString("accessToken") ?? '';
+      FlutterSecureStorage storage = const FlutterSecureStorage();
+      final String accessToken = await storage.read(key: "accessToken") ?? '';
       headers.addAll(Map.of({"Authorization": "Bearer ${accessToken.trim()}"}));
     }
-
-    debugPrint("Headers : " + headers.toString());
 
     return headers;
   }
