@@ -12,7 +12,6 @@ import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CounterState.dart';
 import 'package:grocery/state_manager/GenericState.dart';
 
-// ignore: must_be_immutable
 class ProductDetail extends StatefulWidget {
   static final routeName = 'detailProduct';
 
@@ -24,7 +23,7 @@ class ProductDetail extends StatefulWidget {
   final int price;
   final String shopId;
   final String shopName;
-  String? imageUrl;
+  final String? imageUrl;
 
   ProductDetail(
       {Key? key,
@@ -36,9 +35,8 @@ class ProductDetail extends StatefulWidget {
       required this.price,
       required this.shopId,
       required this.shopName,
-      String? imageUrl}) {
-    this.imageUrl = imageUrl;
-  }
+      this.imageUrl})
+      : super(key: key);
 
   @override
   _ProductDetail createState() {

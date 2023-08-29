@@ -12,13 +12,10 @@ import 'package:grocery/services/RestClient.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class ProductCategories extends StatelessWidget {
   ProductCategories({
     Key? key,
   }) : super(key: key);
-
-  late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
     final client = RestClient(await HttpRequestService.getDio());
@@ -49,11 +46,10 @@ class ProductCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    categoryFuture = this.fetchCategories();
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: FutureBuilder<List<ProductCategory>>(
-          future: categoryFuture,
+          future: fetchCategories(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Row(
@@ -134,17 +130,14 @@ class ProductCategories extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class ProductCategory extends StatelessWidget {
   ProductCategory({
     Key? key,
-    String? imageUrl,
+    this.imageUrl,
     required this.id,
     required this.title,
     required this.onTap,
-  }) : super(key: key) {
-    this.imageUrl = imageUrl;
-  }
+  }) : super(key: key);
 
   factory ProductCategory.fromJson(Map<String, dynamic> json, Function onTap) {
     return new ProductCategory(
@@ -155,7 +148,7 @@ class ProductCategory extends StatelessWidget {
     );
   }
 
-  String? imageUrl;
+  final String? imageUrl;
   final String title;
   final String id;
   final Function onTap;

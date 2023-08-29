@@ -15,11 +15,10 @@ import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CartState.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 
-// ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
   ProductCard(
       {Key? key,
-      String? imageUrl,
+      this.imageUrl,
       required this.id,
       required this.shopId,
       required this.shopName,
@@ -27,11 +26,8 @@ class ProductCard extends StatelessWidget {
       required this.category,
       required this.weight,
       required this.price,
-      double? margin})
-      : super(key: key) {
-    this.imageUrl = imageUrl;
-    this.margin = margin ?? Application.defaultPadding / 2;
-  }
+      this.margin = Application.defaultPadding / 2})
+      : super(key: key);
 
   final String id;
   final String merk;
@@ -40,10 +36,11 @@ class ProductCard extends StatelessWidget {
   final String shopName;
   final int weight;
   final int price;
-  String? imageUrl;
-  late double margin;
+  final String? imageUrl;
+  final double? margin;
 
-  factory ProductCard.fromJson(Map<String, dynamic> item, {double? margin}) {
+  factory ProductCard.fromJson(Map<String, dynamic> item,
+      {double? margin = Application.defaultPadding / 2}) {
     return new ProductCard(
       id: item['id'],
       shopId: item['shopId'],
@@ -98,7 +95,7 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         width: size.width * 0.4,
-        margin: EdgeInsets.only(left: margin, right: margin),
+        margin: EdgeInsets.only(left: margin!, right: margin!),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [

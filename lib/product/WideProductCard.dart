@@ -12,7 +12,6 @@ import 'package:grocery/state_manager/RouterState.dart';
 import 'ProductCard.dart';
 import 'ProductDetail.dart';
 
-// ignore: must_be_immutable
 class WideProductCard extends StatelessWidget {
   WideProductCard({
     Key? key,
@@ -23,10 +22,8 @@ class WideProductCard extends StatelessWidget {
     required this.category,
     required this.weight,
     required this.price,
-    String? imageUrl,
-  }) : super(key: key) {
-    this.imageUrl = imageUrl;
-  }
+    this.imageUrl,
+  }) : super(key: key);
 
   final String id;
   final String shopId;
@@ -35,7 +32,7 @@ class WideProductCard extends StatelessWidget {
   final int weight;
   final int price;
   final String category;
-  String? imageUrl;
+  final String? imageUrl;
 
   Future<void> addToChart() async {
     final response = await HttpRequestService.sendRequest(

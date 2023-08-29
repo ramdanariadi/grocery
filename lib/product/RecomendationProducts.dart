@@ -8,7 +8,6 @@ import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/services/RestClient.dart';
 import 'package:shimmer/shimmer.dart';
 
-// ignore: must_be_immutable
 class RecomendationProducts extends StatelessWidget {
   RecomendationProducts({
     Key? key,
