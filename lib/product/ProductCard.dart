@@ -21,6 +21,8 @@ class ProductCard extends StatelessWidget {
       {Key? key,
       String? imageUrl,
       required this.id,
+      required this.shopId,
+      required this.shopName,
       required this.merk,
       required this.category,
       required this.weight,
@@ -34,6 +36,8 @@ class ProductCard extends StatelessWidget {
   final String id;
   final String merk;
   final String category;
+  final String shopId;
+  final String shopName;
   final int weight;
   final int price;
   String? imageUrl;
@@ -42,6 +46,8 @@ class ProductCard extends StatelessWidget {
   factory ProductCard.fromJson(Map<String, dynamic> item, {double? margin}) {
     return new ProductCard(
       id: item['id'],
+      shopId: item['shopId'],
+      shopName: item['shopName'],
       merk: item['name'],
       category: item['category'],
       weight: item['weight'],
@@ -81,6 +87,8 @@ class ProductCard extends StatelessWidget {
             path: ProductDetail.routeName,
             extra: ProductArguments(
                 id: this.id,
+                shopId: this.shopId,
+                shopName: this.shopName,
                 tag: this.id + 'top',
                 merk: this.merk,
                 category: this.category,
@@ -191,6 +199,8 @@ class ProductArguments {
   final String category;
   final int weight;
   final int price;
+  final String shopName;
+  final String shopId;
   String? imageUrl;
 
   ProductArguments(
@@ -200,7 +210,9 @@ class ProductArguments {
       required this.category,
       required this.weight,
       required this.price,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.shopName,
+      required this.shopId});
 }
 
 class FakeProductCard extends StatelessWidget {

@@ -11,6 +11,8 @@ class CartItemCard extends StatefulWidget {
     Key? key,
     required this.callback,
     required this.id,
+    required this.shopId,
+    required this.shopName,
     required this.productId,
     required this.merk,
     required this.category,
@@ -23,6 +25,8 @@ class CartItemCard extends StatefulWidget {
   }
 
   final String id;
+  final String shopId;
+  final String shopName;
   final String productId;
   final String merk;
   final int weight;
@@ -36,6 +40,8 @@ class CartItemCard extends StatefulWidget {
       Map<String, dynamic> item, VoidCallback callback) {
     return new CartItemCard(
       id: item['id'],
+      shopId: item['shopId'],
+      shopName: item['shopName'],
       productId: item['productId'],
       merk: item['name'],
       weight: item['weight'],
@@ -83,6 +89,8 @@ class _WideProductCard extends State<CartItemCard> {
             arguments: ProductArguments(
                 tag: widget.id + 'cart',
                 id: widget.id,
+                shopId: widget.shopId,
+                shopName: widget.shopName,
                 merk: widget.merk,
                 category: widget.category,
                 weight: widget.weight,
@@ -140,8 +148,8 @@ class _WideProductCard extends State<CartItemCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
-                        left: Application.defaultPadding / 2),
+                    padding:
+                        EdgeInsets.only(left: Application.defaultPadding / 2),
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(
@@ -153,29 +161,32 @@ class _WideProductCard extends State<CartItemCard> {
                               fontWeight: FontWeight.bold)),
                       TextSpan(
                           text: "weight ",
-                          style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
+                          style: TextStyle(
+                              height: 1.5, color: ApplicationColor.blackHint)),
                       TextSpan(
                           text: "${widget.weight}g\n",
                           style: TextStyle(
                               height: 1.5,
                               color: ApplicationColor.blackHint,
                               fontWeight: FontWeight.w500)),
-                        TextSpan(
-                        text: "\$${widget.price}",
-                        style: TextStyle(
-                            height: 1.5,
-                            color: ApplicationColor.blackHint,
-                            fontWeight: FontWeight.bold)),
-                    TextSpan(
-                        text: "/kg",
-                        style: TextStyle(height: 1.5, color: ApplicationColor.blackHint)),
+                      TextSpan(
+                          text: "\$${widget.price}",
+                          style: TextStyle(
+                              height: 1.5,
+                              color: ApplicationColor.blackHint,
+                              fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: "/kg",
+                          style: TextStyle(
+                              height: 1.5, color: ApplicationColor.blackHint)),
                     ])),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(right: Application.defaultPadding / 2),
+                        margin: EdgeInsets.only(
+                            right: Application.defaultPadding / 2),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -187,7 +198,8 @@ class _WideProductCard extends State<CartItemCard> {
                               },
                               margin: EdgeInsets.all(0),
                               padding: EdgeInsets.all(0),
-                              color: ApplicationColor.naturalWhite.withOpacity(0.5),
+                              color: ApplicationColor.naturalWhite
+                                  .withOpacity(0.5),
                               child: Icon(
                                 Icons.remove_outlined,
                                 color: ApplicationColor.blackHint,
@@ -215,7 +227,8 @@ class _WideProductCard extends State<CartItemCard> {
                               },
                               margin: EdgeInsets.all(0),
                               padding: EdgeInsets.all(0),
-                              color: ApplicationColor.naturalWhite.withOpacity(0.5),
+                              color: ApplicationColor.naturalWhite
+                                  .withOpacity(0.5),
                               child: Icon(
                                 Icons.add,
                                 color: ApplicationColor.blackHint,

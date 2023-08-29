@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grocery/alert/Alert.dart';
 import 'package:grocery/chart/Cart.dart';
+import 'package:grocery/chat/ChatRoom.dart';
 import 'package:grocery/custom_widget/ScaffoldBottomActionBar.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/product/ProductCard.dart';
@@ -79,6 +80,8 @@ class MyApp extends StatelessWidget {
                                     state.extra as ProductArguments;
                                 return ProductDetail(
                                   id: arguments.id,
+                                  shopId: arguments.shopId,
+                                  shopName: arguments.shopName,
                                   tag: arguments.tag,
                                   merk: arguments.merk,
                                   category: arguments.category,
@@ -119,6 +122,17 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                     path: Alert.routeName,
                     builder: (context, state) => state.extra as Alert),
+                /* Chat Room Route */
+                GoRoute(
+                    path: ChatRoom.routeName,
+                    builder: (context, state) {
+                      ChatRoomArg args = state.extra as ChatRoomArg;
+                      return ChatRoom(
+                        shopName: args.shopName,
+                        shopId: args.shopId,
+                        userId: args.userId,
+                      );
+                    })
               ])),
     );
   }

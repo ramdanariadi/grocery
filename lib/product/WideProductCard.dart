@@ -17,6 +17,8 @@ class WideProductCard extends StatelessWidget {
   WideProductCard({
     Key? key,
     required this.id,
+    required this.shopId,
+    required this.shopName,
     required this.merk,
     required this.category,
     required this.weight,
@@ -27,6 +29,8 @@ class WideProductCard extends StatelessWidget {
   }
 
   final String id;
+  final String shopId;
+  final String shopName;
   final String merk;
   final int weight;
   final int price;
@@ -52,6 +56,8 @@ class WideProductCard extends StatelessWidget {
   factory WideProductCard.fromJson(Map<String, dynamic> item) {
     return new WideProductCard(
         id: item['id'],
+        shopId: item['shopId'],
+        shopName: item['shopName'],
         merk: item['name'],
         weight: item['weight'],
         price: item['price'],
@@ -71,6 +77,8 @@ class WideProductCard extends StatelessWidget {
             path: ProductDetail.routeName,
             extra: ProductArguments(
                 id: id,
+                shopId: shopId,
+                shopName: shopName,
                 tag: id + 'recomend',
                 merk: merk,
                 category: category,
