@@ -1,14 +1,15 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/custom_widget/Skeleteon.dart';
+import 'package:grocery/product/dto/GetCategory.dart';
 import 'package:grocery/products/Products.dart';
-import 'package:grocery/services/HttpRequestService.dart';
 import 'package:grocery/constants/Application.dart';
 import 'package:grocery/constants/ApplicationColor.dart';
 import 'package:grocery/products/ProductGroupGridItems.dart';
+import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 import 'package:grocery/state_manager/RouterState.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -21,15 +22,16 @@ class ProductCategories extends StatelessWidget {
   late Future<List<ProductCategory>> categoryFuture;
 
   Future<List<ProductCategory>> fetchCategories() async {
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.GET,
-        url: Application.httBaseUrl + "/category?pageIndex=0&pageSize=10");
+    final client = RestClient(await HttpRequestService.getDio());
+    final GetCategoryResponse response =
+        await client.fetchCategory(GetCategory(pageIndex: 0, pageSize: 10));
 
-    if (response.statusCode == 200) {
-      List<dynamic> listCategory = jsonDecode(response.body)['data'];
-      List<ProductCategory> productCategories = listCategory
-          .map((e) => ProductCategory.fromJson(e,
-                  (String categoryId, String title, BuildContext context) {
+    List<ProductCategory> pc = response.data
+        .map((e) => ProductCategory(
+              id: e.id,
+              imageUrl: e.imageUrl,
+              title: e.category,
+              onTap: (String categoryId, String title, BuildContext context) {
                 RouterState routerState = BlocProvider.of<RouterState>(context);
                 routerState.go(
                     context: context,
@@ -40,14 +42,10 @@ class ProductCategories extends StatelessWidget {
                       'url': Application.httBaseUrl +
                           '/product?categoryId=$categoryId&pageIndex=0&pageSize=10'
                     });
-              }))
-          .toList();
-      return productCategories;
-    } else {
-      Fluttertoast.showToast(
-          msg: "Failed load category", toastLength: Toast.LENGTH_LONG);
-    }
-    return List<ProductCategory>.empty();
+              },
+            ))
+        .toList();
+    return pc;
   }
 
   @override

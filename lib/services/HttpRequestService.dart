@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:grocery/constants/Application.dart';
@@ -92,5 +93,16 @@ class HttpRequestService {
     }
 
     return headers;
+  }
+
+  static Future<Dio> getDio({bool isSecure = false}) async {
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'application/json';
+    if (isSecure) {
+      FlutterSecureStorage storage = const FlutterSecureStorage();
+      final String accessToken = await storage.read(key: "accessToken") ?? '';
+      dio.options.headers['Authorization'] = 'Bearer ${accessToken.trim()}';
+    }
+    return dio;
   }
 }
