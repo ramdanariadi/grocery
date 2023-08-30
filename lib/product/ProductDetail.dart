@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -8,9 +9,11 @@ import 'package:grocery/custom_widget/Button.dart';
 import 'package:grocery/home/Home.dart';
 import 'package:grocery/profile/Login.dart';
 import 'package:grocery/services/HttpRequestService.dart';
+import 'package:grocery/services/RestClient.dart';
 import 'package:grocery/services/UserService.dart';
 import 'package:grocery/state_manager/CounterState.dart';
 import 'package:grocery/state_manager/GenericState.dart';
+import 'package:logger/logger.dart';
 
 class ProductDetail extends StatefulWidget {
   static final routeName = 'detailProduct';
@@ -53,62 +56,103 @@ class _ProductDetail extends State<ProductDetail> {
   UserService userService = UserService.getInstance();
 
   _ProductDetail();
+  final logger = Logger();
 
   Future<void> like() async {
     if (!await UserService.isAuthenticated())
       GoRouter.of(context).go(Login.routeName);
-
-    final response;
-    String url = Application.httBaseUrl + '/wishlist/${widget.id}';
-    debugPrint(url);
+    RestClient restClient =
+        RestClient(await HttpRequestService.getDio(isSecure: true));
     if (productLoved) {
       debugPrint("remove from wislist");
-      response = await HttpRequestService.sendRequest(
-          method: HttpMethod.DELETE, url: url, isSecure: true);
+      restClient.removeFromWishlist(widget.id).then((value) {
+        if (widgetExist) {
+          productLoved = !productLoved;
+          _likedState.eventSink.add(productLoved);
+          Fluttertoast.showToast(
+              msg: productLoved ? 'loved it' : 'unloved it',
+              toastLength: Toast.LENGTH_LONG);
+        }
+      }).catchError((obj) {
+        switch (obj.runtimeType) {
+          case DioException:
+            final res = (obj as DioException).response;
+            logger.e("Got error : ${res!.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      });
     } else {
       debugPrint("ADD to wislist");
-      response = await HttpRequestService.sendRequest(
-          method: HttpMethod.POST, url: url, isSecure: true);
-    }
-    if (widgetExist) {
-      if (response.statusCode == 200) {
-        productLoved = !productLoved;
-        _likedState.eventSink.add(productLoved);
-        Fluttertoast.showToast(
-            msg: productLoved ? 'loved it' : 'unloved it',
-            toastLength: Toast.LENGTH_LONG);
-      } else {
-        Fluttertoast.showToast(
-            msg: '${response.statusCode}', toastLength: Toast.LENGTH_LONG);
-      }
+      restClient.addToWishlist(widget.id).then((value) {
+        if (widgetExist) {
+          productLoved = !productLoved;
+          _likedState.eventSink.add(productLoved);
+          Fluttertoast.showToast(
+              msg: productLoved ? 'loved it' : 'unloved it',
+              toastLength: Toast.LENGTH_LONG);
+        }
+      }).catchError((obj) {
+        switch (obj.runtimeType) {
+          case DioException:
+            final res = (obj as DioException).response;
+            logger.e("Got error : ${res!.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      });
     }
   }
 
   Future<void> addToCart() async {
     if (!await UserService.isAuthenticated())
       GoRouter.of(context).go(Login.routeName);
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.POST,
-        url: Application.httBaseUrl + '/cart/${widget.id}/$_count',
-        isSecure: true);
-    if (response.statusCode == 200 && widgetExist) {
-      GoRouter.of(context).go(Home.routeName);
-    } else {
+
+    RestClient restClient =
+        RestClient(await HttpRequestService.getDio(isSecure: true));
+    restClient.addToCart(productId: widget.id, total: _count).then((value) {
+      if (widgetExist) {
+        GoRouter.of(context).go(Home.routeName);
+      }
+    }).catchError((obj) {
       Fluttertoast.showToast(msg: "opps something wrong");
-      debugPrint(response.body.toString());
-    }
+      switch (obj.runtimeType) {
+        case DioException:
+          final res = (obj as DioException).response;
+          logger.e("Got error : ${res!.statusCode} -> ${res.statusMessage}");
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   Future<void> isLiked() async {
     if (!await UserService.isAuthenticated()) return;
-    final response = await HttpRequestService.sendRequest(
-        method: HttpMethod.GET,
-        url: Application.httBaseUrl + '/wishlist/${widget.id}',
-        isSecure: true);
-    if (widgetExist) {
-      productLoved = response.statusCode == 200;
-      _likedState.eventSink.add(response.statusCode == 200);
-    }
+    RestClient restClient =
+        RestClient(await HttpRequestService.getDio(isSecure: true));
+    restClient.getWishListByProduct(widget.id).then((value) {
+      debugPrint("success");
+      if (widgetExist) {
+        productLoved = true;
+        _likedState.eventSink.add(true);
+      }
+    }).catchError((obj) {
+      switch (obj.runtimeType) {
+        case DioException:
+          final res = (obj as DioException).response;
+          logger.e("Got error : ${res!.statusCode} -> ${res.statusMessage}");
+          break;
+        default:
+          break;
+      }
+      if (widgetExist) {
+        productLoved = false;
+        _likedState.eventSink.add(false);
+      }
+    });
   }
 
   @override
